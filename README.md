@@ -23,5 +23,4 @@ A aplicação simula uma rede social onde **conteúdos e perfis são gerados aut
 - Framework CSS: Tailwind CSS
 - LocalStorage (persistência de dados temporária)
 
-## Estrutura do Projeto 
 
