@@ -20,7 +20,7 @@ A aplicação simula uma rede social onde **conteúdos e perfis são gerados aut
 
 - HTML5, CSS3, JavaScript
 - API Gemini (Google)
-- Framework CSS: Tailwind CSS
+- Framework CSS: Bootstrap
 - LocalStorage (persistência de dados temporária)
 
 
