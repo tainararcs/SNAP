@@ -18,7 +18,8 @@ const NOME_USUARIOS_ALEATORIOS = [
  */
 function gerarUsuarioFicticio() {
     const nomeAleatorio = NOME_USUARIOS_ALEATORIOS[Math.floor(Math.random() * NOME_USUARIOS_ALEATORIOS.length)];
-    const avatarId = Math.floor(Math.random() * 70); // i.pravatar.cc tem cerca de 70 imagens
+    // Corrigido: gera IDs entre 1 e 70 (o serviço requer 1-70)
+    const avatarId = Math.floor(Math.random() * 70) + 1;
     const avatarUrl = `${AVATAR_BASE_URL}${avatarId}`;
     return {
         nomeUsuario: nomeAleatorio,
