@@ -18,7 +18,7 @@
 
     OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno correto.
 */
-async function requisitarPost(apiKey, interessesPredefinidos = null) {
+export async function requisitarPost(apiKey, interessesPredefinidos = null) {
 
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent?key=' + apiKey;
 
@@ -55,8 +55,6 @@ async function requisitarPost(apiKey, interessesPredefinidos = null) {
     else{ // Lista de interesses gerada pelo Gemini.
         prompt += 'O retorno deve seguir o formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
     }
-
-    console.log(prompt); // Para debug (exibe o prompt no console).
 
     // Define o corpo da requisição a ser feita.
     const body = {
