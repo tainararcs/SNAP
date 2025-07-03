@@ -46,14 +46,12 @@ function loginUser() {
     const email = document.getElementById('login-email').value.trim();
     const senha = document.getElementById('login-password').value;
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    const userFound = users.find(user => user.email === email && user.senha === senha);
-
-    if (userFound) {
-        localStorage.setItem('usuarioLogado', JSON.stringify(userFound));
+    if (user && user.email === email && user.senha === senha) {
+        localStorage.setItem('LoggedUser', JSON.stringify(user));
         showMessageLogin("Login bem-sucedido!");
-        window.location.href = "interests.html"; // Redireciona para a tela de seleção de interesses.
+        window.location.href = "feed.html"; // Redireciona para o feed.
     } 
     else {
         showMessageLogin("Email ou senha incorretos.");
@@ -66,21 +64,14 @@ function registerUser() {
     const email = document.getElementById('register-email').value.trim();
     const senha = document.getElementById('register-password').value;
 
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-
-    // Verifica se o email já está cadastrado.
-    const existente = users.find(user => user.email === email);
-    if (existente) {
-        showMessageRegister("Email já cadastrado.");
-        return;
-    }
-
-    const newUser = new User(nome, email, senha);
-    users.push(newUser);
-
-    localStorage.setItem('users', JSON.stringify(users));
+    const newUser = new User(0, nome, email, senha);
+   
+    // Armazena apenas UM usuário no localstorage (sobrescreve o anterior).
+    localStorage.setItem('user', JSON.stringify(newUser));
 
     showMessageRegister("Usuário cadastrado com sucesso!");
+
+    window.location.href = "interests.html"; // Redireciona para a tela de seleção de interesses.
 }
 
 // Exibe uma mensagem referente ao login.
