@@ -1,8 +1,8 @@
 // Classe de estrutura de uma postagem. 
 
 class Post {
-    userName;
-    content;
+    userName = "";
+    content = "";
 
     constructor(userName, content) {
         this.userName = userName;
