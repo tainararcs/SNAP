@@ -19,61 +19,48 @@
 
     <body>
         
-        <!-- Página de Login -->
-        <section id="login-page">            
-            
-            <div class="logo">
-                <img src="logo.png" alt="Logo da rede">
-            </div>
-            
-            <h2>Nome da rede</h2>
+        <div class="login">
+            <h2>Login</h2>
 
-            <form action="/login" method="POST">
-                <label for="email-login">Email</label>
-                <input type="email" id="email-login" name="email" required>
+            <label for="email">Email</label>
+            <input type="text" id="login-email" name="email" placeholder="Digite seu e-mail " required>
 
-                <label for="password-login">Senha</label>
-                <input type="password" id="password-login" name="password" required>
+            <label for="password">Senha</label>
+            <input type="password" id="login-password" name="password" placeholder="Digite a senha" required>
 
-                <button type="submit">Log in</button>
-            </form>
-
-            <div class="login-links">
-                <a href="/register">Entrar com uma conta</a>
-                <a href="/recover-password">Esqueceu a senha?</a>
-                <p>Não tem uma conta? <a href="/register">Registre-se</a></p>
-            </div>
-        </section>
-
-        <!-- Página de Cadastro -->
-        <section id="signup-page">
-            
-            <div class="logo">
-                <img src="logo.png" alt="Logo da rede">
+            <div class="btn-container">
+                <button class="login-btn">Entrar</button>    
             </div>
 
-            <h2>Junte-se à nossa rede</h2>
-            
-            <form action="/register" method="POST">
-                <label for="name">Nome</label>
-                <input type="text" id="nome" name="name" required>
+            <p>Não tem uma conta? <a href="#">Cadastre-se aqui</a></p>
+            <p>Esqueceu a senha? <a href="#">Recuperar senha</a></p>
 
-                <label for="email-signup">Email</label>
-                <input type="email" id="email-signup" name="email" required>
+            <div id="login-message" class="message"></div>
+        </div>
 
-                <label for="birth-date">Data de Nascimento</label>
-                <input type="date" id="birth-date" name="birth_date" required>
+        <div class="register">
+            <h2>Cadastro</h2>
 
-                <label for="password-signup">Senha</label>
-                <input type="password" id="password-signup" name="password" required>
+            <label for="username">Nome</label>
+            <input type="text" id="register-name" name="username" placeholder="Digite o nome de usuário" required>
 
-                <button type="submit">Sign up</button>
-            </form>
+            <label for="email">Email</label>
+            <input type="text" id="register-email" name="email" placeholder="Digite o email de usuário" required>
 
-            <p>Já possui uma conta? <a href="/login">Login</a></p>
-        </section>
+            <label for="password">Senha:</label>
+            <input type="password" id="register-password" name="password" placeholder="Digite a senha" required>
 
+            <div class="btn-container">
+                <button class="register-btn">Cadastrar</button>
+            </div>
+
+            <p>Ja tem uma conta faça login aqui? <a class="go-login" href="#">Login</a></p>
+            <div id="register-message" class="message"></div>
+        </div>
+
+        <!-- Script de login/cadastro -->
+        <script type="module" src="./js/login.js" defer></script>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </body>
-</html>
+</html> 
