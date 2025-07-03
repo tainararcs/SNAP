@@ -65,6 +65,25 @@
       /* Detalhe visual */
     }
 
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .post-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+    }
+
+    .post-username {
+      font-weight: bold;
+      color: #333;
+    }
+
     .post-card p {
       margin: 0 0 10px 0;
       line-height: 1.6;
@@ -140,17 +159,21 @@
           const postCard = document.createElement('div');
           postCard.className = 'post-card';
           postCard.innerHTML = `
-                        <p class="post-content">${post.conteudo}</p>
-                        <p class="post-hashtags">${post.hashtags}</p>
-                    `;
+            <div class="post-header">
+              <img src="${post.avatarUrl}" alt="${post.nomeUsuario}" class="post-avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+              <span class="post-username">${post.nomeUsuario}</span>
+            </div>
+            <p class="post-content">${post.conteudo}</p>
+            <p class="post-hashtags">${post.hashtags}</p>
+          `;
           // Adiciona o novo post no topo do feed (simulando um feed dinâmico)
           feedContainer.prepend(postCard);
         } else {
           const errorCard = document.createElement('div');
           errorCard.className = 'post-card';
           errorCard.innerHTML = `
-                        <p class="post-content" style="color: red;">Erro ao gerar o post. Verifique o console.</p>
-                    `;
+            <p class="post-content" style="color: red;">Erro ao gerar o post. Verifique o console.</p>
+          `;
           feedContainer.prepend(errorCard);
           console.error("Não foi possível gerar um post válido.");
         }
@@ -161,8 +184,8 @@
         const errorCard = document.createElement('div');
         errorCard.className = 'post-card';
         errorCard.innerHTML = `
-                    <p class="post-content" style="color: red;">Ocorreu um erro inesperado: ${error.message}.</p>
-                `;
+          <p class="post-content" style="color: red;">Ocorreu um erro inesperado: ${error.message}.</p>
+        `;
         feedContainer.prepend(errorCard);
         console.error("Erro inesperado durante a geração do post:", error);
       }
