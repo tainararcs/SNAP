@@ -1,4 +1,4 @@
-// Lógica de criação de usuários.
+// Lógica de criação e login de usuários.
 
 import { User } from './User.js';
 
