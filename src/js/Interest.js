@@ -33,14 +33,12 @@ class Interest {
 
     // Pesquisa um interesse na lista.
     searchInterest(interest) {
-    for (let i = 0; i < this.interests.length; i++) {
-        if (this.interests[i] === interest) {
-            return i;
+        for (let i = 0; i < this.interests.length; i++) {
+            if (this.interests[i] === interest) {
+                return i;
+            }
+            return -1;
         }
-        return -1;
     }
     
 }
-
-
-}   
