@@ -1,6 +1,6 @@
 // Classe de estrutura de um usuário. 
 
-class User {
+export class User {
     id = 0;
     name = "";
     email = "";

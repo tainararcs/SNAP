@@ -1,4 +1,4 @@
-//
+// Classe de estrutura de um interesse. 
 
 class Interest {
 

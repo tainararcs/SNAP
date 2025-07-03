@@ -22,14 +22,14 @@
         <div class="login">
             <h2>Login</h2>
 
-            <label for="e-mail">Usuário</label>
-            <input type="text" name="e-mail" placeholder="Digite seu e-mail " required>
+            <label for="email">Usuário</label>
+            <input type="text" id="login-email" name="email" placeholder="Digite seu e-mail " required>
 
             <label for="password">Senha</label>
-            <input type="password" name="password" placeholder="Digite a senha" required>
+            <input type="password" id="login-password" name="password" placeholder="Digite a senha" required>
 
             <div class="btn-container">
-                <button class="logar-btn">Entrar</button>    
+                <button class="login-btn">Entrar</button>    
             </div>
 
             <p>Não tem uma conta? <a href="#">Cadastre-se aqui</a></p>
@@ -44,16 +44,16 @@
             <h2>Cadastro</h2>
 
             <label for="username">Nome</label>
-            <input type="text" name="username" placeholder="Digite o nome de usuário" required>
+            <input type="text" id="register-name" name="username" placeholder="Digite o nome de usuário" required>
 
             <label for="email">Email</label>
-            <input type="text" name="email" placeholder="Digite o email de usuário" required>
+            <input type="text" id="register-email" name="email" placeholder="Digite o email de usuário" required>
 
             <label for="password">Senha:</label>
-            <input type="password" name="password" placeholder="Digite a senha" required>
+            <input type="password" id="register-password" name="password" placeholder="Digite a senha" required>
 
             <div class="btn-container">
-                <button class="cadastrar-btn">Cadastrar</button>
+                <button class="register-btn">Cadastrar</button>
             </div>
 
             <p>Ja tem uma conta faça login aqui? <a class="go-login" href="#">Login</a></p>
@@ -61,22 +61,8 @@
 
         </div>
 
-        <div class="reset-password">
-            <h2>Redefinir Senha</h2>
 
-            <label for="email">E-mail cadastrado:</label>
-            <input type="email" name="e-mail" placeholder="Digite seu e-mail" required>
-
-            <label for="novaSenha">Nova senha:</label>
-            <input type="new-password" name="new-password" placeholder="Digite a nova senha" required>
-            <input type="confirm-password" name="confirm-password" placeholder="Confirme a nova senha" required>
-
-            <button class="btn-reset">Alterar senha</button>
-
-            <div class="mensagem"></div>
-        </div>
-
-        <!-- Linka seu script backend.js -->
+        <!-- Script de login/cadastro -->
         <script type="module" src="./js/login.js" defer></script>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
