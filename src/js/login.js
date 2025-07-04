@@ -46,12 +46,16 @@ function loginUser() {
     const email = document.getElementById('login-email').value.trim();
     const senha = document.getElementById('login-password').value;
 
+    // Acessa o localStorage e busca um valor com a chave "user" e converte para um objeto JavaScript.
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (user && user.email === email && user.senha === senha) {
+        // Converte o objeto user para uma string JSON com JSON.stringify() e armazena no localStorage com a chave "LoggedUser".
         localStorage.setItem('LoggedUser', JSON.stringify(user));
+
         showMessageLogin("Login bem-sucedido!");
-        window.location.href = "feed.html"; // Redireciona para o feed.
+        
+        window.location.href = "posts.html"; // Redireciona para o feed.
     } 
     else {
         showMessageLogin("Email ou senha incorretos.");
