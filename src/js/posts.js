@@ -42,8 +42,6 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
-
 /**
  * Prepara um post gerado pela API Gemini para ser exibido no feed,
  * incluindo um usuário e avatar fictícios.
@@ -65,7 +63,7 @@ export async function prepararPostParaFeed(apiKey, interessesPredefinidos = null
             await delay(timeToWait);
         }
         lastRequestTime = Date.now(); // Atualiza o tempo da última requisição
-        // Fim do Controle de Taxa
+       
 
         // Solicita o post à API Gemini
         const [textoDoPost, interessesDoPost] = await requisitarPost(apiKey, interessesPredefinidos);
