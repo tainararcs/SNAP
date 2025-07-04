@@ -1,35 +1,47 @@
-// login.js
+// Lógica de criação e login de usuários.
+
 import { User } from './User.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.getElementById('container-login');
+    const loginSection = document.querySelector('.login');
+    const registerSection = document.querySelector('.register');
 
-    // Alterna entre login e cadastro
-    signUpButton.addEventListener('click', () => {
-        container.classList.add("right-panel-active");
+    // Inicialmente, mostra apenas a tela de login.
+    loginSection.classList.remove('hidden');
+    registerSection.classList.add('hidden');
+
+    // Evento de clique para mostrar a tela de cadastro.
+    document.querySelector('.login a[href="#"]').addEventListener('click', (e) => {
+        e.preventDefault();
+        loginSection.classList.add('hidden');
+        registerSection.classList.remove('hidden');
     });
 
-    signInButton.addEventListener('click', () => {
-        container.classList.remove("right-panel-active");
+    // Evento de clique para voltar ao login.
+    document.querySelector('.go-login').addEventListener('click', (e) => {
+        e.preventDefault();
+        registerSection.classList.add('hidden');
+        loginSection.classList.remove('hidden');
     });
 
-    const loginForm = document.getElementById('login-form-login');
-    const registerForm = document.getElementById('register-form-login');
-
-    loginForm.addEventListener('submit', (e) => {
+    // Botões de login e cadastro.
+    document.querySelector('.login-btn').addEventListener('click', (e) => {
         e.preventDefault();
         loginUser();
     });
 
-    registerForm.addEventListener('submit', (e) => {
+    document.querySelector('.register-btn').addEventListener('click', (e) => {
         e.preventDefault();
         registerUser();
-        registerForm.reset();
+
+        // Limpa os campos após cadastro.
+        document.getElementById('register-name').value = '';
+        document.getElementById('register-email').value = '';
+        document.getElementById('register-password').value = '';
     });
 });
 
+// Função de login.
 function loginUser() {
     const email = document.getElementById('login-email').value.trim();
     const senha = document.getElementById('login-password').value;
@@ -42,35 +54,52 @@ function loginUser() {
         localStorage.setItem('LoggedUser', JSON.stringify(user));
 
         showMessageLogin("Login bem-sucedido!");
-<<<<<<< HEAD
-        
+
         window.location.href = "posts.html"; // Redireciona para o feed.
     } 
     else {
-=======
-        setTimeout(() => window.location.href = "feed.html", 1000);
-    } else {
->>>>>>> 05b2507fa43ca67bebb78a8bc6dbaf6bf609cf12
         showMessageLogin("Email ou senha incorretos.");
     }
 }
 
+// Função de cadastro.
 function registerUser() {
     const nome = document.getElementById('register-name').value.trim();
     const email = document.getElementById('register-email').value.trim();
     const senha = document.getElementById('register-password').value;
 
     const newUser = new User(0, nome, email, senha);
+   
+    // Armazena apenas UM usuário no localstorage (sobrescreve o anterior).
     localStorage.setItem('user', JSON.stringify(newUser));
 
     showMessageRegister("Usuário cadastrado com sucesso!");
-    setTimeout(() => window.location.href = "interests.html", 1000);
+
+    window.location.href = "interests.html"; // Redireciona para a tela de seleção de interesses.
 }
 
+// Exibe uma mensagem referente ao login.
 function showMessageLogin(message) {
-    document.getElementById('login-message').innerHTML = `<div class="mensagem">${message}</div>`;
+    let messageDiv = document.getElementById('login-message');
+
+    let messageHTML = `
+    <div class="mensagem">
+        ${message} 
+    </div> `;
+
+    // Adiciona a mensagem ao container.
+    messageDiv.innerHTML = messageHTML;
 }
 
+// Exibe uma mensagem referente ao registro.
 function showMessageRegister(message) {
-    document.getElementById('register-message').innerHTML = `<div class="mensagem">${message}</div>`;
+    let messageDiv = document.getElementById('register-message');
+
+    let messageHTML = `
+    <div class="mensagem">
+        ${message} 
+    </div> `;
+
+    // Adiciona a mensagem ao container.
+    messageDiv.innerHTML = messageHTML;
 }
