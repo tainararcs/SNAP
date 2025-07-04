@@ -17,46 +17,46 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
 
-    <body>
+    <body id="body-login">
         
-        <div class="login">
-            <h2>Login</h2>
-
-            <label for="email">Email</label>
-            <input type="text" id="login-email" name="email" placeholder="Digite seu e-mail " required>
-
-            <label for="password">Senha</label>
-            <input type="password" id="login-password" name="password" placeholder="Digite a senha" required>
-
-            <div class="btn-container">
-                <button class="login-btn">Entrar</button>    
-            </div>
-
-            <p>Não tem uma conta? <a href="#">Cadastre-se aqui</a></p>
-            <p>Esqueceu a senha? <a href="#">Recuperar senha</a></p>
-
-            <div id="login-message" class="message"></div>
+        <div class="container-login" id="container-login">
+        <div class="form-container-login sign-up-container-login">
+            <form id="register-form-login">
+                <h1>Criar Conta</h1>
+                <input type="text" id="register-name" placeholder="Nome" required />
+                <input type="email" id="register-email" placeholder="E-mail" required />
+                <input type="password" id="register-password" placeholder="Senha" required />
+                <button type="submit">Cadastrar</button>
+                <div id="register-message" class="message"></div>
+            </form>
         </div>
-
-        <div class="register">
-            <h2>Cadastro</h2>
-
-            <label for="username">Nome</label>
-            <input type="text" id="register-name" name="username" placeholder="Digite o nome de usuário" required>
-
-            <label for="email">Email</label>
-            <input type="text" id="register-email" name="email" placeholder="Digite o email de usuário" required>
-
-            <label for="password">Senha:</label>
-            <input type="password" id="register-password" name="password" placeholder="Digite a senha" required>
-
-            <div class="btn-container">
-                <button class="register-btn">Cadastrar</button>
-            </div>
-
-            <p>Ja tem uma conta faça login aqui? <a class="go-login" href="#">Login</a></p>
-            <div id="register-message" class="message"></div>
+        <div class="form-container-login sign-in-container-login">
+            <form id="login-form-login">
+                <h1>Entrar</h1>
+                <input type="email" id="login-email" placeholder="E-mail" required />
+                <input type="password" id="login-password" placeholder="Senha" required />
+                <a href="#">Esqueceu sua senha?</a>
+                <button type="submit">Logar</button>
+                <div id="login-message" class="message"></div>
+            </form>
         </div>
+        <div class="overlay-container-login">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <img src="logo.png" alt="Logo">
+                    <h1>Bem-vindo de volta!</h1>
+                    <p>Para se manter conectado, faça o login com suas informações</p>
+                    <button class="ghost" id="signIn">Entrar</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <img src="logo.png" alt="Logo">
+                    <h1>Olá, Amigo!</h1>
+                    <p>Digite seus dados e comece a jornada conosco</p>
+                    <button class="ghost" id="signUp">Cadastro</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Script de login/cadastro -->
         <script type="module" src="./js/login.js" defer></script>
