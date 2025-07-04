@@ -1,10 +1,8 @@
-/* Estilos base */
 #interests-page {
     background-color: #FCF7FF;
     padding: 40px 0;
 }
 
-/* Paleta de cores */
 :root {
     --roxo-primario: #6930C3;
     --roxo-secundario: #5E60CE;
@@ -15,7 +13,6 @@
     --cinza: #878c8f;
 }
 
-/* Card principal */
 .interests-card {
     background-color: #fff;
     border-radius: 16px;
@@ -28,7 +25,7 @@
     margin-right: auto;
 }
 
-/* Header com título e botão */
+/* "Header" */
 .interests-header {
     display: flex;
     justify-content: space-between;
@@ -45,7 +42,7 @@
     max-width: 600px;
 }
 
-/* Input e botão */
+/* Input */
 .interests-input {
     height: 50px;
     border: 1px solid #d1d5db;
@@ -82,7 +79,7 @@
     color: #FFF;
 }
 
-/* Sugestões - Corrigido para aparecer ao clicar */
+/* Sugestões */
 .suggestions {
     position: absolute;
     width: 100%;
@@ -154,7 +151,7 @@
     opacity: 1;
 }
 
-/* Botão avançar no header */
+/* Botão avançar */
 .btn-advance-header {
     background: var(--roxo-primario);
     color: #FFF;
@@ -185,14 +182,14 @@
     margin: 0;
 }
 
-/* Modal aumentado - Estilos auxiliares */
+/* Modal */
 #alertModal.modal .modal-dialog.modal-md {
-    max-width: 450px; /* Largura aumentada */
+    max-width: 450px; 
 }
 
 #alertModal .modal-body {
-    padding: 40px; /* Espaçamento interno aumentado */
-    font-size: 18px; /* Tamanho da fonte aumentado */
+    padding: 40px; 
+    font-size: 18px; 
     line-height: 1.6;
 }
 
@@ -243,7 +240,6 @@
     }
 }
 
-/* Ajuste para telas pequenas */
 @media (max-width: 576px) {
     #alertModal.modal .modal-dialog.modal-md {
         max-width: 90%;
