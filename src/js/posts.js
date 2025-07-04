@@ -1,4 +1,4 @@
-// posts.js
+// posts.js !!! TEMPORÁRIO
 
 import { requisitarPost } from './gemini.js'; 
 
