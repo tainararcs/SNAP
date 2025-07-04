@@ -19,6 +19,25 @@
 
     <body>
         
+        <h2>Nos conte o que mais interessa você</h2>
+
+        <div class="input-box">
+            <!-- Input para os interesses -->
+            <input type="text" id="intrests-input" placeholder="Ex: Artes, Paisagens, etc.">
+        
+            <!-- Botão para adicionar o interesse, caso o interesse estiver sido corretamente inserido -->
+            <button class="add" onclick="adicionarInteresse()">+</button>
+
+            <div id="suggestion" class="suggestions"></div>
+        </div>
+
+        <div id="tag" class="tags"></div>
+
+        <!-- O botão avançar que só ficara disponível após inserir pelo menos 3 interesses -->
+        <div id="advance">Avançar →</div>
+
+        <script src="script.js"></script>
+
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </body>
 </html>
