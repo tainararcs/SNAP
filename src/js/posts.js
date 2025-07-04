@@ -2,7 +2,14 @@
 
 import { requisitarPost } from './gemini.js'; 
 
-// --- Dados para geração aleatória de usuário e avatar ---
+
+/* Controle de Taxa 
+*Define o tempo mínimo de atraso (em milissegundos) entre as requisições à API.*/
+const TEMPO_CONTROLE = 1500; //1,5seg
+let lastRequestTime = 0; // Armazena o timestamp da última requisição
+
+
+//  Dados para geração aleatória de usuário e avatar 
 const AVATAR_BASE_URL = "https://i.pravatar.cc/150?img="; // Um gerador de avatares aleatórios
 const NOME_USUARIOS_ALEATORIOS = [
     "Ana Silva", "Bruno Miranda", "Carla Oliveira", "Daniel Tolendal", "Wender Magno",
@@ -10,7 +17,7 @@ const NOME_USUARIOS_ALEATORIOS = [
     "Kelly Bakes", "Lucas Coding", "Rafael Silva", "Carlos Junior", "Olivia Oliveira",
     "Pedro Antonio", "Igor Guilherme", "Rafa Sports", "Sofia Fotografias", "Thiago Bits"
 ];
-// --- Fim dos dados de geração ---
+//  Fim dos dados de geração 
 
 /**
  * Gera um nome de usuário e um URL de avatar aleatórios.
@@ -27,6 +34,15 @@ function gerarUsuarioFicticio() {
     };
 }
 
+/**
+ * Função utilitária para introduzir um atraso.
+ * @param {number} ms - Milissegundos para atrasar.
+ */
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 
 /**
  * Prepara um post gerado pela API Gemini para ser exibido no feed,
@@ -40,11 +56,22 @@ function gerarUsuarioFicticio() {
  */
 export async function prepararPostParaFeed(apiKey, interessesPredefinidos = null) {
     try {
+        //  Controle de Taxa: Verifica e aplica atraso antes da requisição
+        const now = Date.now();
+        const timeSinceLastRequest = now - lastRequestTime;
+        if (timeSinceLastRequest < TEMPO_CONTROLE) {
+            const timeToWait = TEMPO_CONTROLE - timeSinceLastRequest;
+            console.log(`Aguardando ${timeToWait}ms para respeitar o limite de taxa.`);
+            await delay(timeToWait);
+        }
+        lastRequestTime = Date.now(); // Atualiza o tempo da última requisição
+        // Fim do Controle de Taxa
+
         // Solicita o post à API Gemini
         const [textoDoPost, interessesDoPost] = await requisitarPost(apiKey, interessesPredefinidos);
 
-        // Gera o usuário e avatar fictícios
-        const { nomeUsuario, avatarUrl } = gerarUsuarioFicticio();
+        // Gera o usuário e avatar fictícios localmente
+        const perfilDoUsuario = gerarUsuarioFicticio();
 
         // Verifica se o texto do post foi gerado com sucesso
         if (textoDoPost) {
@@ -57,8 +84,9 @@ export async function prepararPostParaFeed(apiKey, interessesPredefinidos = null
             return {
                 conteudo: textoDoPost,
                 hashtags: hashtagsFormatadas,
-                nomeUsuario: nomeUsuario,
-                avatarUrl: avatarUrl
+                nomeUsuario: perfilDoUsuario.nomeUsuario,
+                avatarUrl: perfilDoUsuario.avatarUrl,
+                bio: perfilDoUsuario.bio
             };
         } else {
             console.warn("Não foi possível gerar o conteúdo do post. Retornando null.");
