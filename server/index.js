@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI, Modality } from "@google/genai";
 
 import express from 'express'; // Criar servidor HTTP.
 import cors from 'cors'; // Permitir requisições de outros domínios.
@@ -13,14 +13,14 @@ const PORT = 3001; // Porta onde o servidor escutará requisições.
 app.use(cors()); 
 app.use(bodyParser.json()); 
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenAI(process.env.GEMINI_API_KEY);
 
 // Rota POST para requisitarPost. 
 app.post('/requisitarPost', async (req, res) => {
 
     const interessesPredefinidos = req.body.interesses || [];
 
-    let prompt = 'Crie um post pequeno e aleatório para uma rede social. Este post não deve conter nenhuma hashtag em seu corpo.\n';
+    let prompt = 'Crie um post pequeno e aleatório para uma rede social, como se fosse um jovem da geração Z. Evite iniciar de forma genérica como: Acabei de ... etc. Este post não deve conter nenhuma hashtag em seu corpo.\n';
 
     // Verifica se há interesses pré-definidos.
     if(interessesPredefinidos.length > 0){
@@ -49,14 +49,13 @@ app.post('/requisitarPost', async (req, res) => {
         : 'O retorno deve estar no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
 
     try{
-        // Define o modelo do Gemini a ser usado.
-        const model = genAI.getGenerativeModel({
-            model: 'gemini-2.5-flash-lite-preview-06-17'
-        });
-
-        const result = await model.generateContent(prompt); // Envia o prompt.
-        const response = result.response; // Obtém resposta.
-        const text = response.text(); // Extrai o conteúdo como texto.
+       
+        const response = await genAI.models.generateContent({
+            model: 'gemini-2.5-flash-lite-preview-06-17',
+            contents: prompt
+        }); // Obtém resposta.
+       
+        const text = response.text; // Extrai o conteúdo como texto.
 
         // Busca um bloco no formato JSON dentro do texto.
         const jsonMatch = text.match(/{[\s\S]*}/);
