@@ -19,12 +19,11 @@
 
     <body id="body-login">
         
-<<<<<<< HEAD
         <!-- Página de Login -->
         <section id="login-page">            
             
             <div class="logo">
-                <img src="logo.png" alt="Logo da rede">
+                <!-- <img src="logo.png" alt="Logo da rede"> -->
             </div>
             
             <h2>Nome da rede</h2>
@@ -50,7 +49,7 @@
         <section id="signup-page">
             
             <div class="logo">
-                <img src="logo.png" alt="Logo da rede">
+                <!-- <img src="logo.png" alt="Logo da rede"> -->
             </div>
 
             <h2>Junte-se à nossa rede</h2>
@@ -62,9 +61,6 @@
                 <label for="email-signup">Email</label>
                 <input type="email" id="email-signup" name="email" required>
 
-                <label for="birth-date">Data de Nascimento</label>
-                <input type="date" id="birth-date" name="birth_date" required>
-
                 <label for="password-signup">Senha</label>
                 <input type="password" id="password-signup" name="password" required>
 
@@ -73,10 +69,11 @@
 
             <p>Já possui uma conta? <a href="/login">Login</a></p>
         </section>
+ 
+        <!-- Alertas (Desktop) -->
+        <div id="global-alert" class="alert d-none text-center global-alert" role="alert"></div>
 
-
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-=======
+        <!-- Tela principal (Desktop) -->
         <div class="container-login" id="container-login">
             <div class="form-container-login sign-up-container-login">
                 <form id="register-form-login">
@@ -85,7 +82,6 @@
                     <input type="email" id="register-email" placeholder="E-mail" required />
                     <input type="password" id="register-password" placeholder="Senha" required />
                     <button type="submit">Cadastrar</button>
-                    <div id="register-message" class="message"></div>
                 </form>
             </div>
             <div class="form-container-login sign-in-container-login">
@@ -95,7 +91,6 @@
                     <input type="password" id="login-password" placeholder="Senha" required />
                     <a href="#">Esqueceu sua senha?</a>
                     <button type="submit">Logar</button>
-                    <div id="login-message" class="message"></div>
                 </form>
             </div>
             <div class="overlay-container-login">
@@ -118,11 +113,8 @@
             </div>
         </div>
 
-        <!-- Script de login/cadastro -->
         <script type="module" src="./js/login.js" defer></script>
-
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
->>>>>>> 04ace19b61fa6825bf8fef77e413e743a2199782
     </body>
 </html> 

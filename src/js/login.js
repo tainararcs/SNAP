@@ -40,7 +40,7 @@ function loginUser() {
         // Converte o objeto user para uma string JSON com JSON.stringify() e armazena no localStorage com a chave "LoggedUser".
         localStorage.setItem('LoggedUser', JSON.stringify(user));
 
-        showMessageLogin("Login bem-sucedido!");
+        showAlert('Login bem-sucedido!', 'success');
 
         // Verifica se o usuário tem interesses. Caso não tenha, redireciona para a página de interesses.
         if (!user.interests || user.interests.length === 0) {
@@ -50,7 +50,7 @@ function loginUser() {
         }
        
     } else {
-        showMessageLogin("Email ou senha incorretos.");
+        showAlert('Email ou senha incorretos.', 'danger');
     }
 }
 
@@ -64,14 +64,17 @@ function registerUser() {
     // Armazena o objeto 'newUser' no localStorage como uma string JSON com a chave 'user'.
     localStorage.setItem('user', JSON.stringify(newUser));
 
-    showMessageRegister("Usuário cadastrado com sucesso!");
+    showAlert('Usuário cadastrado com sucesso!', 'success');
     setTimeout(() => window.location.href = "interests.html", 1000);
 }
 
-function showMessageLogin(message) {
-    document.getElementById('login-message').innerHTML = `<div class="mensagem">${message}</div>`;
-}
+function showAlert(message, type = "success", duration = 3000) {
+    const alertDiv = document.getElementById("global-alert");
+    alertDiv.className = `alert alert-${type} text-center global-alert`;
+    alertDiv.textContent = message;
+    alertDiv.classList.remove("d-none");
 
-function showMessageRegister(message) {
-    document.getElementById('register-message').innerHTML = `<div class="mensagem">${message}</div>`;
+    setTimeout(() => {
+        alertDiv.classList.add("d-none");
+    }, duration);
 }

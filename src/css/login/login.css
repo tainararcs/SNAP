@@ -81,6 +81,17 @@
 	width: 100%;
 }
 
+.global-alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    width: auto;
+    max-width: 90%;
+    padding: 12px 24px;
+}
+
 .container-login {
 	background-color: #FFFFFF;
 	border-radius: 10px;
@@ -202,3 +213,26 @@
 	transform: translateX(20%);
 }
 
+/* Esconde a versão desktop em telas pequenas */
+@media (max-width: 768px) {
+    .container-login {
+        display: none;
+    }
+
+    #login-page,
+    #signup-page {
+        display: block;
+    }
+}
+
+/* Esconde a versão mobile em telas grandes */
+@media (min-width: 769px) {
+    #login-page,
+    #signup-page {
+        display: none;
+    }
+
+    .container-login {
+        display: block;
+    }
+}
