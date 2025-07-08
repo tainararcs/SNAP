@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
     <head>
-        <title>Rede Social</title>
-        <meta name="description" content="">
+        <title>Rede Social - Seus Interesses</title>
+        <meta name="description" content="Escolha seus interesses para personalizar seu feed.">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -17,8 +16,52 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
 
-    <body>
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <body id="interests-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                    <div class="interests-card">
+                        <div class="interests-header">
+                            <h2 class="interests-title">Nos conte o que mais interessa você</h2>
+                            <button id="advance" class="btn btn-advance-header">Avançar →</button>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" id="intrests-input" class="form-control interests-input" placeholder="Ex: Artes, Paisagens, etc." autocomplete="off">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-interests add">+</button>
+                                </span>
+                            </div>
+                            <div id="suggestion" class="suggestions"></div>
+                        </div>
+
+                        <div id="tag" class="tags"></div>
+
+                        <div class="interests-footer">
+                            <p>Seus interesses serão usados para exibir<br>as melhores postagens para você</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para alertas -->
+        <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <p id="alertMessage"></p>
+                    </div>
+                    <div class="modal-footer text-center" style="display: block;">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/interests.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>

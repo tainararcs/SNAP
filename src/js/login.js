@@ -1,96 +1,77 @@
-let login_btn = document.querySelector('#login-page button[type="submit"]');
-let register_btn = document.querySelector('#signup-page button[type="submit"]');
+import { User } from './User.js';
 
-// Evento de clique para login.
-login_btn.onclick = function(e) {
-    e.preventDefault();
-    login();
-    document.querySelector('#email-login').value = '';
-    document.querySelector('#password-login').value = '';
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container-login');
 
-// Evento de clique para cadastro.
-register_btn.onclick = function(e) {
-    e.preventDefault();
-    registerUser();
-    document.querySelector('#email-signup').value = '';
-    document.querySelector('#password-signup').value = '';
-}
+    // Alterna entre login e cadastro (transição visual).
+    signUpButton.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+    });
 
-// Usuários do localStorage.
-let storedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
+    signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
 
-// Função para login.
-function login() {
-    let email = document.querySelector('#email-login').value;
-    let password = document.querySelector('#password-login').value;
+    const loginForm = document.getElementById('login-form-login');
+    const registerForm = document.getElementById('register-form-login');
 
-    let user = searchUser(email);
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        loginUser();
+    });
 
-    if (user) {
-        if (user.password !== password) {
-            showMessage('Senha incorreta.');
-            return;
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        registerUser();
+        registerForm.reset();
+    });
+});
+
+function loginUser() {
+    const email = document.getElementById('login-email').value.trim();
+    const senha = document.getElementById('login-password').value;
+
+    // Acessa o localStorage e busca um valor com a chave "user" e converte para um objeto JavaScript.
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && user.email === email && user.senha === senha) {
+        // Converte o objeto user para uma string JSON com JSON.stringify() e armazena no localStorage com a chave "LoggedUser".
+        localStorage.setItem('LoggedUser', JSON.stringify(user));
+
+        showMessageLogin("Login bem-sucedido!");
+
+        // Verifica se o usuário tem interesses. Caso não tenha, redireciona para a página de interesses.
+        if (!user.interests || user.interests.length === 0) {
+            setTimeout(() => window.location.href = "interests.html", 1000);
+        } else {
+            setTimeout(() => window.location.href = "feed.html", 1000);
         }
-        showMessage(`Bem-vindo, ${user.email}!`);
-        window.location.href = 'feed.html';
+       
     } else {
-        showMessage('Usuário ou senha incorretos.');
+        showMessageLogin("Email ou senha incorretos.");
     }
 }
 
-// Função para cadastro
 function registerUser() {
-    let name = document.querySelector('#nome').value;
-    let email = document.querySelector('#email-signup').value;
-    let password = document.querySelector('#password-signup').value;
-    let birthDate = document.querySelector('#birth-date').value;
+    const nome = document.getElementById('register-name').value.trim();
+    const email = document.getElementById('register-email').value.trim();
+    const senha = document.getElementById('register-password').value;
 
-    if (searchUser(email)) {
-        showMessage('Usuário já cadastrado.');
-        return;
-    }
+    const newUser = new User(0, nome, email, senha);
+   
+    // Armazena o objeto 'newUser' no localStorage como uma string JSON com a chave 'user'.
+    localStorage.setItem('user', JSON.stringify(newUser));
 
-    let newUser = {
-        name: name,
-        email: email,
-        password: password,
-        birthDate: birthDate
-    };
-
-    storedUsers.push(newUser);
-    localStorage.setItem('usuarios', JSON.stringify(storedUsers));
-    showMessage('Usuário cadastrado com sucesso!');
-    window.location.href = 'interests.html';
+    showMessageRegister("Usuário cadastrado com sucesso!");
+    setTimeout(() => window.location.href = "interests.html", 1000);
 }
 
-// Função para pesquisar usuário.
-function searchUser(email) {
-    return storedUsers.find(user => user.email === email) || null;
+function showMessageLogin(message) {
+    document.getElementById('login-message').innerHTML = `<div class="mensagem">${message}</div>`;
 }
 
-// Função para exibir mensagem.
-function showMessage(message) {
-    let divMessage = document.querySelector('.mensagem');
-    if (!divMessage) {
-        divMessage = document.createElement('div');
-        divMessage.className = 'mensagem';
-        document.body.appendChild(divMessage);
-    }
-
-    divMessage.innerHTML = `
-        <div style="color: red; font-weight: bold; padding: 10px; border: 1px solid red; border-radius: 5px; margin-top: 10px;">
-            ${message}
-        </div>
-    `;
-}
-
-function showLoginPage() {
-    document.querySelector('#login-page').style.display = 'block';
-    document.querySelector('#signup-page').style.display = 'none';
-}
-
-function showRegisterPage() {
-    document.querySelector('#login-page').style.display = 'none';
-    document.querySelector('#signup-page').style.display = 'block';
+function showMessageRegister(message) {
+    document.getElementById('register-message').innerHTML = `<div class="mensagem">${message}</div>`;
 }

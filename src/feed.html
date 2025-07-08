@@ -2,13 +2,13 @@
 
 <html lang="pt-BR">
     <head>
-        <title>Rede Social</title>
+        <title>Simulação Feed - Rede Social</title>
         <meta name="description" content="">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/feed/feed.css">
         <script>document.documentElement.classList.add('js');</script>
 
         <!-- Fonte: Roboto -->
@@ -18,7 +18,88 @@
     </head>
 
     <body>
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <div class="header">
+            <h1>Simulação de Feed Generativo</h1>
+            <button id="generatePostBtn">Gerar Novo Post</button>
+        </div>
+
+        <div id="feed-container">
+            <p class="loading" id="initial-loading-message">Seu feed está vazio. Clique em "Gerar Novo Post" para começar!</p>
+        </div>
+
+        <script type="module">
+            // Importa a função de preparar o post do seu arquivo posts.js
+
+            import { prepararPostParaFeed } from './js/posts.js';
+
+            // SUA CHAVE DE API AQUI! SUBSTITUA PELO VALOR REAL DA SUA CHAVE.
+            const API_KEY = "INSIRA A CHAVE API";
+
+            const generatePostBtn = document.getElementById('generatePostBtn');
+            const feedContainer = document.getElementById('feed-container');
+            const initialLoadingMessage = document.getElementById('initial-loading-message');
+
+            generatePostBtn.addEventListener('click', async () => {
+            // Remove a mensagem inicial se ela estiver presente
+            if (initialLoadingMessage) {
+                initialLoadingMessage.remove();
+            }
+
+            // Exibe uma mensagem de carregamento temporária (opcional, mas bom para feedback)
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading';
+            loadingDiv.textContent = 'Gerando novo post...';
+            feedContainer.prepend(loadingDiv); // Adiciona no topo do feed
+
+            try {
+                // Chama a sua função para preparar o post
+                // Você pode passar interesses predefinidos aqui, ou deixar null para o Gemini gerar
+                // Exemplo com interesses: const post = await prepararPostParaFeed(API_KEY, ["#tecnologia", "#futuro"]);
+                const post = await prepararPostParaFeed(API_KEY, null);
+
+                // Remove a mensagem de carregamento
+                loadingDiv.remove();
+
+                if (post) {
+                // Cria um novo elemento de post para o feed
+                const postCard = document.createElement('div');
+                postCard.className = 'post-card';
+                postCard.innerHTML = `
+                    <div class="post-header">
+                    <img src="${post.avatarUrl}" alt="${post.nomeUsuario}" class="post-avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                    <span class="post-username">${post.nomeUsuario}</span>
+                    </div>
+                    <p class="post-content">${post.conteudo}</p>
+                    <p class="post-hashtags">${post.hashtags}</p>
+                `;
+                // Adiciona o novo post no topo do feed (simulando um feed dinâmico)
+                feedContainer.prepend(postCard);
+                } else {
+                const errorCard = document.createElement('div');
+                errorCard.className = 'post-card';
+                errorCard.innerHTML = `
+                    <p class="post-content" style="color: red;">Erro ao gerar o post. Verifique o console.</p>
+                `;
+                feedContainer.prepend(errorCard);
+                console.error("Não foi possível gerar um post válido.");
+                }
+            } catch (error) {
+                // Remove a mensagem de carregamento em caso de erro
+                loadingDiv.remove();
+
+                const errorCard = document.createElement('div');
+                errorCard.className = 'post-card';
+                errorCard.innerHTML = `
+                <p class="post-content" style="color: red;">Ocorreu um erro inesperado: ${error.message}.</p>
+                `;
+                feedContainer.prepend(errorCard);
+                console.error("Erro inesperado durante a geração do post:", error);
+            }
+            });
+        </script>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>
