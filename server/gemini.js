@@ -1,4 +1,4 @@
-/* Gera o conteúdo para um post utilizando a API Gemini. 
+/* Gera o conteúdo para um post. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
 
     Uma lista de interesses (hashtags) pode ou não ser passada como parâmetro. 
     Se uma lista for fornecida, o modelo irá criar uma postagem baseada nos interesses contidos nesta lista.
