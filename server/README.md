@@ -1,13 +1,6 @@
-## 🚀 Primeiros passos
 
 Após clonar o repositório, siga os passos abaixo:
 
-```bash
-cd server
-npm run setup
-```
-
-Esse comando irá instalar todas as dependências necessárias  e iniciar automaticamente o servidor local.
 
 ## 🔑 Configuração da API
 
@@ -16,6 +9,21 @@ Dentro da pasta `server`, existe um arquivo `.env` de exemplo. Nele, você deve 
 ```
 GEMINI_API_KEY=sua_chave_aqui
 ```
+
+## 📦 Instalação e Execução
+
+Para instalar todas as dependências e iniciar o servidor automaticamente, use:
+
+```bash
+npm run setup
+```
+
+Ou, se as dependências já estiverem instaladas, apenas inicie o servidor com:
+
+```bash
+npm start
+```
+
 
 
 **⚠️ Importante:**  
