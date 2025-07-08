@@ -32,9 +32,6 @@
 
             import { prepararPostParaFeed } from './js/posts.js';
 
-            // SUA CHAVE DE API AQUI! SUBSTITUA PELO VALOR REAL DA SUA CHAVE.
-            const API_KEY = "INSIRA A CHAVE API";
-
             const generatePostBtn = document.getElementById('generatePostBtn');
             const feedContainer = document.getElementById('feed-container');
             const initialLoadingMessage = document.getElementById('initial-loading-message');
@@ -55,7 +52,7 @@
                 // Chama a sua função para preparar o post
                 // Você pode passar interesses predefinidos aqui, ou deixar null para o Gemini gerar
                 // Exemplo com interesses: const post = await prepararPostParaFeed(API_KEY, ["#tecnologia", "#futuro"]);
-                const post = await prepararPostParaFeed(API_KEY, null);
+                const post = await prepararPostParaFeed(null);
 
                 // Remove a mensagem de carregamento
                 loadingDiv.remove();

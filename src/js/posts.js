@@ -1,6 +1,6 @@
 // posts.js !!! TEMPORÁRIO
 
-import { requisitarPost } from './gemini.js'; 
+import { requisitarPost } from '/server/gemini.js'; 
 
 
 /* Controle de Taxa 
@@ -52,7 +52,7 @@ function delay(ms) {
  * @returns {Promise<object | null>} Um objeto com as propriedades 'conteudo', 'hashtags',
  * 'nomeUsuario' e 'avatarUrl', ou null se houver um erro na geração do post.
  */
-export async function prepararPostParaFeed(apiKey, interessesPredefinidos = null) {
+export async function prepararPostParaFeed(interessesPredefinidos = null) {
     try {
         //  Controle de Taxa: Verifica e aplica atraso antes da requisição
         const now = Date.now();
@@ -66,7 +66,7 @@ export async function prepararPostParaFeed(apiKey, interessesPredefinidos = null
         // Fim do Controle de Taxa
 
         // Solicita o post à API Gemini
-        const [textoDoPost, interessesDoPost] = await requisitarPost(apiKey, interessesPredefinidos);
+        const [textoDoPost, interessesDoPost] = await requisitarPost(interessesPredefinidos);
 
         // Gera o usuário e avatar fictícios localmente
         const perfilDoUsuario = gerarUsuarioFicticio();
