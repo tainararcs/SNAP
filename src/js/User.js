@@ -5,7 +5,7 @@ export class User {
     name = "";
     email = "";
     senha = "";
-       
+        
     // Lista de interesses.
     interests = [];
 
@@ -18,7 +18,7 @@ export class User {
         this.email = email;
         this.senha = senha;
     }
-       
+        
     // Getters.
 
     getId() {
@@ -50,12 +50,20 @@ export class User {
         if (index >= 0 && index < this.interests.length) {
             return this.interests[index];
         }
-        return null;        
+        return null;         
     }
-     
+      
     // Retorna a lista completa de interesses.
     getInterests() {
         return this.interests;
+    }
+
+    // NOVO MÉTODO: Gera a URL do avatar com base no ID do usuário.
+    getAvatarUrl() {
+        // Usa o ID do usuário para gerar um avatar consistente.
+        // O serviço i.pravatar.cc usa IDs até 70. Vamos usar o módulo para garantir que esteja no range.
+        const avatarId = (this.id % 70) + 1; 
+        return `https://i.pravatar.cc/150?img=${avatarId}`;
     }
 
     // Setters.
@@ -89,7 +97,6 @@ export class User {
     addInterest(interest) {
         this.interests.push(interest);
     }
-   
     // Adiciona uma lista de interesses.
     addInterestList(interestList) {
         this.interests.push(...interestList);
@@ -104,6 +111,4 @@ export class User {
         }
         return -1;
     }
-
-   
 }
