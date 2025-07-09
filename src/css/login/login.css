@@ -1,3 +1,20 @@
+:root {
+    --color-purple-1: #7400B8;
+    --color-purple-2: #6930C3;
+    --color-purple-3: #5E60CE;
+    --color-blue-1: #5390D9;
+    --color-blue-2: #4EA8DE;
+    --color-blue-3: #48BFE3;
+    --color-blue-4: #56CFE1;
+    --color-blue-5: #64DFDF;
+    --color-blue-6: #72EFDD;
+    --color-white-1: #FCF7FF;
+    --color-white-2: #D9DCE2;
+    --color-grey-1: #3C3D3F;
+    --color-grey-2: #282A2C;
+}
+
+
 #body-login {
 	background: #FCF7FF;
 	display: flex;
@@ -38,8 +55,8 @@
 
 #body-login button {
 	border-radius: 20px;
-	border: 1px solid #5E60CE;
-	background-color: #5E60CE;
+	border: 1px solid var(--color-purple-2);
+	background-color: var(--color-purple-1);
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -164,7 +181,7 @@
 .overlay {
 	background: #7400B8;
 	background: -webkit-linear-gradient(to right, #7400B8, #5390D9);
-	background: linear-gradient(to right, #7400B8, #5390D9);
+	background: linear-gradient(to right, #7400B8 80%, #72EFDD);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -213,13 +230,120 @@
 	transform: translateX(20%);
 }
 
+
+/* Logo da aplicação */
+.logo img{
+	width: 200px;
+}
+
+/*
+	Título	
+*/
+
+.title{
+	color: var(--color-purple-1);
+	font-weight: bold;
+}
+
+
+
+
+/* ... (manter todos os estilos existentes) ... */
+
+/* Estilos para a versão mobile */
+.mobile-page {
+    display: none;
+    width: 100%;
+    max-width: 400px;
+    padding: 0 20px;
+}
+
+.mobile-form-container {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    padding: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.mobile-form-container h1 {
+    font-weight: bold;
+    margin: 0 0 20px;
+}
+
+.mobile-form-container input {
+    background-color: #FCF7FF;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+}
+
+.mobile-form-container button {
+    border-radius: 20px;
+    border: 1px solid #5E60CE;
+    background-color: #5E60CE;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 15px 0;
+    width: 100%;
+}
+
+.mobile-form-container a {
+    color: #878C8F;
+    font-size: 14px;
+    text-decoration: none;
+    display: block;
+    margin: 15px 0;
+}
+
+.mobile-form-container p {
+    font-size: 14px;
+    margin: 20px 0 0;
+}
+
+/* Ajustes específicos para mobile */
+@media (max-width: 768px) {
+    #body-login {
+        padding: 20px;
+        justify-content: flex-start;
+        margin-top: 40px;
+    }
+    
+    .mobile-page {
+        display: block;
+    }
+    
+    .mobile-form-container {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-form-container {
+        padding: 20px;
+    }
+}
+
+
+
+/* Substituir as regras existentes de media query por: */
+
 /* Esconde a versão desktop em telas pequenas */
 @media (max-width: 768px) {
     .container-login {
         display: none;
     }
 
-    #login-page,
+    #login-page {
+        display: none;
+    }
+
     #signup-page {
         display: block;
     }
@@ -227,6 +351,10 @@
 
 /* Esconde a versão mobile em telas grandes */
 @media (min-width: 769px) {
+	.mobile-form-container{
+		display: none;
+	}
+
     #login-page,
     #signup-page {
         display: none;
@@ -235,4 +363,15 @@
     .container-login {
         display: block;
     }
+}
+
+
+footer{
+	margin-top: 50px;
+}
+
+@media (max-width: 1000px ) {
+	#body-login{
+		padding: 0px 40px;
+	}
 }
