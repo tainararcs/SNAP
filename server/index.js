@@ -27,7 +27,7 @@ app.post('/requisitarPost', async (req, res) => {
 
         prompt += 'Baseado na seguinte lista de interesses: ';
         
-        for (let i = 0; i < interessesPredefinidos.length; i++) {
+        for(let i = 0; i < interessesPredefinidos.length; i++){
 
             prompt += `"${interessesPredefinidos[i]}"`;
 
@@ -45,8 +45,8 @@ app.post('/requisitarPost', async (req, res) => {
 
     // Especifica o formato esperado da resposta.
     prompt += interessesPredefinidos.length > 0
-        ? 'O retorno deve estar no formato JSON: {"texto": "..."}'
-        : 'O retorno deve estar no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
+        ? 'O retorno deve estar somente no formato JSON: {"texto": "..."}'
+        : 'O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
 
     try{
        
@@ -79,6 +79,47 @@ app.post('/requisitarPost', async (req, res) => {
     } catch(error){ // Em caso de erro.
         console.error('Erro:', error);
         res.status(500).json({ texto: null, interesses: interessesPredefinidos || [] });
+    }
+});
+
+// Rota POST para requisitarUserData. 
+app.get('/requisitarUserData', async (req, res) => {
+
+    let prompt = 'Crie dados para um usuário de uma rede social. Os dados gerados serão:\n - nome: um nome composto cujo primeiro nome seja o nome de alguma celebridade aleatória, personagem fictício, nome popular, mistura de cada um, e o segundo nome aleatório idem.\n - email: relacionado ao nome do usuário.\n - senha: caracteres aleatórios \n';
+
+    // Especifica o formato esperado da resposta.
+    prompt += 'O retorno deve estar somente no formato JSON: {"nome": "Nome", "email": "email@email.com", "senha": "xxx"}';
+
+    try{
+    
+        const response = await genAI.models.generateContent({
+            model: 'gemini-2.5-flash-lite-preview-06-17',
+            contents: prompt,
+            generationConfig: {
+                responseMimeType: 'application/json',
+                temperature: 2.0,  
+                topP: 2.0,   
+                topK: 100 
+                // Valores mais elevados pois a criatividade do modelo para geração de nomes apresentou-se ruim.
+            }
+        }); // Obtém resposta.
+       
+        const text = response.text; // Extrai o conteúdo como texto.
+
+        // Busca um bloco no formato JSON dentro do texto.
+        const jsonMatch = text.match(/{[\s\S]*}/);
+
+        if(!jsonMatch)
+            throw new Error('Resposta fora do formato esperado.');
+
+        // Converte o texto JSON em um objeto JavaScript.
+        const userData = JSON.parse(jsonMatch[0]);
+
+        res.json(userData); // Responde em formato JSON.
+
+    } catch(error){ // Em caso de erro.
+        console.error('Erro:', error);
+        res.status(500).json({ error: 'Erro ao gerar dados do usuário.' });
     }
 });
 
