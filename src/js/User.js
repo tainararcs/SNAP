@@ -58,7 +58,7 @@ export class User {
         return this.interests;
     }
 
-    // NOVO MÉTODO: Gera a URL do avatar com base no ID do usuário.
+    // Gera a URL do avatar com base no ID do usuário.
     getAvatarUrl() {
         // Usa o ID do usuário para gerar um avatar consistente.
         // O serviço i.pravatar.cc usa IDs até 70. Vamos usar o módulo para garantir que esteja no range.
