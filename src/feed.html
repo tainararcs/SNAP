@@ -21,12 +21,12 @@
 <body>
     <div class="header">
         <h1>Bem-vindo ao seu Feed, <span id="user-display-name">Carregando...</span>!</h1>
-        <button id="generatePostBtn">Gerar Novo Post Manualmente</button>
+        <button id="generatePostBtn">Gerar post teste</button>
         <button id="logoutBtn" style="margin-left: 10px;">Sair</button>
     </div>
 
     <div id="feed-container">
-        <p class="loading" id="initial-loading-message">Iniciando a geração automática de posts...</p>
+        <p class="loading" id="initial-loading-message">Carregando feed aguarde...</p>
     </div>
 
     <script type="module">
@@ -44,7 +44,7 @@
 
         // Configurações da Geração de Posts
         const NUMBER_OF_POSTS_TO_GENERATE = 20;
-        const INTERVAL_BETWEEN_POSTS_MS = 5000; // 5 segundos
+        const INTERVAL_BETWEEN_POSTS_MS = 2500; // 2,5 segundos
         // Fim das Configurações
 
         // Lógica para Carregar o Usuário do localStorage
@@ -111,7 +111,6 @@
             // Exibe uma mensagem de carregamento temporária
             const generatingMessage = document.createElement('p');
             generatingMessage.className = 'generating-message active';
-            generatingMessage.textContent = 'Gerando um novo post...';
             feedContainer.prepend(generatingMessage);
 
             try {
@@ -153,17 +152,16 @@
          */
         async function startAutomaticPostGeneration(count, interval) {
             generatePostBtn.disabled = true;
-            generatePostBtn.textContent = `Gerando Posts Automaticamente (0/${count})...`;
 
             for (let i = 0; i < count; i++) {
                 await generateAndAddSinglePost();
-                generatePostBtn.textContent = `Gerando Posts Automaticamente (${i + 1}/${count})...`;
+                //updatingMessage.textContent = 'Atualizando feed...'
                 if (i < count - 1) {
                     await new Promise(resolve => setTimeout(resolve, interval));
                 }
             }
             generatePostBtn.disabled = false;
-            generatePostBtn.textContent = 'Gerar Novo Post Manualmente';
+            generatePostBtn.textContent = 'Teste Gerar';
             console.log(`Geração automática de ${count} posts concluída.`);
         }
 
