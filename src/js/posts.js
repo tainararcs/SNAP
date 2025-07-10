@@ -108,7 +108,7 @@ export async function prepararPostParaFeed(currentUser) {
                 nomeUsuario: userData.nome, // Nome gerado pelo Gemini via requisitarUserData
                 avatarUrl: avatarUrl,       // Avatar baseado no id gerado pelo Gemini
                 conteudo: conteudo,
-                hashtags: hashtagsArray.map(tag => `#${tag.replace(/\s/g, '_')}`).join(' ') // Formata hashtags
+                hashtags: hashtagsArray.map(tag => `${tag.replace(/\s/g, '_')}`).join(' ') // Formata hashtags
             };
         } else {
             console.error("Dados de post ou usuário fictício incompletos:", { conteudo, userData });
