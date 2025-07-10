@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <link rel="icon" href="./img/logo-site.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="css/style.css"/>
 
     <!-- Bootstrap + Roboto -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet"/>
@@ -34,12 +34,7 @@
           <h1>Criar Conta</h1>
           <input type="text" id="register-name" placeholder="Nome" required/>
           <input type="email" id="register-email" placeholder="E-mail" required/>
-          <input
-            type="password"
-            id="register-password"
-            placeholder="Senha"
-            required
-          />
+          <input type="password" id="register-password" placeholder="Senha" required/>
           <button type="submit">Cadastrar</button>
         </form>
       </div>
@@ -56,12 +51,12 @@
         <div class="overlay">
           <div class="overlay-panel overlay-left">
             <h1>Bem-vindo de volta!</h1>
-            <p>Para se manter conectado, faça o login com suas informações</p>
+            <p class="text">Para se manter conectado, faça o login com suas informações</p>
             <button class="ghost" id="signIn">Entrar</button>
           </div>
           <div class="overlay-panel overlay-right">
             <h1>Olá, Amigo!</h1>
-            <p>Digite seus dados e comece a jornada conosco</p>
+            <p class="text">Digite seus dados e comece a jornada conosco</p>
             <button class="ghost" id="signUp">Cadastro</button>
           </div>
         </div>

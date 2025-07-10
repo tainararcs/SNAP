@@ -2,7 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* impede rolagem em toda a página */
+    overflow: hidden; 
 }
 
 #body-login {
@@ -214,6 +214,10 @@ html, body {
 	width: 50%;
 	transform: translateX(0);
 	transition: transform 0.6s ease-in-out;
+}
+
+.text {
+	font-size: 28px;
 }
 
 .overlay-left {
