@@ -78,10 +78,11 @@ export async function requisitarUserData() {
 
 /* Gera uma imagem de perfil baseada em um nome de usuário. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
 
-    Retorna a url, fornecida pelo servidor, para acesso a imagem em caso de sucesso, e null caso ocorra algum erro.
+    Retorna a url, fornecida pelo servidor, para acesso a imagem em caso de sucesso.
+    Caso ocorra algum erro, retorna a url para uma imagem de usuário "default".
 
     Exemplo de uso:
-    
+
         const url = await requisitarImagemPerfil("Rafael");
 
     OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno corretamente.
@@ -104,6 +105,6 @@ export async function requisitarImagemPerfil (username) {
 
     } catch(error){ // Em caso de erro
         console.error('Erro ao obter imagem:', error);
-        return null;
+        return "http://localhost:3001/default.png";
     }
 } // function requisitarImagemPerfil
