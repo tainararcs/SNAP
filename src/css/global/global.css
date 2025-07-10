@@ -4,3 +4,10 @@ body {
     box-sizing: border-box;
     color: #282A2C;
 }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; 
+}
