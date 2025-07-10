@@ -1,120 +1,105 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR">
-    <head>
-        <title>Rede Social</title>
-        <meta name="description" content="">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <title>Rede Social</title>
+    <meta name="description" content="Rede Social">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/style.css">
-        <script>document.documentElement.classList.add('js');</script>
+    <link rel="icon" href="./img/logo-site.png" type="image/x-icon"/>
 
-        <!-- Fonte: Roboto -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    </head>
+    <!-- Bootstrap + Roboto -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/login/login.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet"/>
 
-    <body id="body-login">
-        
-        <!-- Página de Login -->
-        <section id="login-page">            
-            
-            <div class="logo">
-                <!-- <img src="logo.png" alt="Logo da rede"> -->
-            </div>
-            
-            <h2>Nome da rede</h2>
+    <script>document.documentElement.classList.add("js");</script>
+  </head>
 
-            <form action="/login" method="POST">
-                <label for="email-login">Email</label>
-                <input type="email" id="email-login" name="email" required>
+  <body id="body-login">
+    <!-- Alerta Global -->
+    <div id="global-alert" class="alert d-none global-alert"></div>
 
-                <label for="password-login">Senha</label>
-                <input type="password" id="password-login" name="password" required>
+    <div class="top-logo">
+      <img src="./img/logo-site.png" alt="Logo da rede" class="desktop-logo"/>
+    </div>
 
-                <button type="submit">Log in</button>
-            </form>
-
-            <div class="login-links">
-                <a href="/register">Entrar com uma conta</a>
-                <a href="/recover-password">Esqueceu a senha?</a>
-                <p>Não tem uma conta? <a href="/register">Registre-se</a></p>
-            </div>
-        </section>
-
-        <!-- Página de Cadastro -->
-        <section id="signup-page">
-            
-            <div class="logo">
-                <!-- <img src="logo.png" alt="Logo da rede"> -->
-            </div>
-
-            <h2>Junte-se à nossa rede</h2>
-            
-            <form action="/register" method="POST">
-                <label for="name">Nome</label>
-                <input type="text" id="nome" name="name" required>
-
-                <label for="email-signup">Email</label>
-                <input type="email" id="email-signup" name="email" required>
-
-                <label for="password-signup">Senha</label>
-                <input type="password" id="password-signup" name="password" required>
-
-                <button type="submit">Sign up</button>
-            </form>
-
-            <p>Já possui uma conta? <a href="/login">Login</a></p>
-        </section>
- 
-        <!-- Alertas (Desktop) -->
-        <div id="global-alert" class="alert d-none text-center global-alert" role="alert"></div>
-
-        <!-- Tela principal (Desktop) -->
-        <div class="container-login" id="container-login">
-            <div class="form-container-login sign-up-container-login">
-                <form id="register-form-login">
-                    <h1>Criar Conta</h1>
-                    <input type="text" id="register-name" placeholder="Nome" required />
-                    <input type="email" id="register-email" placeholder="E-mail" required />
-                    <input type="password" id="register-password" placeholder="Senha" required />
-                    <button type="submit">Cadastrar</button>
-                </form>
-            </div>
-            <div class="form-container-login sign-in-container-login">
-                <form id="login-form-login">
-                    <h1>Entrar</h1>
-                    <input type="email" id="login-email" placeholder="E-mail" required />
-                    <input type="password" id="login-password" placeholder="Senha" required />
-                    <a href="#">Esqueceu sua senha?</a>
-                    <button type="submit">Logar</button>
-                </form>
-            </div>
-            <div class="overlay-container-login">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <!-- <img src="logo.png" alt="Logo"> -->
-
-                        <h1>Bem-vindo de volta!</h1>
-                        <p>Para se manter conectado, faça o login com suas informações</p>
-                        <button class="ghost" id="signIn">Entrar</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <!-- <img src="logo.png" alt="Logo"> -->
-                        
-                        <h1>Olá, Amigo!</h1>
-                        <p>Digite seus dados e comece a jornada conosco</p>
-                        <button class="ghost" id="signUp">Cadastro</button>
-                    </div>
-                </div>
-            </div>
+    <!-- Desktop -->
+    <div class="container-login" id="container-login">
+      <div class="form-container-login sign-up-container-login">
+        <form id="register-form-login">
+          <h1>Criar Conta</h1>
+          <input type="text" id="register-name" placeholder="Nome" required/>
+          <input type="email" id="register-email" placeholder="E-mail" required/>
+          <input
+            type="password"
+            id="register-password"
+            placeholder="Senha"
+            required
+          />
+          <button type="submit">Cadastrar</button>
+        </form>
+      </div>
+      <div class="form-container-login sign-in-container-login">
+        <form id="login-form-login">
+          <h1>Entrar</h1>
+          <input type="email" id="login-email" placeholder="E-mail" required/>
+          <input type="password" id="login-password" placeholder="Senha" required/>
+          <a href="#">Esqueceu sua senha?</a>
+          <button type="submit">Logar</button>
+        </form>
+      </div>
+      <div class="overlay-container-login">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Bem-vindo de volta!</h1>
+            <p>Para se manter conectado, faça o login com suas informações</p>
+            <button class="ghost" id="signIn">Entrar</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Olá, Amigo!</h1>
+            <p>Digite seus dados e comece a jornada conosco</p>
+            <button class="ghost" id="signUp">Cadastro</button>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <script type="module" src="./js/login.js" defer></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </body>
-</html> 
+    <!-- Mobile: Login -->
+    <div id="login-page" class="mobile-page">
+      <div class="mobile-form-container">
+        <form id="mobile-login-form">
+          <h1>Entrar</h1>
+          <input type="email" id="email-login" placeholder="E-mail" required/>
+          <input type="password" id="password-login" placeholder="Senha" required/>
+          <a href="#">Esqueceu sua senha?</a>
+          <button type="submit">Logar</button>
+          <p>Não tem uma conta? <a href="/register">Cadastre-se</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Mobile: Cadastro -->
+    <div id="signup-page" class="mobile-page">
+      <div class="mobile-form-container">
+        <form id="mobile-register-form">
+          <h1>Crie sua conta conosco</h1>
+          <input type="text" id="nome" placeholder="Nome" required/>
+          <input type="email" id="email-signup" placeholder="E-mail" required/>
+          <input type="password" id="password-signup" placeholder="Senha" required/>
+          <button type="submit">Cadastrar</button>
+          <p>Já tem uma conta? <a href="/login">Entrar</a></p>
+        </form>
+      </div>
+    </div>
+
+    <footer>Desenvolvido pela equipe de TSI, Barbacena: 2025</footer>
+
+    <script type="module" src="js/login.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>
