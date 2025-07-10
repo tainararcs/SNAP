@@ -15,7 +15,7 @@
         const [texto, interesses] = await requisitarPost(["#tecnologia", "#games"])
         const [textoAleatorio, interessesAleatorios] = await requisitarPost()
 
-    OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno correto.
+    OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno corretamente.
 */
 export async function requisitarPost(interessesPredefinidos = null) {
     
@@ -29,8 +29,8 @@ export async function requisitarPost(interessesPredefinidos = null) {
         });
 
         // Converte a resposta de JSON para um objeto JavaScript.
-        const data = await response.json();
-        return [data.texto, data.interesses];
+        const content = await response.json();
+        return [content.texto, content.interesses];
 
     } catch(error){ // Em caso de erro
         console.error('Erro ao obter post:', error);
@@ -40,26 +40,20 @@ export async function requisitarPost(interessesPredefinidos = null) {
 
 
 /* Gera dados para um usuário fictícios. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
-
     Em caso de sucesso retorna um objeto Java Script com os seguintes campos: 
-
-    - id
-    - nome
-    - email
-    - senha
+    
+    - id, nome, email, senha
 
     Em caso de erro, retorna somente null.
-
     Exemplo de uso: 
 
         const [user] = await requisitarUserData();
-
         console.log(data.id);
         console.log(data.nome);
         console.log(data.email);
         console.log(data.senha);
 
-    OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno correto.
+    OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno corretamente.
 */
 export async function requisitarUserData() {
     
@@ -68,7 +62,6 @@ export async function requisitarUserData() {
         // Chama o servidor backend Node.js (rodando localmente), para solicitar dados para um usuário fictício.
         const response = await fetch('http://localhost:3001/requisitarUserData', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
         });
 
         // Converte a resposta de JSON para um objeto JavaScript.
@@ -81,3 +74,36 @@ export async function requisitarUserData() {
         return null;
     }
 } // function requisitarUserData
+
+
+/* Gera uma imagem de perfil baseada em um nome de usuário. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
+
+    Retorna a url, fornecida pelo servidor, para acesso a imagem em caso de sucesso, e null caso ocorra algum erro.
+
+    Exemplo de uso:
+    
+        const url = await requisitarImagemPerfil("Rafael");
+
+    OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno corretamente.
+*/
+export async function requisitarImagemPerfil (username) {
+    
+    try{
+
+        // Chama o servidor backend Node.js (rodando localmente), para solicitar uma imagem de um usuário fictício.
+        const response = await fetch('http://localhost:3001/requisitarImagemPerfil', {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: username
+        });
+
+        // Monta a url para acessar a imagem.
+        const imageUrl =  "http://localhost:3001/" + await response.text();
+        
+        return imageUrl;
+
+    } catch(error){ // Em caso de erro
+        console.error('Erro ao obter imagem:', error);
+        return null;
+    }
+} // function requisitarImagemPerfil
