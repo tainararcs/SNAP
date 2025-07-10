@@ -45,13 +45,11 @@ app.post('/requisitarPost', async (req, res) => {
     }
 
     prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo textual deste post.';
-    prompt += 'Gere uma lista contendo estes interesses, que devem ser representados como hashtags (obrigatoriamente precedidos por #).\n';
+    prompt += ' Gere uma lista contendo estes interesses, que devem ser representados como hashtags (obrigatoriamente precedidos por #).\n';
 
     // Especifica o formato esperado da resposta.
     prompt += 'O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
 
-
-    console.log(prompt);
     try{
        
         const response = await genAI.models.generateContent({
