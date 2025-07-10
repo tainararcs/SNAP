@@ -1,38 +1,13 @@
 // posts.js !!! TEMPORÁRIO
 
 import { requisitarPost } from '/server/gemini.js'; 
+import { User } from './User.js'; // Assumindo que a classe User está em 'User.js' no mesmo diretório ou caminho relativo.
 
 
 /* Controle de Taxa 
 *Define o tempo mínimo de atraso (em milissegundos) entre as requisições à API.*/
 const TEMPO_CONTROLE = 1500; //1,5seg
 let lastRequestTime = 0; // Armazena o timestamp da última requisição
-
-
-//  Dados para geração aleatória de usuário e avatar 
-const AVATAR_BASE_URL = "https://i.pravatar.cc/150?img="; // Um gerador de avatares aleatórios
-const NOME_USUARIOS_ALEATORIOS = [
-    "Ana Silva", "Bruno Miranda", "Carla Oliveira", "Daniel Tolendal", "Wender Magno",
-    "Fabio Arts", "Gabriela.P", "Hugo Gamer", "Isabela_Mkt", "Joao dos Venenos",
-    "Kelly Bakes", "Lucas Coding", "Rafael Silva", "Carlos Junior", "Olivia Oliveira",
-    "Pedro Antonio", "Igor Guilherme", "Rafa Sports", "Sofia Fotografias", "Thiago Bits"
-];
-//  Fim dos dados de geração 
-
-/**
- * Gera um nome de usuário e um URL de avatar aleatórios.
- * @returns {{nomeUsuario: string, avatarUrl: string}} Objeto com nome e URL do avatar.
- */
-function gerarUsuarioFicticio() {
-    const nomeAleatorio = NOME_USUARIOS_ALEATORIOS[Math.floor(Math.random() * NOME_USUARIOS_ALEATORIOS.length)];
-    // Corrigido: gera IDs entre 1 e 70 (o serviço requer 1-70)
-    const avatarId = Math.floor(Math.random() * 70) + 1;
-    const avatarUrl = `${AVATAR_BASE_URL}${avatarId}`;
-    return {
-        nomeUsuario: nomeAleatorio,
-        avatarUrl: avatarUrl
-    };
-}
 
 /**
  * Função utilitária para introduzir um atraso.
@@ -44,17 +19,20 @@ function delay(ms) {
 
 /**
  * Prepara um post gerado pela API Gemini para ser exibido no feed,
- * incluindo um usuário e avatar fictícios.
+ * utilizando os dados de um objeto User fornecido.
  *
- * @param {string} apiKey - Sua chave de API do Gemini.
- * @param {string[] | null} [interessesPredefinidos=null] - Uma lista de interesses (hashtags) para o post.
- * Se não for fornecida ou for vazia, o Gemini gerará os interesses.
+ * @param {User} user - O objeto User que está gerando o post.
  * @returns {Promise<object | null>} Um objeto com as propriedades 'conteudo', 'hashtags',
  * 'nomeUsuario' e 'avatarUrl', ou null se houver um erro na geração do post.
  */
-export async function prepararPostParaFeed(interessesPredefinidos = null) {
+export async function prepararPostParaFeed(user) {
+    if (!(user instanceof User)) {
+        console.error("Erro: O argumento fornecido não é uma instância da classe User.");
+        return null;
+    }
+
     try {
-        //  Controle de Taxa: Verifica e aplica atraso antes da requisição
+        // Controle de Taxa: Verifica e aplica atraso antes da requisicao
         const now = Date.now();
         const timeSinceLastRequest = now - lastRequestTime;
         if (timeSinceLastRequest < TEMPO_CONTROLE) {
@@ -65,26 +43,26 @@ export async function prepararPostParaFeed(interessesPredefinidos = null) {
         lastRequestTime = Date.now(); // Atualiza o tempo da última requisição
         // Fim do Controle de Taxa
 
-        // Solicita o post à API Gemini
-        const [textoDoPost, interessesDoPost] = await requisitarPost(interessesPredefinidos);
+        // Solicita o post API Gemini, passando os interesses do usuário
+        const [textoDoPost, interessesDoPost] = await requisitarPost(user.getInterests());
 
-        // Gera o usuário e avatar fictícios localmente
-        const perfilDoUsuario = gerarUsuarioFicticio();
+        // Usa os dados do usuário fornecido
+        const nomeUsuario = user.getName();
+        const avatarUrl = user.getAvatarUrl(); // Usa o novo método para obter o avatar
 
         // Verifica se o texto do post foi gerado com sucesso
         if (textoDoPost) {
             // Formata os interesses como uma string de hashtags, se existirem
             const hashtagsFormatadas = interessesDoPost.length > 0 
-                ? interessesDoPost.join(' ') 
+                ? interessesDoPost.map(tag => `#${tag}`).join(' ') // Adiciona '#' a cada hashtag
                 : '';
 
-            // Retorna o objeto do post formatado para o feed, com as novas informações
+            // Retorna o objeto do post formatado para o feed, com as informações do usuário
             return {
                 conteudo: textoDoPost,
                 hashtags: hashtagsFormatadas,
-                nomeUsuario: perfilDoUsuario.nomeUsuario,
-                avatarUrl: perfilDoUsuario.avatarUrl,
-                bio: perfilDoUsuario.bio
+                nomeUsuario: nomeUsuario,
+                avatarUrl: avatarUrl,
             };
         } else {
             console.warn("Não foi possível gerar o conteúdo do post. Retornando null.");

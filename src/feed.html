@@ -1,102 +1,195 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-    <head>
-        <title>Simulação Feed - Rede Social</title>
-        <meta name="description" content="">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/feed/feed.css">
-        <script>document.documentElement.classList.add('js');</script>
+<head>
+    <title>Meu Feed Generativo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Feed de rede social com posts gerados por IA baseados em interesses do usuário.">
 
-        <!-- Fonte: Roboto -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    </head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <body>
-        <div class="header">
-            <h1>Simulação de Feed Generativo</h1>
-            <button id="generatePostBtn">Gerar Novo Post</button>
-        </div>
+    <link rel="stylesheet" href="css/feed/feed.css">
 
-        <div id="feed-container">
-            <p class="loading" id="initial-loading-message">Seu feed está vazio. Clique em "Gerar Novo Post" para começar!</p>
-        </div>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-        <script type="module">
-            // Importa a função de preparar o post do seu arquivo posts.js
+    <script>document.documentElement.classList.add('js');</script>
+</head>
 
-            import { prepararPostParaFeed } from './js/posts.js';
+<body>
+    <div class="header">
+        <h1>Bem-vindo ao seu Feed, <span id="user-display-name">Carregando...</span>!</h1>
+        <button id="generatePostBtn">Gerar Novo Post Manualmente</button>
+        <button id="logoutBtn" style="margin-left: 10px;">Sair</button>
+    </div>
 
-            const generatePostBtn = document.getElementById('generatePostBtn');
-            const feedContainer = document.getElementById('feed-container');
-            const initialLoadingMessage = document.getElementById('initial-loading-message');
+    <div id="feed-container">
+        <p class="loading" id="initial-loading-message">Iniciando a geração automática de posts...</p>
+    </div>
 
-            generatePostBtn.addEventListener('click', async () => {
-            // Remove a mensagem inicial se ela estiver presente
-            if (initialLoadingMessage) {
+    <script type="module">
+        // Importa as funções e classes necessárias
+        // Ajuste os caminhos conforme a sua estrutura de pastas
+        import { prepararPostParaFeed } from './js/posts.js';
+        import { User } from './js/User.js';
+
+        // Elementos do DOM
+        const generatePostBtn = document.getElementById('generatePostBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const feedContainer = document.getElementById('feed-container');
+        const initialLoadingMessage = document.getElementById('initial-loading-message');
+        const userDisplayName = document.getElementById('user-display-name');
+
+        // Configurações da Geração de Posts
+        const NUMBER_OF_POSTS_TO_GENERATE = 20;
+        const INTERVAL_BETWEEN_POSTS_MS = 5000; // 5 segundos
+        // Fim das Configurações
+
+        // Lógica para Carregar o Usuário do localStorage
+        let currentUser;
+        const storedUser = localStorage.getItem('user');
+
+        if (storedUser) {
+            const userData = JSON.parse(storedUser);
+            currentUser = new User(
+                userData.id || Math.floor(Math.random() * 1000) + 1,
+                userData.name || "Usuário Generativo",
+                userData.email || "email@example.com",
+                userData.senha || "defaultpass" // Senha não deve ser armazenada no localStorage em app real
+            );
+            // Adiciona os interesses carregados. Se não houver, usa um conjunto padrão.
+            if (userData.interests && Array.isArray(userData.interests) && userData.interests.length > 0) {
+                currentUser.addInterestList(userData.interests);
+                console.log("Interesses do usuário carregados do localStorage:", currentUser.getInterests());
+            } else {
+                currentUser.addInterestList([
+                    "tecnologia", "inovação", "futuro", "inteligencia artificial", "curiosidades"
+                ]);
+                console.warn("Nenhum interesse encontrado no localStorage ou lista vazia. Usando interesses padrão.");
+            }
+            userDisplayName.textContent = currentUser.getName(); // Exibe o nome do usuário
+        } else {
+            // Se não houver usuário salvo, redireciona para a página de login
+            alert("Você precisa estar logado para acessar o feed. Redirecionando para o login.");
+            window.location.href = 'index.html'; // Redireciona para a página de login
+        }
+
+        /**
+         * Adiciona um post ao feed no DOM.
+         * @param {object} postData - Objeto contendo os dados do post a ser exibido.
+         */
+        function addPostToFeedDOM(postData) {
+            // Remove a mensagem inicial se ela estiver visível
+            if (initialLoadingMessage && initialLoadingMessage.parentNode) {
                 initialLoadingMessage.remove();
             }
 
-            // Exibe uma mensagem de carregamento temporária (opcional, mas bom para feedback)
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'loading';
-            loadingDiv.textContent = 'Gerando novo post...';
-            feedContainer.prepend(loadingDiv); // Adiciona no topo do feed
+            const postCard = document.createElement('div');
+            postCard.className = 'post-card';
+            const postTime = new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+
+            postCard.innerHTML = `
+                <div class="post-header">
+                    <img src="${postData.avatarUrl}" alt="${postData.nomeUsuario}" class="post-avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                    <span class="post-username">${postData.nomeUsuario}</span>
+                    <span class="post-time">${postTime}</span>
+                </div>
+                <p class="post-content">${postData.conteudo}</p>
+                <p class="post-hashtags">${postData.hashtags}</p>
+            `;
+            // Adiciona o novo post no topo do feed para que os mais recentes apareçam primeiro
+            feedContainer.prepend(postCard);
+        }
+
+        /**
+         * Gera e adiciona um único post ao feed, incluindo tratamento de carregamento e erros.
+         * @returns {Promise<void>}
+         */
+        async function generateAndAddSinglePost() {
+            // Exibe uma mensagem de carregamento temporária
+            const generatingMessage = document.createElement('p');
+            generatingMessage.className = 'generating-message active';
+            generatingMessage.textContent = 'Gerando um novo post...';
+            feedContainer.prepend(generatingMessage);
 
             try {
-                // Chama a sua função para preparar o post
-                // Você pode passar interesses predefinidos aqui, ou deixar null para o Gemini gerar
-                // Exemplo com interesses: const post = await prepararPostParaFeed(API_KEY, ["#tecnologia", "#futuro"]);
-                const post = await prepararPostParaFeed(null);
+                // Chama a função `prepararPostParaFeed` passando o objeto `currentUser`
+                const post = await prepararPostParaFeed(currentUser);
 
-                // Remove a mensagem de carregamento
-                loadingDiv.remove();
+                // Remove a mensagem de carregamento após a tentativa
+                generatingMessage.remove();
 
                 if (post) {
-                // Cria um novo elemento de post para o feed
-                const postCard = document.createElement('div');
-                postCard.className = 'post-card';
-                postCard.innerHTML = `
-                    <div class="post-header">
-                    <img src="${post.avatarUrl}" alt="${post.nomeUsuario}" class="post-avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
-                    <span class="post-username">${post.nomeUsuario}</span>
-                    </div>
-                    <p class="post-content">${post.conteudo}</p>
-                    <p class="post-hashtags">${post.hashtags}</p>
-                `;
-                // Adiciona o novo post no topo do feed (simulando um feed dinâmico)
-                feedContainer.prepend(postCard);
+                    addPostToFeedDOM(post);
+                    console.log("Post gerado e adicionado:", post);
                 } else {
-                const errorCard = document.createElement('div');
-                errorCard.className = 'post-card';
-                errorCard.innerHTML = `
-                    <p class="post-content" style="color: red;">Erro ao gerar o post. Verifique o console.</p>
-                `;
-                feedContainer.prepend(errorCard);
-                console.error("Não foi possível gerar um post válido.");
+                    const errorCard = document.createElement('div');
+                    errorCard.className = 'post-card error-card';
+                    errorCard.innerHTML = `
+                        <p class="post-content" style="color: red;">Erro ao gerar o post. Verifique o console.</p>
+                    `;
+                    feedContainer.prepend(errorCard);
+                    console.error("Não foi possível gerar um post válido (prepararPostParaFeed retornou null).");
                 }
             } catch (error) {
-                // Remove a mensagem de carregamento em caso de erro
-                loadingDiv.remove();
+                generatingMessage.remove();
 
                 const errorCard = document.createElement('div');
-                errorCard.className = 'post-card';
+                errorCard.className = 'post-card error-card';
                 errorCard.innerHTML = `
-                <p class="post-content" style="color: red;">Ocorreu um erro inesperado: ${error.message}.</p>
+                    <p class="post-content" style="color: red;">Ocorreu um erro inesperado: ${error.message || error}. Verifique o console.</p>
                 `;
                 feedContainer.prepend(errorCard);
                 console.error("Erro inesperado durante a geração do post:", error);
             }
-            });
-        </script>
+        }
+
+        /**
+         * Inicia a geração automática de posts com um número e intervalo definidos.
+         * @param {number} count - O número total de posts a serem gerados.
+         * @param {number} interval - O intervalo de tempo (em milissegundos) entre cada geração.
+         */
+        async function startAutomaticPostGeneration(count, interval) {
+            generatePostBtn.disabled = true;
+            generatePostBtn.textContent = `Gerando Posts Automaticamente (0/${count})...`;
+
+            for (let i = 0; i < count; i++) {
+                await generateAndAddSinglePost();
+                generatePostBtn.textContent = `Gerando Posts Automaticamente (${i + 1}/${count})...`;
+                if (i < count - 1) {
+                    await new Promise(resolve => setTimeout(resolve, interval));
+                }
+            }
+            generatePostBtn.disabled = false;
+            generatePostBtn.textContent = 'Gerar Novo Post Manualmente';
+            console.log(`Geração automática de ${count} posts concluída.`);
+        }
 
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </body>
+        // Botão de geração manual de posts
+        generatePostBtn.addEventListener('click', generateAndAddSinglePost);
+
+        // Botão de sair
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('user'); // Remove o usuário do localStorage
+            window.location.href = 'index.html'; // Redireciona para a página de login
+        });
+
+        // Inicia a geração automática de posts assim que o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM totalmente carregado. Iniciando geração automática de posts.");
+            // Só inicia a geração se um usuário válido for carregado
+            if (currentUser) {
+                startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
+            }
+        });
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
 </html>
