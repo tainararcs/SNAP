@@ -29,7 +29,7 @@ app.post('/requisitarPost', async (req, res) => {
     // Verifica se há interesses pré-definidos.
     if(interessesPredefinidos.length > 0){
 
-        prompt += 'Baseado na seguinte lista de interesses: ';
+        prompt += 'Baseado em pelo menos um interesses da seguinte lista de interesses: ';
         
         for(let i = 0; i < interessesPredefinidos.length; i++){
 
@@ -43,15 +43,15 @@ app.post('/requisitarPost', async (req, res) => {
             }
         }
     }
-    else{ // Solicita que o Gemini gere os interesses para o post.
-        prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo textual deste post. Gere uma lista contendo estes interesses, que devem ser representados como hashtags (obrigatoriamente precedidos por #).\n';
-    }
+
+    prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo textual deste post.';
+    prompt += 'Gere uma lista contendo estes interesses, que devem ser representados como hashtags (obrigatoriamente precedidos por #).\n';
 
     // Especifica o formato esperado da resposta.
-    prompt += interessesPredefinidos.length > 0
-        ? 'O retorno deve estar somente no formato JSON: {"texto": "..."}'
-        : 'O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
+    prompt += 'O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
 
+
+    console.log(prompt);
     try{
        
         const response = await genAI.models.generateContent({
@@ -73,10 +73,7 @@ app.post('/requisitarPost', async (req, res) => {
         // Atribui o texto da resposta ou null.
         const texto = post.texto || null;
 
-        /* Se algum interesse tiver sido passado como parâmetro, atribui eles.
-            Caso contrário, atribui os interesses fornecidos pelo Gemini, ou null. 
-        */
-        const interesses = interessesPredefinidos.length > 0 ? interessesPredefinidos : (post.interesses || []);
+        const interesses = post.interesses || [];
 
         res.json({ texto, interesses }); // Responde em formato JSON.
 
