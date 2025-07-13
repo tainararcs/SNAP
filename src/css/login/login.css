@@ -1,5 +1,5 @@
 #body-login {
-	background: #FCF7FF;
+	background: var(--main-white);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -30,7 +30,7 @@
 }
 
 #body-login a {
-	color: #878C8F;
+	color: var(--gray);
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
@@ -38,9 +38,9 @@
 
 #body-login button {
 	border-radius: 20px;
-	border: 1px solid #5E60CE;
-	background-color: #5E60CE;
-	color: #FFFFFF;
+	border: 1px solid var(--roxo3);
+	background-color: var(--roxo3);
+	color: var(--white);
 	font-size: 12px;
 	font-weight: bold;
 	padding: 12px 45px;
@@ -59,11 +59,11 @@
 
 #body-login button.ghost {
 	background-color: transparent;
-	border-color: #FFFFFF;
+	border-color: var(--white);
 }
 
 #body-login form {
-	background-color: #FFFFFF;
+	background-color: var(--white);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -74,7 +74,7 @@
 }
 
 #body-login input {
-	background-color: #FCF7FF;
+	background-color: var(--main-white);
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
@@ -109,7 +109,7 @@
 }
 
 .container-login {
-	background-color: #FFFFFF;
+	background-color: var(--white);
 	border-radius: 10px;
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 	position: relative;
@@ -177,11 +177,11 @@
 }
 
 .overlay {
-	background: linear-gradient(to right, #7400B8, #5390D9);
+	background: linear-gradient(to right, var(--roxo1), var(--azul1));
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
-	color: #FFFFFF;
+	color: var(--white);
 	position: relative;
 	left: -100%;
 	height: 100%;
@@ -273,7 +273,7 @@ footer {
 	}
 
 	.mobile-form-container {
-		background-color: #FFFFFF;
+		background-color: var(--white);
 		border-radius: 10px;
 		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 		padding: 30px;
@@ -287,7 +287,7 @@ footer {
 	}
 
 	.mobile-form-container input {
-		background-color: #FCF7FF;
+		background-color: var(--main-white);
 		border: none;
 		padding: 12px 15px;
 		margin: 8px 0;
@@ -296,9 +296,9 @@ footer {
 
 	.mobile-form-container button {
 		border-radius: 20px;
-		border: 1px solid #5E60CE;
-		background-color: #5E60CE;
-		color: #FFFFFF;
+		border: 1px solid var(--roxo3);
+		background-color: var(--roxo3);
+		color: var(--white);
 		font-size: 12px;
 		font-weight: bold;
 		padding: 12px 45px;
@@ -309,7 +309,7 @@ footer {
 	}
 
 	.mobile-form-container a {
-		color: #878C8F;
+		color: var(--gray);
 		font-size: 14px;
 		text-decoration: none;
 		display: block;

@@ -2,7 +2,7 @@ body {
     margin: 0px;
     font-family: 'Roboto', Helvetica, sans-serif;
     box-sizing: border-box;
-    color: #282A2C;
+    color: var(--main-black);
 }
 
 html, body {
@@ -10,4 +10,26 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden; 
+}
+
+:root {
+    --roxo1: #6930C3;
+    --roxo2: #6930C3;
+    --roxo3: #5E60CE;
+    --azul1: #5390D9;
+    --azul2: #4EA8DE;
+    --azul3: #48BFE3;
+    --azul4: #56CFE1;
+    --azul5: #64DFDF;
+    --azul6: #72EFDD;
+
+    --gray: #878C8F;
+    --light-gray1: #D9DCE2;
+    --light-gray2: #C4CAD0;
+    --dark-gray: #3C3D3F;
+    --main-white: #FCF7FF;
+    --main-black: #282A2C;
+
+    --white: #FFFFFF;
+    --black: #000000;
 }
