@@ -1,4 +1,5 @@
 import { User } from './User.js'; // Importe a classe User
+import {requisitarPost, requisitarUserData} from './gemini.js'
 
 /* Controle de Taxa.
 *  Define o tempo mínimo de atraso (em milissegundos) entre as requisições à API, 
@@ -14,61 +15,6 @@ let lastRequestTime = 0; // Armazena o timestamp da última requisição.
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-/**
- * Requisita ao backend um conteúdo de post com base nos interesses fornecidos.
- * @param {string[]} interessesPredefinidos - Lista de interesses para gerar o conteúdo.
- * @returns Conteúdo do post e hashtags associadas.
- */
-async function _requisitarPostInterno(interessesPredefinidos = null) {
-    try {
-        const response = await fetch('http://localhost:3001/requisitarPost', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ interesses: interessesPredefinidos || [] })
-        });
-
-        if (!response.ok) { // Verifica se a resposta HTTP foi bem-sucedida.
-            const errorBody = await response.text();
-            throw new Error(`Erro HTTP: ${response.status} - ${errorBody}`);
-        }
-
-        const data = await response.json();
-        
-        // Retorna o conteúdo e hashtags.
-        return [data.texto, data.interesses];
-
-    } catch(error) {
-        console.error('Erro ao obter post:', error);
-        return [null, interessesPredefinidos || []];
-    }
-} // function _requisitarPostInterno
-
-/**
- * Requisita ao backend os dados de um usuário fictício.
- * @returns {Promise<Object|null>} - Objeto com dados do usuário ou null em caso de erro.
- */
-async function _requisitarUserDataInterno() {
-    try {
-        const response = await fetch('http://localhost:3001/requisitarUserData', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!response.ok) { // Verifica se a resposta HTTP foi bem-sucedida.
-            const errorBody = await response.text();
-            throw new Error(`Erro HTTP: ${response.status} - ${errorBody}`);
-        }
-
-        const data = await response.json();
-        return data;
-
-    } catch(error) {
-        console.error('Erro ao obter dados do usuário fictício:', error);
-        return null;
-    }
-} // function _requisitarUserDataInterno
-
 
 /**
  * Prepara um post para o feed, solicitando conteúdo e dados de usuário fictício separadamente ao backend (Gemini).
@@ -99,8 +45,8 @@ export async function prepararPostParaFeed(currentUser) {
 
         // Faz as duas requisições em paralelo.
         const [postContentArray, userData] = await Promise.all([
-            _requisitarPostInterno(interessesDoUsuario), // Conteúdo e hashtags.
-            _requisitarUserDataInterno() // Dados do usuário fictício.
+            requisitarPost(interessesDoUsuario), // Conteúdo e hashtags.
+            requisitarUserData() // Dados do usuário fictício.
         ]);
 
         const [conteudo, hashtagsArray] = postContentArray; // Desestrutura a resposta do post.
