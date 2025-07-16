@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const suggestionsOptions = document.getElementById('suggestion');
     const tagsDiv = document.getElementById('tag');
     const advancePage = document.getElementById('advance');
-    const addButton = document.querySelector('.add');
    
     // Oculta o botão "Avançar" inicialmente.
     advancePage.style.display = 'none';
@@ -61,17 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Evento para adicionar com Enter ou botão '+'.
+    // Evento para adicionar com Enter.
     interestInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             addInterest();
         }
-    });
-
-    addButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        addInterest();
     });
 
     // Fecha sugestões ao clicar fora.

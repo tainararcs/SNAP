@@ -13,15 +13,15 @@ html, body {
 }
 
 :root {
-    --roxo1: #6930C3;
-    --roxo2: #6930C3;
-    --roxo3: #5E60CE;
-    --azul1: #5390D9;
-    --azul2: #4EA8DE;
-    --azul3: #48BFE3;
-    --azul4: #56CFE1;
-    --azul5: #64DFDF;
-    --azul6: #72EFDD;
+    --purple1: #6930C3;
+    --purple2: #6930C3;
+    --purple3: #5E60CE;
+    --blue1: #5390D9;
+    --blue2: #4EA8DE;
+    --blue3: #48BFE3;
+    --blue4: #56CFE1;
+    --blue5: #64DFDF;
+    --blue6: #72EFDD;
 
     --gray: #878C8F;
     --light-gray1: #D9DCE2;

@@ -38,8 +38,8 @@
 
 #body-login button {
 	border-radius: 20px;
-	border: 1px solid var(--roxo3);
-	background-color: var(--roxo3);
+	border: 1px solid var(--purple3);
+	background-color: var(--purple3);
 	color: var(--white);
 	font-size: 12px;
 	font-weight: bold;
@@ -177,7 +177,7 @@
 }
 
 .overlay {
-	background: linear-gradient(to right, var(--roxo1), var(--azul1));
+	background: linear-gradient(to right, var(--purple1), var(--blue1));
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -236,6 +236,7 @@ footer {
     width: 100%;
     text-align: center;
     font-size: 14px;
+	color: var(--gray);
 }
 
 @media (max-width: 1000px) {
@@ -296,8 +297,8 @@ footer {
 
 	.mobile-form-container button {
 		border-radius: 20px;
-		border: 1px solid var(--roxo3);
-		background-color: var(--roxo3);
+		border: 1px solid var(--purple3);
+		background-color: var(--purple3);
 		color: var(--white);
 		font-size: 12px;
 		font-weight: bold;

@@ -5,16 +5,16 @@
         <title>Rede Social - Seus Interesses</title>
         <meta name="description" content="Escolha seus interesses para personalizar seu feed.">
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-        <link rel="icon" href="./img/logo-site.png" type="image/x-icon"/>
-        <link rel="stylesheet" href="css/style.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>        
 
         <!-- Bootstrap + Roboto -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet"/>
+
+        <link rel="icon" href="./img/logo-site.png" type="image/x-icon"/>
+        <link rel="stylesheet" href="css/style.css"/>
 
         <script>document.documentElement.classList.add("js");</script>
 
@@ -26,25 +26,20 @@
                 <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
                     <div class="interests-card">
                         <div class="interests-header">
-                            <h2 class="interests-title">Nos conte o que mais interessa você</h2>
+                            <h2 class="interests-title">Nos conte o que mais<br>interessa você</h2>
                             <button id="advance" class="btn btn-advance-header">Avançar →</button>
                         </div>
+                        <p class="interests-instruction">Adicione pelo menos 3 interesses para continuar</p>
 
                         <div class="form-group">
-                            <div class="input-group">
+                            <div class="input-with-button">
                                 <input type="text" id="interests-input" class="form-control interests-input" placeholder="Ex: Artes, Paisagens, etc." autocomplete="off">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-interests add">+</button>
-                                </span>
+                                <span class="add-icon">+</span>
                             </div>
                             <div id="suggestion" class="suggestions"></div>
                         </div>
 
                         <div id="tag" class="tags"></div>
-
-                        <div class="interests-footer">
-                            <p>Seus interesses serão usados para exibir<br>as melhores postagens para você</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -62,6 +57,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="interests-footer">
+            <p>Seus interesses serão usados para exibir<br>as melhores postagens para você</p>
         </div>
 
         <script type="module" src="js/interests.js"></script>
