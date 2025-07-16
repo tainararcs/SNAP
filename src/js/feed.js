@@ -8,7 +8,7 @@ const feedContainer = document.getElementById('feed-container');
 const initialLoadingMessage = document.getElementById('initial-loading-message');
 const userDisplayName = document.getElementById('user-display-name');
 
-const NUMBER_OF_POSTS_TO_GENERATE = 20;
+const NUMBER_OF_POSTS_TO_GENERATE = 10;
 const INTERVAL_BETWEEN_POSTS_MS = 2500;
 
 let currentUser;
