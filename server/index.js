@@ -17,10 +17,10 @@ app.use(bodyParser.json());
 app.use(express.text());
 app.use('/img', express.static('public/img')); // Acesso as imagens armazenadas.
 
-const genAI = new GoogleGenAI(process.env.GEMINI_API_KEY);
-
 // Rota POST para requisitarPost. 
 app.post('/requisitarPost', async (req, res) => {
+    
+    const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY1});
 
     const interessesPredefinidos = req.body.interesses || [];
 
@@ -82,7 +82,9 @@ app.post('/requisitarPost', async (req, res) => {
 });
 
 // Rota POST para requisitarUserData. 
-app.get('/requisitarUserData', async (req, res) => {
+app.get('/requisitarUserData', async (req, res) => {   
+
+    const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY2});
 
     let prompt = 'Crie dados para um usuário de uma rede social. Os dados gerados serão:\n - nome: um nome composto, sem espaços entre os nomes, cujo primeiro nome seja o nome de alguma celebridade aleatória, personagem fictício, nome popular, mistura de cada um, e o segundo nome aleatório idem.\n - email: relacionado ao nome do usuário.\n - senha: caracteres aleatórios \n';
 
@@ -124,6 +126,8 @@ app.get('/requisitarUserData', async (req, res) => {
 
 // Rota POST para requisitarImagemPerfil. 
 app.post('/requisitarImagemPerfil', async (req, res) => {
+    
+    const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY3});
 
     const username = req.body;
     const prompt = `Crie uma imagem 400x400 de uma pessoa com traços aleatórios baseando-se no nome fictício: ${username}. A resposta deve conter apenas uma imagem, sem qualquer texto.`
