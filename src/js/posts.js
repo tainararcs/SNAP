@@ -33,6 +33,7 @@ export async function prepararPostParaFeed(currentUser) {
     console.log("Solicitando post e dados de usuário fictício do backend com base nos interesses:", interessesDoUsuario);
 
     try {
+
         // Controle de Taxa: Verifica e aplica atraso antes das requisições combinadas.
         const now = Date.now();
         const timeSinceLastRequest = now - lastRequestTime;
@@ -57,6 +58,8 @@ export async function prepararPostParaFeed(currentUser) {
             // O avatarId é gerado aleatoriamente para o avatar com base no id do usuário fictício.
             const avatarIdFromUserData = userData.id % 70 || Math.floor(Math.random() * 70) + 1;
             const avatarUrl = `https://i.pravatar.cc/150?img=${avatarIdFromUserData}`;
+            
+            armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl);
 
             return {
                 nomeUsuario: userData.nome, // Nome gerado pelo Gemini via requisitarUserData.
@@ -64,6 +67,8 @@ export async function prepararPostParaFeed(currentUser) {
                 conteudo: conteudo,
                 hashtags: hashtagsArray.map(tag => `${tag.replace(/\s/g, '_')}`).join(' ') // Formata hashtags.
             };
+
+
         } else {
             console.error("Dados de post ou usuário fictício incompletos:", { conteudo, userData });
             return null;
@@ -73,3 +78,72 @@ export async function prepararPostParaFeed(currentUser) {
         return null;
     }
 } // function prepararPostParaFeed
+
+
+// Recupera os usuários armazenados no localStorage, ou retorna um array vazio.
+export function getStoredUsers() {
+  return JSON.parse(localStorage.getItem('usuarios') || '[]');
+}
+
+// Salva um array de usuários no localStorage com a chave 'usuarios'.
+export function saveStoredUsers(users) {
+  localStorage.setItem('usuarios', JSON.stringify(users));
+}
+
+// Retorna o próximo ID disponível com base no maior ID já usado. Se não houver usuários, começa com 1.
+export function getNextUserId() {    
+    const users = getStoredUsers();
+    return users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+}
+
+
+/**
+ * Armazena ou atualiza um usuário fictício com um novo post.
+ * @param {object} userData - Dados do usuário gerado pela IA ({ nome, email, senha }).
+ * @param {string} conteudo - Conteúdo do post.
+ * @param {string[]} hashtagsArray - Lista de hashtags.
+ * @param {string} avatarUrl - URL do avatar associado ao post.
+ */
+export function armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl) {
+    const users = getStoredUsers();
+
+    // Verifica se o usuário já existe com base no email.
+    const userExistente = users.find(user => user.email === userData.email);
+
+    let id;
+
+    if (userExistente) {
+        id = userExistente.id;
+    } else {
+        id = getNextUserId();
+    }
+
+    // Cria um novo objeto de post.
+    const novoPost = {
+        conteudo,
+        hashtags: hashtagsArray.join(' '),
+        avatarUrl,
+        data: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
+    };
+
+    if (userExistente) {
+        userExistente.posts.push(novoPost);
+    } else {
+        // Se for um novo usuário, cria um novo objeto com o post e adiciona ao array de usuários.
+        const novoUsuario = {
+            id,
+            nome: userData.nome,
+            email: userData.email,
+            senha: userData.senha,
+            interests: hashtagsArray,
+            posts: [novoPost]
+        };
+        users.push(novoUsuario);
+    }
+
+    // Atualiza o localStorage.
+    saveStoredUsers(users);
+
+    // Retorna o ID do usuário.
+    return id;
+}
