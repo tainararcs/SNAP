@@ -25,6 +25,13 @@ homeLink.addEventListener("click", (e) => {
 
 if (storedUser) {
   const userData = JSON.parse(storedUser);
+
+  //Carregando tema
+   if (userData.theme === 'dark') {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
   currentUser = new User(
     userData.id || Math.floor(Math.random() * 1000) + 1,
     userData.name || "Usuário Generativo",

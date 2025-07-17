@@ -1,3 +1,4 @@
+import { updateUserTheme } from './User.js';
 const configLink = document.querySelector("#link-configs");
 configLink.addEventListener("click", (e) => {
 
@@ -29,7 +30,16 @@ document.addEventListener("click", (e) => {
         document.querySelector("#settingsDesktop").style.display = "block";
         document.querySelector("#theme-div").style.display = "none";
     }
-    
+    //Mudando o tema
+    if(e.target.id === 'light-theme'){
+        document.body.classList.remove('dark-mode');
+        updateUserTheme(false);
+    }
+    if(e.target.id === 'dark-theme'){
+        document.body.classList.add('dark-mode');
+        updateUserTheme(true);
+    }
+
     // Mostrar ajuda
     if(e.target.id === 'help') {
         document.querySelector("#settingsDesktop").style.display = "none";

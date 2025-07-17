@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
         "Jardinagem", "Animais de Estimação", "Carros", "Motocicletas"
     ];
 
+    // Carrega o usuário atual.
+    let user = JSON.parse(localStorage.getItem('user'));
+
+     //Carregando o tema
+    if (user && user.theme === 'dark') {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode'); // Garantir que não fique escuro por engano
+    }
     // Vetor em que será armazenado os interesses escolhidos pelo usuário.
     let interestsArray = [];
 
@@ -131,9 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Evento do botão avançar.
     advancePage.addEventListener('click', () => {
         if (interestsArray.length >= 3) {
-            // Carrega o usuário atual.
-            let user = JSON.parse(localStorage.getItem('user'));
-
+            
             user.interests = interestsArray;
 
             localStorage.setItem('user', JSON.stringify(user));

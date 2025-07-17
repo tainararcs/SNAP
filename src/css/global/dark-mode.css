@@ -31,3 +31,188 @@ body.dark-mode {
   font-size: 30px !important;
   transform: translate(-15px, -4px);
 }
+
+
+/* ===== MODO ESCURO: Página de Interesses ===== */
+body.dark-mode#interests-page {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark-mode#interests-page .interests-card {
+  background-color: #2c2c2c;
+  border: 1px solid #444;
+  box-shadow: none;
+}
+
+body.dark-mode#interests-page .interests-title,
+body.dark-mode#interests-page .interests-instruction,
+body.dark-mode#interests-page .interests-footer p {
+  color: #e0e0e0;
+}
+
+body.dark-mode#interests-page .form-control.interests-input {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+body.dark-mode#interests-page .form-control::placeholder {
+  color: #aaa;
+}
+
+body.dark-mode#interests-page .add-icon {
+  background-color: #444;
+  color: #ddd;
+  border-left: 1px solid #555;
+}
+
+body.dark-mode#interests-page .add-icon:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+body.dark-mode#interests-page .tags span {
+  background-color: #4c4c4c;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+body.dark-mode#interests-page .tags span:hover {
+  background-color: #666;
+}
+
+body.dark-mode#interests-page .suggestions {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+}
+
+body.dark-mode#interests-page .suggestions div {
+  color: #ddd;
+}
+
+body.dark-mode#interests-page .suggestions div:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+body.dark-mode#interests-page .btn-advance-header {
+  background-color: #6930C3;
+  color: #fff;
+  border: none;
+}
+
+body.dark-mode#interests-page .btn-advance-header:hover {
+  background-color: #5e60ce;
+}
+
+/* Modal no modo escuro */
+body.dark-mode#interests-page .modal-content {
+  background-color: #2b2b2b;
+  color: #fff;
+}
+
+body.dark-mode#interests-page .modal-footer .btn-primary {
+  background-color: #6930C3;
+  border: none;
+}
+
+
+/* ===== MODO ESCURO: Página de Feed ===== */
+
+body.dark-mode#body-feed {
+  --bg-primary: var(--main-black); /* fundo principal */
+  --bg-secondary: #1e1e1e;          /* fundo para sidebars e header */
+  --text-primary: var(--light-gray1);  /* texto padrão claro */
+  --text-secondary: var(--gray);       /* texto secundário */
+  --border-color: #333333;              /* bordas escuras */
+  --highlight-color: var(--blue5);     /* cor de destaque azul claro */
+
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Sidebars, header e sidebar-direita */
+body.dark-mode#body-feed .sidebar,
+body.dark-mode#body-feed .sidebar-direita,
+body.dark-mode#body-feed .header {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* Links e textos dentro da sidebar */
+body.dark-mode#body-feed .sidebar .nav-link {
+  color: var(--text-primary);
+}
+
+body.dark-mode#body-feed .sidebar .nav-link:hover {
+  background-color: #2a2a2a;
+  color: var(--highlight-color);
+}
+
+body.dark-mode#body-feed .sidebar .nav-link.active {
+  background-color: #333333;
+  color: var(--highlight-color);
+  font-weight: 600;
+}
+
+/* Rodapé da sidebar */
+body.dark-mode#body-feed .sidebar-footer {
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+/* Feed central */
+body.dark-mode#body-feed .feed-central {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Posts */
+body.dark-mode#body-feed .post-card {
+  background-color: #292929;
+  color: var(--text-primary);
+  box-shadow: none;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+}
+
+/* Elementos com cor primária */
+body.dark-mode#body-feed .post-header,
+body.dark-mode#body-feed .post-content,
+body.dark-mode#body-feed .sidebar-direita h6,
+body.dark-mode#body-feed .profile-suggestion {
+  color: var(--text-primary);
+}
+
+/* Elementos com cor de destaque */
+body.dark-mode#body-feed .post-username,
+body.dark-mode#body-feed .post-hashtags,
+body.dark-mode#body-feed .profile-suggestion:hover {
+  color: var(--highlight-color);
+}
+
+/* Sidebar direita */
+body.dark-mode#body-feed .sidebar-direita {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+/* Mensagens de loading / erro / tempo do post */
+body.dark-mode#body-feed .loading,
+body.dark-mode#body-feed .generating-message,
+body.dark-mode#body-feed .post-time {
+  color: var(--text-secondary);
+}
+
+body.dark-mode#body-feed .generating-message.active {
+  color: var(--highlight-color);
+}
+
+body.dark-mode#body-feed .error-card {
+  background-color: #4d1a1a;
+  border-color: #ff6b6b;
+  color: var(--text-primary);
+}
