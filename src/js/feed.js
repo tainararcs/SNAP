@@ -1,4 +1,3 @@
-// js/feed.js
 import { prepararPostParaFeed } from './posts.js';
 import { User } from './User.js';
 
@@ -7,6 +6,9 @@ const logoutBtn = document.getElementById('logoutBtn');
 const feedContainer = document.getElementById('feed-container');
 const initialLoadingMessage = document.getElementById('initial-loading-message');
 const userDisplayName = document.getElementById('user-display-name');
+
+// Páginas.
+const profileLink = document.getElementById('profile-link');
 
 const NUMBER_OF_POSTS_TO_GENERATE = 20;
 const INTERVAL_BETWEEN_POSTS_MS = 2500;
@@ -106,3 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
   }
 });
+
+// Navegação para o perfil.
+if (profileLink) {
+    profileLink.addEventListener('click', (e) => {
+        if (profileLink.dataset.page === 'profile') {
+            e.preventDefault();
+            fetch("profile.html");
+        }
+    });
+}
