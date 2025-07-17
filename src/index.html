@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
     <link rel="icon" href="./img/logo-site.png" type="image/x-icon"/>
     <link rel="stylesheet" href="css/style.css"/>
@@ -43,7 +45,7 @@
           <h1>Entrar</h1>
           <input type="email" id="login-email" placeholder="E-mail" required/>
           <input type="password" id="login-password" placeholder="Senha" required/>
-          <a href="#">Esqueceu sua senha?</a>
+          <a href="#" id="forgot-password-link">Esqueceu sua senha?</a>
           <button type="submit">Logar</button>
         </form>
       </div>
@@ -60,6 +62,16 @@
             <button class="ghost" id="signUp">Cadastro</button>
           </div>
         </div>
+      </div>
+      <div class="form-container-login forgot-password-container" style="display: none;">
+        <form id="forgot-password-form">
+          <h1>Recuperar Senha</h1>
+          <input type="email" id="recover-email" placeholder="E-mail" required/>
+          <input type="password" id="recover-password" placeholder="Senha" required/>
+          <input type="password" id="recover-password2" placeholder="Confirme sua senha" required/>
+          <button type="button" id="recover-btn">Recuperar</button>
+          <button type="button" id="back-to-login">Voltar ao login</button>
+        </form>
       </div>
     </div>
 
@@ -90,6 +102,11 @@
         </form>
       </div>
     </div>
+
+    <!-- Botão de modo escuro -->
+    <button id="dark-mode-toggle" title="Alternar tema">
+    <span class="material-icons" id="dark-mode-icon">dark_mode</span>
+    </button>
 
     <footer>Desenvolvido pela equipe de TSI, Barbacena: 2025</footer>
 

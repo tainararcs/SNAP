@@ -230,6 +230,22 @@
 	transform: translateX(20%);
 }
 
+/* Recuperar senha */
+.forgot-password-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 10;
+  display: none;
+  transition: all 0.6s ease-in-out;
+}
+
+#back-to-login{
+	margin-top: 20px;
+}
+
 footer {
     position: absolute;
     bottom: 10px;
