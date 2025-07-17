@@ -1,5 +1,7 @@
 import { User } from './User.js';
 
+let loginPage;
+let recoverPage;
 document.addEventListener('DOMContentLoaded', () => {
 
 	// Desktop
@@ -18,13 +20,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Mobile
 	const mobileLoginForm = document.getElementById('mobile-login-form');
 	const mobileRegisterForm = document.getElementById('mobile-register-form');
-	const loginPage = document.getElementById('login-page');
+	loginPage = document.getElementById('login-page');
 	const signupPage = document.getElementById('signup-page');
+
+	// Recuperar senha Mobile
+	const mobileRecoverForm = document.getElementById('mobile-recover-form');
+	recoverPage = document.getElementById('recover-page');
+	const recoverBtnMobile = document.getElementById('recover-btn-mobile');
+	const backToLoginMobile = document.getElementById('back-to-login-mobile');
 
 	// Botões de troca (mobile)
 	const mobileToRegister = signupPage?.querySelector('a[href="/login"]'); // Entrar
 	const mobileToLogin = loginPage?.querySelector('a[href="/register"]');   // Cadastre-se
-
+	const recoverLinkMobile = document.getElementById('recover-link-mobile');
+	
 	// Exibir apenas login na inicialização do mobile
 	if (window.innerWidth <= 768) {
 		if (loginPage && signupPage) {
@@ -62,6 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		forgotPasswordContainer.style.display = 'block';
 	});
 
+	recoverLinkMobile?.addEventListener('click', (e) => {
+		e.preventDefault();
+		loginPage.style.display = 'none';
+		signupPage.style.display = 'none';
+		recoverPage.style.display = 'block';
+	});
+
 	// Submit - Desktop
 	loginForm?.addEventListener('submit', (e) => {
 		e.preventDefault();
@@ -95,33 +111,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		mobileRegisterForm.reset();
 	});
 
-
-	// Modo escuro
-	const toggleBtn = document.getElementById("dark-mode-toggle");
-	const icon = document.getElementById("dark-mode-icon");
+	mobileRecoverForm?.addEventListener('submit', (e) => {
+		e.preventDefault();
+		recoverPassword();
+	});	
 	
-	const loggedUser = JSON.parse(localStorage.getItem("LoggedUser"));
-	const prefersDark = loggedUser?.theme === "dark" || localStorage.getItem("darkMode") === "true";
-	
-	if (prefersDark) {
-		document.body.classList.add("dark-mode");
-		icon.textContent = "light_mode";
-	}
-
-	toggleBtn?.addEventListener("click", () => {
-		document.body.classList.toggle("dark-mode");
-
-		const isDark = document.body.classList.contains("dark-mode");
-		icon.textContent = isDark ? "light_mode" : "dark_mode";
-
-		localStorage.setItem("darkMode", isDark);
-
-		const currentUser = JSON.parse(localStorage.getItem("LoggedUser"));
-		if (currentUser) {
-			currentUser.theme = isDark ? "dark" : "light";
-			localStorage.setItem("LoggedUser", JSON.stringify(currentUser));
-		}
+	recoverBtnMobile?.addEventListener('click', (e) => {
+		e.preventDefault();
+		recoverPassword(true); // Passa true para indicar que é mobile
 	});
+
+	backToLoginMobile?.addEventListener('click', (e) => {
+		e.preventDefault();
+		recoverPage.style.display = 'none';
+		loginPage.style.display = 'block';
+	});
+	
 });
 
 /**
@@ -169,10 +174,10 @@ function registerUser() {
 }
 
 //Recuperar senha
-function recoverPassword() {
-	const email = document.getElementById('recover-email')?.value.trim();
-	const senha = document.getElementById('recover-password')?.value;
-	const senha2 = document.getElementById('recover-password2')?.value;
+function recoverPassword(isMobile = false) {
+	const email = document.getElementById(isMobile ? 'recover-email-mobile' : 'recover-email')?.value.trim();
+	const senha = document.getElementById(isMobile ? 'recover-password-mobile' : 'recover-password')?.value;
+	const senha2 = document.getElementById(isMobile ? 'recover-password2-mobile' : 'recover-password2')?.value;
 
 	if (!email || !senha || !senha2) {
 		showAlert('Preencha todos os campos.', 'danger');
@@ -188,9 +193,17 @@ function recoverPassword() {
 
 	if (user?.email.toLowerCase() === email.toLowerCase()) {
 		user.senha = senha;
+		
 		localStorage.setItem('user', JSON.stringify(user));
+		
 		showAlert('Senha atualizada com sucesso!', 'success');
-		document.getElementById('back-to-login')?.click(); // volta pro login
+		
+		if (isMobile) {
+			loginPage.style.display = 'block';
+			recoverPage.style.display = 'none';
+		} else {
+			document.getElementById('back-to-login')?.click();
+		}
 	} else {
 		showAlert('E-mail não encontrado.', 'danger');
 	}

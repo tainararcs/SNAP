@@ -82,7 +82,7 @@
           <h1>Entrar</h1>
           <input type="email" id="email-login" placeholder="E-mail" required/>
           <input type="password" id="password-login" placeholder="Senha" required/>
-          <a href="#">Esqueceu sua senha?</a>
+          <a href="#" id="recover-link-mobile">Esqueceu sua senha?</a>
           <button type="submit">Logar</button>
           <p>Não tem uma conta? <a href="/register">Cadastre-se</a></p>
         </form>
@@ -103,10 +103,24 @@
       </div>
     </div>
 
+    <!-- Mobile: Recuperar senha -->
+    <div id="recover-page" class="mobile-page" style="display: none;">
+      <div class="mobile-form-container">
+        <form id="mobile-recover-form">
+          <h1>Recuperar Senha</h1>
+          <input type="email" id="recover-email-mobile" placeholder="E-mail" required/>
+          <input type="password" id="recover-password-mobile" placeholder="Senha" required/>
+          <input type="password" id="recover-password2-mobile" placeholder="Confirme sua senha" required/>
+          <button type="button" id="recover-btn-mobile">Recuperar</button>
+          <button type="button" id="back-to-login-mobile">Voltar</button>
+        </form>
+      </div>
+    </div>
+
     <!-- Botão de modo escuro -->
-    <button id="dark-mode-toggle" title="Alternar tema">
+    <!-- <button id="dark-mode-toggle" title="Alternar tema">
     <span class="material-icons" id="dark-mode-icon">dark_mode</span>
-    </button>
+    </button> -->
 
     <footer>Desenvolvido pela equipe de TSI, Barbacena: 2025</footer>
 
