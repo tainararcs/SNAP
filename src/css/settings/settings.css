@@ -1,0 +1,17 @@
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+    font-size: 28px;
+    color: var(--roxo-primario, #6930C3);
+    
+}
+
+.back-btn, .LbackToSettings, .HbackToSettings, .TbackToSettings {
+    vertical-align: middle;
+    margin-right: 10px;
+    cursor: pointer;
+}
