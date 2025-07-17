@@ -14,43 +14,27 @@ document.addEventListener('DOMContentLoaded', () => {
         "Jardinagem", "Animais de Estimação", "Carros", "Motocicletas"
     ];
 
-    // Carrega o usuário atual.
-    let user = JSON.parse(localStorage.getItem('user'));
-
-     //Carregando o tema
-    if (user && user.theme === 'dark') {
-        document.body.classList.add('dark-mode');
-    } else {
-        document.body.classList.remove('dark-mode'); // Garantir que não fique escuro por engano
-    }
-    // Vetor em que será armazenado os interesses escolhidos pelo usuário.
     let interestsArray = [];
 
     const interestInput = document.getElementById('interests-input');
     const suggestionsOptions = document.getElementById('suggestion');
     const tagsDiv = document.getElementById('tag');
-    const advancePage = document.getElementById('advance');
-    const addButton = document.querySelector('.add-icon');
+    const advanceDesktop = document.getElementById('advance-desktop');
+    const advanceMobile = document.getElementById('advance-mobile');
 
-    addButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        addInterest();
-    });
+    // Oculta os botões "Avançar" inicialmente
+    advanceDesktop.style.display = 'none';
+    advanceMobile.style.display = 'none';
 
-    // Oculta o botão "Avançar" inicialmente.
-    advancePage.style.display = 'none';
-
-    // Mostrar sugestões ao focar no input.
+    // Mostrar sugestões ao focar no input
     interestInput.addEventListener('focus', () => {
         if (interestInput.value.length > 0) {
             toggleSuggestions(true);
         }
     });
 
-    // Evento de input para mostrar sugestões.
+    // Evento de input para mostrar sugestões
     interestInput.addEventListener('input', () => {
-
-        // Trata os interesses em minúsculas.
         const text = interestInput.value.toLowerCase();
         suggestionsOptions.innerHTML = '';
 
@@ -63,11 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 matchingInterests.forEach(item => {
                     const div = document.createElement('div');
                     div.textContent = item;
-                    div.onclick = () => {
-                        interestInput.value = item;
-                        toggleSuggestions(false);
-
-                    };
+                    div.onclick = () => addInterest(item);
                     suggestionsOptions.appendChild(div);
                 });
                 toggleSuggestions(true);
@@ -79,50 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-    //Usar as setas do teclado para navegar pelas sugestões
-    let selectedSuggestionIndex = -1;
-
-    interestInput.addEventListener('keydown', (e) => {
-        const suggestions = suggestionsOptions.querySelectorAll('div');
-
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (suggestions.length > 0) {
-                selectedSuggestionIndex = (selectedSuggestionIndex + 1) % suggestions.length;
-                updateSuggestionHighlight(suggestions);
-            }
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (suggestions.length > 0) {
-                selectedSuggestionIndex = (selectedSuggestionIndex - 1 + suggestions.length) % suggestions.length;
-                updateSuggestionHighlight(suggestions);
-            }
-        } else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (suggestions.length > 0 && selectedSuggestionIndex >= 0) {
-                interestInput.value = suggestions[selectedSuggestionIndex].textContent;
-                toggleSuggestions(false);
-                selectedSuggestionIndex = -1;
-            } else {
-                addInterest();
-            }
-        }
-    });
-
-
-    function updateSuggestionHighlight(suggestions) {
-        suggestions.forEach((el, i) => {
-            if (i === selectedSuggestionIndex) {
-                el.classList.add('highlighted');
-            } else {
-                el.classList.remove('highlighted');
-            }
-        });
-    }
-
-
-    // Evento para adicionar com Enter.
+    // Evento para adicionar com Enter
     interestInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -130,45 +67,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Fecha sugestões ao clicar fora.
+    // Fecha sugestões ao clicar fora
     document.addEventListener('click', (e) => {
         if (!interestInput.contains(e.target) && !suggestionsOptions.contains(e.target)) {
             toggleSuggestions(false);
         }
     });
 
-    // Evento do botão avançar.
-    advancePage.addEventListener('click', () => {
-        if (interestsArray.length >= 3) {
-            
+    // Função unificada do botão Avançar
+    function handleAdvanceClick() {
+        if (interestsArray.length >= MIN_INTERESTS_TO_PROCEED) {
+            let user = JSON.parse(localStorage.getItem('user')) || {};
             user.interests = interestsArray;
-
             localStorage.setItem('user', JSON.stringify(user));
-
             window.location.href = "feed.html";
         } else {
             showAlert("Escolha pelo menos 3 interesses antes de avançar.");
         }
-    });
+    }
 
+    advanceDesktop.addEventListener('click', handleAdvanceClick);
+    advanceMobile.addEventListener('click', handleAdvanceClick);
 
-    // Mostra/oculta sugestões.
+    // Mostra/oculta sugestões
     function toggleSuggestions(show) {
         suggestionsOptions.style.display = show ? 'block' : 'none';
     }
 
-    // Mostra alerta personalizado.
+    // Mostra alerta personalizado
     function showAlert(message) {
         $('#alertMessage').text(message);
         $('#alertModal').modal('show');
     }
 
-    // Adiciona interesse.
+    // Adiciona interesse
     function addInterest(value) {
         const newInterest = value || interestInput.value.trim();
 
         if (newInterest && listaGemini.includes(newInterest) && !interestsArray.includes(newInterest)) {
-            if (interestsArray.length < 5) {
+            if (interestsArray.length < MAX_INTERESTS) {
                 interestsArray.push(newInterest);
                 updateTags();
                 interestInput.value = '';
@@ -179,20 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Remove interesse.
+    // Remove interesse
     function removeInterest(interesseRemover) {
         interestsArray = interestsArray.filter(i => i !== interesseRemover);
         updateTags();
     }
 
-    // Atualiza a exibição das tags.
+    // Atualiza exibição das tags e botões
     function updateTags() {
         tagsDiv.innerHTML = '';
 
         interestsArray.forEach(i => {
             const span = document.createElement('span');
             span.className = 'tag';
-            span.innerHTML = `${i} <span class="remove-tag" title="Remover Interesse">×</span>`;
+            span.innerHTML = `${i} <span class="remove-tag">×</span>`;
             span.onclick = (e) => {
                 if (e.target.classList.contains('remove-tag')) {
                     removeInterest(i);
@@ -201,8 +138,21 @@ document.addEventListener('DOMContentLoaded', () => {
             tagsDiv.appendChild(span);
         });
 
-        // Mostrar o botão "Avançar" somente se houver 3 ou mais interesses.
-        advancePage.style.display = interestsArray.length >= 3 ? 'inline-block' : 'none';
-    }
+        // Verifica se é tela mobile
+        const isMobile = window.innerWidth <= 768;
 
+        // Mostra apenas o botão da plataforma atual
+        if (interestsArray.length >= MIN_INTERESTS_TO_PROCEED) {
+            if (isMobile) {
+                advanceMobile.style.display = 'inline-block';
+                advanceDesktop.style.display = 'none';
+            } else {
+                advanceDesktop.style.display = 'inline-block';
+                advanceMobile.style.display = 'none';
+            }
+        } else {
+            advanceDesktop.style.display = 'none';
+            advanceMobile.style.display = 'none';
+        }
+    }
 });
