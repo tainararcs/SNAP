@@ -24,34 +24,52 @@
 
                 <!-- Sidebar Esquerda -->
                 <div class="col-lg-2 col-md-4 d-flex flex-column sidebar vh-100 sticky-top">
-                    <div class="flex-grow-1 d-flex flex-column justify-content-between">
+                    <div id ="all-links" class="flex-grow-1 d-flex flex-column justify-content-between">
                         <div>
                             <div class="logo text-center py-3">LOGO</div>
                             <nav class="nav flex-column px-2">
-                                <a class="nav-link active" href="#"><i class="bi bi-house-door me-2"></i> Página Inicial</a>
-                                <a class="nav-link" id="link-search" href="#" ><i class="bi bi-search me-2"></i> Pesquisa</a>
-                                <a class="nav-link" href="#"><i class="bi bi-bell me-2"></i> Notificações</a>
-                                <a class="nav-link" href="#"><i class="bi bi-plus-square me-2"></i> Criar</a>
+                                <a id="link-home" class="nav-link active" href="#"><i class="bi bi-house-door me-2"></i> Página Inicial</a>
+                                <a id="link-search" class="nav-link" href="#" ><i class="bi bi-search me-2"></i> Pesquisa</a>
+                                <a id="link-notif" class="nav-link" href="#"><i class="bi bi-bell me-2"></i> Notificações</a>
+                                <a id="link-create" class="nav-link" href="#"><i class="bi bi-plus-square me-2"></i> Criar</a>
                                 <a id="profile-link" class="nav-link" href="profile.html"><i class="bi bi-person me-2"></i> Perfil</a>
                             </nav>
                         </div>
                         <div class="sidebar-footer">
-                            <a class="nav-link" href="#"><i class="bi bi-gear me-2"></i> Configurações</a>
+                            <a id="link-configs" class="nav-link" href="#"><i class="bi bi-gear me-2"></i> Configurações</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Feed Central -->
                 <div class="col-lg-8 col-md-8 py-4 feed-central">
-                    <div class="header text-center mb-4">
-                        <h1>Bem-vindo ao seu Feed, <span id="user-display-name">Carregando...</span>!</h1>
-                        <button id="generatePostBtn" class="btn btn-primary">Gerar post teste</button>
-                        <button id="logoutBtn" class="btn btn-secondary ms-2">Sair</button>
+
+                    <!-- Feed -->
+                    <div id="page-feed" class="page">
+                        <div class="header text-center mb-4">
+                            <h1>Bem-vindo ao seu Feed, <span id="user-display-name">Carregando...</span>!</h1>
+                            <button id="generatePostBtn" class="btn btn-primary">Gerar post teste</button>
+                            <button id="logoutBtn" class="btn btn-secondary ms-2">Sair</button>
+                        </div>
+
+                        <div id="feed-container">
+                            <p class="loading" id="initial-loading-message">Carregando feed, aguarde...</p>
+                        </div>
                     </div>
 
-                    <div id="feed-container">
-                        <p class="loading" id="initial-loading-message">Carregando feed, aguarde...</p>
-                    </div>
+                    <!-- Pesquisa -->
+                    <div id="page-search" class="page" style="display:none;"></div>
+
+                    <!-- Notificações -->
+                    <div id="page-notifications" class="page" style="display:none;"></div>
+
+                     <!-- Criar post -->
+                    <div id="page-create" class="page" style="display:none;"></div>
+
+                    <!-- Configurações -->
+                    <div id="page-configs" class="page" style="display:none;"></div>
+
+                    <!-- Outras páginas, sigam a mesma lógica -->
                 </div>
 
                 <!-- Sidebar Direita -->
@@ -68,8 +86,15 @@
 
             </div>
         </div>
+        
+        <script src="./js/navegation.js"></script>
 
+        
+        <script src="./js/notifications.js"></script>
+         <script src="./js/settings.js"></script>
+       
         <script src="./js/search.js"></script>
+
         <script type="module" src="./js/feed.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

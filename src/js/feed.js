@@ -16,6 +16,13 @@ const INTERVAL_BETWEEN_POSTS_MS = 2500;
 let currentUser;
 const storedUser = localStorage.getItem('user');
 
+const homeLink = document.getElementById("link-home");
+homeLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    showPage("page-feed");
+    setActiveLink("link-home");
+});
+
 if (storedUser) {
   const userData = JSON.parse(storedUser);
   currentUser = new User(
@@ -100,7 +107,6 @@ async function startAutomaticPostGeneration(count, interval) {
 generatePostBtn.addEventListener('click', generateAndAddSinglePost);
 
 logoutBtn.addEventListener('click', () => {
-  localStorage.removeItem('user');
   window.location.href = 'index.html';
 });
 
