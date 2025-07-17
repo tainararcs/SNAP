@@ -1,0 +1,98 @@
+/* notifications.css */
+
+/* notifications.css */
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.notifications-list {
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+.notifications-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.notification-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.notification-card.unread {
+    border-left: 4px solid #007bff;
+    background-color: #f0f8ff;
+}
+
+.notification-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.notification-icon {
+    font-size: 24px;
+    margin-right: 15px;
+    color: #007bff;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-message {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+.notification-time {
+    color: #777;
+    font-size: 14px;
+}
+
+.mark-as-read {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.mark-as-read:hover {
+    background-color: #e6f0ff;
+}
+
+.no-notifications {
+    text-align: center;
+    padding: 40px 20px;
+    color: #777;
+    font-size: 18px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
