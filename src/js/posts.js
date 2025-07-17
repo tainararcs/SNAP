@@ -1,180 +1,149 @@
-// js/posts.js
+import { User } from './User.js'; // Importe a classe User
+import {requisitarPost, requisitarUserData} from './gemini.js'
 
-import { User } from './User.js'; // Importa a classe User para validação e obtenção de interesses
+/* Controle de Taxa.
+*  Define o tempo mínimo de atraso (em milissegundos) entre as requisições à API, 
+*  evitando sobrecarga ou chamadas excessivas em curto intervalo.
+*/
+const TEMPO_CONTROLE = 1500; // 1,5 seg - Mantenha esse controle para as requisições combinadas.
+let lastRequestTime = 0; // Armazena o timestamp da última requisição.
 
-/* Controle de Taxa
- * Define o tempo mínimo de atraso (em milissegundos) entre as requisições combinadas ao backend.
- */
-const TEMPO_CONTROLE_REQUISICOES_MS = 5000; // 5 segundos
-let ultimoTempoRequisicao = 0; // Armazena o timestamp da última requisição combinada
 /**
  * Função utilitária para introduzir um atraso.
- * @param {number} milissegundos - Milissegundos para atrasar a execução.
- * @returns {Promise<void>} 
+ * @param {number} ms - Milissegundos para atrasar.
  */
-function atrasar(milissegundos) {
-    return new Promise(resolver => setTimeout(resolver, milissegundos));
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**
- * Requisita o conteúdo e as hashtags de um post ao servidor backend.
- * @param {string[]} interessesParaPost - Lista de interesses para guiar a geração do post.
- * @returns {Promise<[string|null, string[]]>} texto do post e array de hashtags, ou null em caso de erro
- */
-async function requisitarConteudoPost(interessesParaPost = []) {
-    try {
-        const resposta = await fetch('http://localhost:3001/requisitarPost', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ interesses: interessesParaPost })
-        });
-
-        if (!resposta.ok) {
-            const corpoErro = await resposta.text();
-            console.error('Erro HTTP ao obter conteúdo do post (Status:', resposta.status, 'Corpo:', corpoErro, ')');
-            throw new Error(`Backend retornou erro ${resposta.status} para /requisitarPost: ${corpoErro}`);
-        }
-
-        const dados = await resposta.json();
-        return [dados.texto || null, Array.isArray(dados.interesses) ? dados.interesses : []];
-
-    } catch(erro) {
-        console.error('Erro ao chamar /requisitarPost:', erro.message || erro);
-        return [null, interessesParaPost || []]; // Retorna null caso erro
-    }
-}
-/**
- * Requisita dados para um usuário fictício (nome, email, senha) ao servidor backend.
- * @returns {Promise<object|null>} Um objeto com 'nome', 'email', 'senha' do usuário fictício, ou null em caso de erro.
- */
-async function requisitarDadosUsuarioFicticio() {
-    try {
-        const resposta = await fetch('http://localhost:3001/requisitarUserData', {
-            method: 'GET', // Sua rota é GET
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!resposta.ok) {
-            const corpoErro = await resposta.text();
-            console.error('Erro HTTP ao obter dados do usuário fictício (Status:', resposta.status, 'Corpo:', corpoErro, ')');
-            throw new Error(`Backend retornou erro ${resposta.status} para /requisitarUserData: ${corpoErro}`);
-        }
-
-        const dados = await resposta.json();
-        // Se o backend retorna um objeto com 'error', tratamos como falha
-        if (dados && dados.error) {
-            console.error("Erro reportado pelo backend em /requisitarUserData:", dados.error);
-            return null; // Retorna null em caso de erro
-        }
-        return dados; 
-
-    } catch(erro) {
-        console.error('Erro ao chamar /requisitarUserData:', erro.message || erro);
-        return null;
-    }
-}
-
-/**
- * Requisita ao servidor o caminho para uma imagem de perfil gerada para um nome de usuário.
- * O backend salva a imagem e retorna o caminho.
+ * Prepara um post para o feed, solicitando conteúdo e dados de usuário fictício separadamente ao backend (Gemini).
+ * O conteúdo do post será baseado nos interesses do usuário logado.
  *
- * @param {string} nomeUsuario - O nome de usuário fictício para basear a imagem.
- * @returns {Promise<string|null>} A URL completa da imagem de perfil, ou null em caso de erro.
+ * @param {User} currentUser - O objeto User contendo os interesses do usuário logado.
+ * @returns {Promise<object|null>} Um objeto com os dados do post ou null em caso de erro.
  */
-async function requisitarImagemPerfil(nomeUsuario) {
-    try {
-        const resposta = await fetch('http://localhost:3001/requisitarImagemPerfil', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }, 
-            body: JSON.stringify({ username: nomeUsuario }) 
-        });
-        if (!resposta.ok) {
-            const corpoErro = await resposta.text();
-            console.error('Erro HTTP ao obter imagem de perfil (Status:', resposta.status, 'Corpo:', corpoErro, ')');
-            throw new Error(`Backend retornou erro ${resposta.status} para /requisitarImagemPerfil: ${corpoErro}`);
-        }
-
-        // A resposta do backend é o caminho relativo da imagem (ex: "public/img/Nome.png")
-        const caminhoImagem = await resposta.text();
-        const urlBaseBackend = 'http://localhost:3001'; 
-        // Monta a URL completa para que o navegador possa acessar a imagem
-        return `${urlBaseBackend}/${caminhoImagem.replace(/^public\//, '')}`;
-
-    } catch(erro) {
-        console.error('Erro ao chamar /requisitarImagemPerfil:', erro.message || erro);
-        return null;
-    }
-}
-
-
-/**
- * Monta um post para o feed.
- * 1. Obter o conteúdo do post e hashtags (baseado nos interesses do usuário logado).
- * 2. Obter dados de um usuário fictício (nome, email, etc.).
- * 3. Obter uma imagem de perfil para o usuário fictício.
- * Todas as requisições são feitas ao backend usando o GEMINI
- *
- * @param {User} usuarioLogado - O objeto User contendo os interesses do usuário atualmente logado.
- * @returns {Promise<object|null>} Um objeto completo do post pronto para exibição no feed, ou null em caso de erro
- */
-export async function prepararPostParaFeed(usuarioLogado) {
-    // Validação inicial para garantir que temos um usuário e interesses
-    if (!usuarioLogado || !usuarioLogado.getInterests || usuarioLogado.getInterests().length === 0) {
-        console.error("Erro: Objeto de usuário logado ou lista de interesses está inválida/vazia.");
+export async function prepararPostParaFeed(currentUser) {
+    if (!currentUser || !currentUser.getInterests || currentUser.getInterests().length === 0) {
+        console.error("Erro: Usuário ou interesses não definidos para gerar post.");
         return null;
     }
 
-    const interessesDoUsuario = usuarioLogado.getInterests();
-    console.log("Iniciando preparação do post com base nos interesses:", interessesDoUsuario);
+    const interessesDoUsuario = currentUser.getInterests();
+    console.log("Solicitando post e dados de usuário fictício do backend com base nos interesses:", interessesDoUsuario);
 
     try {
-        // Controle de Taxa: Aplica um atraso para não sobrecarregar o servidor/API free
-        const agora = Date.now();
-        const tempoDesdeUltimaRequisicao = agora - ultimoTempoRequisicao;
-        if (tempoDesdeUltimaRequisicao < TEMPO_CONTROLE_REQUISICOES_MS) {
-            const tempoDeEspera = TEMPO_CONTROLE_REQUISICOES_MS - tempoDesdeUltimaRequisicao;
-            console.log(`Aguardando ${tempoDeEspera}ms para respeitar o limite de taxa.`);
-            await atrasar(tempoDeEspera);
-        }
-        ultimoTempoRequisicao = Date.now(); // Atualiza o timestamp da última requisição
 
-        // Realiza as requisições para o conteúdo do post e dados do usuário fictício em paralelo
-        const [resultadoConteudoPost, resultadoDadosUsuario] = await Promise.all([
-            requisitarConteudoPost(interessesDoUsuario), // Conteúdo e hashtags do post
-            requisitarDadosUsuarioFicticio()           // Dados do usuário fictício (nome, email, senha)
+        // Controle de Taxa: Verifica e aplica atraso antes das requisições combinadas.
+        const now = Date.now();
+        const timeSinceLastRequest = now - lastRequestTime;
+        if (timeSinceLastRequest < TEMPO_CONTROLE) {
+            const timeToWait = TEMPO_CONTROLE - timeSinceLastRequest;
+            console.log(`Aguardando ${timeToWait}ms para respeitar o limite de taxa para requisições múltiplas.`);
+            await delay(timeToWait);
+        }
+        lastRequestTime = Date.now(); // Atualiza o tempo da última requisição.
+
+        // Faz as duas requisições em paralelo.
+        const [postContentArray, userData] = await Promise.all([
+            requisitarPost(interessesDoUsuario), // Conteúdo e hashtags.
+            requisitarUserData() // Dados do usuário fictício.
         ]);
 
-        const [conteudoPost, hashtagsArray] = resultadoConteudoPost;
+        const [conteudo, hashtagsArray] = postContentArray; // Desestrutura a resposta do post.
 
-        // verificando se ambos os resultados não são nulos e têm os campos esperados
-        if (!conteudoPost || !resultadoDadosUsuario || !resultadoDadosUsuario.nome) {
-            console.error("Dados iniciais (conteúdo do post ou dados do usuário fictício) incompletos/inválidos:", { conteudo: conteudoPost, dadosUsuario: resultadoDadosUsuario });
-            return null; // Retorna nulo para que o feed não exiba um post incompleto
-        }
-        //solicitando imagem do perfil
-        const urlAvatar = await requisitarImagemPerfil(resultadoDadosUsuario.nome);
+        // Verifica se ambos os dados foram obtidos com sucesso.
+        if (conteudo && userData && userData.nome) { // Assumindo que userData.nome é o nome gerado.
 
-        // Se a imagem do avatar não pôde ser gerada, usamos um avatar padrão
-        if (!urlAvatar) {
-            console.warn(`Não foi possível obter imagem para o usuário "${resultadoDadosUsuario.nome}". Usando avatar padrão.`);
-            const idAvatarPadrao = Math.floor(Math.random() * 70) + 1; // ID aleatório entre 1 e 70 para i.pravatar.cc
+            // O avatarId é gerado aleatoriamente para o avatar com base no id do usuário fictício.
+            const avatarIdFromUserData = userData.id % 70 || Math.floor(Math.random() * 70) + 1;
+            const avatarUrl = `https://i.pravatar.cc/150?img=${avatarIdFromUserData}`;
+            
+            armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl);
+
             return {
-                nomeUsuario: resultadoDadosUsuario.nome,
-                avatarUrl: `https://i.pravatar.cc/150?img=${idAvatarPadrao}`, // Avatar de fallback
-                conteudo: conteudoPost,
-                hashtags: hashtagsArray.map(tag => `#${tag.replace(/\s/g, '_')}`).join(' ') // Formata hashtags
+                nomeUsuario: userData.nome, // Nome gerado pelo Gemini via requisitarUserData.
+                avatarUrl: avatarUrl,       // Avatar baseado no id gerado pelo Gemini.
+                conteudo: conteudo,
+                hashtags: hashtagsArray.map(tag => `${tag.replace(/\s/g, '_')}`).join(' ') // Formata hashtags.
             };
-        }
 
-        // Retorna o objeto final do post completo para ser exibido no feed
-        return {
-            nomeUsuario: resultadoDadosUsuario.nome,
-            avatarUrl: urlAvatar, // URL da imagem de perfil gerada
-            conteudo: conteudoPost,
-            hashtags: hashtagsArray.map(tag => `#${tag.replace(/\s/g, '_')}`).join(' ') // Formata hashtags
-        };
-    } catch (erro) {
-        console.error("Erro crítico ao preparar post para o feed (catch principal):", erro.message || erro);
+
+        } else {
+            console.error("Dados de post ou usuário fictício incompletos:", { conteudo, userData });
+            return null;
+        }
+    } catch (error) {
+        console.error("Erro ao preparar post para o feed:", error);
         return null;
     }
+} // function prepararPostParaFeed
+
+
+// Recupera os usuários armazenados no localStorage, ou retorna um array vazio.
+export function getStoredUsers() {
+  return JSON.parse(localStorage.getItem('usuarios') || '[]');
+}
+
+// Salva um array de usuários no localStorage com a chave 'usuarios'.
+export function saveStoredUsers(users) {
+  localStorage.setItem('usuarios', JSON.stringify(users));
+}
+
+// Retorna o próximo ID disponível com base no maior ID já usado. Se não houver usuários, começa com 1.
+export function getNextUserId() {    
+    const users = getStoredUsers();
+    return users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+}
+
+
+/**
+ * Armazena ou atualiza um usuário fictício com um novo post.
+ * @param {object} userData - Dados do usuário gerado pela IA ({ nome, email, senha }).
+ * @param {string} conteudo - Conteúdo do post.
+ * @param {string[]} hashtagsArray - Lista de hashtags.
+ * @param {string} avatarUrl - URL do avatar associado ao post.
+ */
+export function armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl) {
+    const users = getStoredUsers();
+
+    // Verifica se o usuário já existe com base no email.
+    const userExistente = users.find(user => user.email === userData.email);
+
+    let id;
+
+    if (userExistente) {
+        id = userExistente.id;
+    } else {
+        id = getNextUserId();
+    }
+
+    // Cria um novo objeto de post.
+    const novoPost = {
+        conteudo,
+        hashtags: hashtagsArray.join(' '),
+        avatarUrl,
+        data: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
+    };
+
+    if (userExistente) {
+        userExistente.posts.push(novoPost);
+    } else {
+        // Se for um novo usuário, cria um novo objeto com o post e adiciona ao array de usuários.
+        const novoUsuario = {
+            id,
+            nome: userData.nome,
+            email: userData.email,
+            senha: userData.senha,
+            interests: hashtagsArray,
+            posts: [novoPost]
+        };
+        users.push(novoUsuario);
+    }
+
+    // Atualiza o localStorage.
+    saveStoredUsers(users);
+
+    // Retorna o ID do usuário.
+    return id;
 }
