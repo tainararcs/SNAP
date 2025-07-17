@@ -98,7 +98,6 @@ async function startAutomaticPostGeneration(count, interval) {
 generatePostBtn.addEventListener('click', generateAndAddSinglePost);
 
 logoutBtn.addEventListener('click', () => {
-  localStorage.removeItem('user');
   window.location.href = 'index.html';
 });
 

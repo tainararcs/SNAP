@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const loginForm = document.getElementById('login-form-login');
 	const registerForm = document.getElementById('register-form-login');
 
+	// Recuperar senha
+	const forgotPasswordLink = document.getElementById('forgot-password-link');
+	const forgotPasswordContainer = document.querySelector('.forgot-password-container');
+	const backToLoginBtn = document.getElementById('back-to-login');
+	const recoverBtn = document.getElementById('recover-btn');
+
 	// Mobile
 	const mobileLoginForm = document.getElementById('mobile-login-form');
 	const mobileRegisterForm = document.getElementById('mobile-register-form');
@@ -50,6 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
+	// Recuperar senha
+	forgotPasswordLink?.addEventListener('click', (e) => {
+		loginForm.style.display = 'none';
+		forgotPasswordContainer.style.display = 'block';
+	});
+
 	// Submit - Desktop
 	loginForm?.addEventListener('submit', (e) => {
 		e.preventDefault();
@@ -61,6 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		registerForm.reset();
 	});
 
+	recoverBtn?.addEventListener('click', (e) =>{
+		e.preventDefault();
+		recoverPassword();
+	});
+
+	backToLoginBtn?.addEventListener('click', (e) => {
+		e.preventDefault();
+		forgotPasswordContainer.style.display = 'none';
+		loginForm.style.display = 'flex';
+	});
+
 	// Submit - Mobile
 	mobileLoginForm?.addEventListener('submit', (e) => {
 		e.preventDefault();
@@ -70,6 +93,34 @@ document.addEventListener('DOMContentLoaded', () => {
 		e.preventDefault();
 		registerUser();
 		mobileRegisterForm.reset();
+	});
+
+
+	// Modo escuro
+	const toggleBtn = document.getElementById("dark-mode-toggle");
+	const icon = document.getElementById("dark-mode-icon");
+	
+	const loggedUser = JSON.parse(localStorage.getItem("LoggedUser"));
+	const prefersDark = loggedUser?.theme === "dark" || localStorage.getItem("darkMode") === "true";
+	
+	if (prefersDark) {
+		document.body.classList.add("dark-mode");
+		icon.textContent = "light_mode";
+	}
+
+	toggleBtn?.addEventListener("click", () => {
+		document.body.classList.toggle("dark-mode");
+
+		const isDark = document.body.classList.contains("dark-mode");
+		icon.textContent = isDark ? "light_mode" : "dark_mode";
+
+		localStorage.setItem("darkMode", isDark);
+
+		const currentUser = JSON.parse(localStorage.getItem("LoggedUser"));
+		if (currentUser) {
+			currentUser.theme = isDark ? "dark" : "light";
+			localStorage.setItem("LoggedUser", JSON.stringify(currentUser));
+		}
 	});
 });
 
@@ -115,6 +166,34 @@ function registerUser() {
 
 	showAlert('Usuário cadastrado com sucesso!', 'success');
 	setTimeout(() => window.location.href = "interests.html", 1000);
+}
+
+//Recuperar senha
+function recoverPassword() {
+	const email = document.getElementById('recover-email')?.value.trim();
+	const senha = document.getElementById('recover-password')?.value;
+	const senha2 = document.getElementById('recover-password2')?.value;
+
+	if (!email || !senha || !senha2) {
+		showAlert('Preencha todos os campos.', 'danger');
+		return;
+	}
+
+	if (senha !== senha2) {
+		showAlert('As senhas não coincidem.', 'danger');
+		return;
+	}
+
+	const user = JSON.parse(localStorage.getItem('user'));
+
+	if (user?.email.toLowerCase() === email.toLowerCase()) {
+		user.senha = senha;
+		localStorage.setItem('user', JSON.stringify(user));
+		showAlert('Senha atualizada com sucesso!', 'success');
+		document.getElementById('back-to-login')?.click(); // volta pro login
+	} else {
+		showAlert('E-mail não encontrado.', 'danger');
+	}
 }
 
 /**
