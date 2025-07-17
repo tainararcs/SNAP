@@ -112,3 +112,12 @@ export class User {
         return -1;
     }
 }
+
+
+// Atualiza o tema do usuário no localStorage.
+export function updateUserTheme(themeDark = false) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) return;
+    user.theme = themeDark ? 'dark' : 'light';
+    localStorage.setItem('user', JSON.stringify(user));
+}

@@ -1,7 +1,10 @@
-import { User } from './User.js';
+import { User, updateUserTheme } from './User.js';
 
 let loginPage;
 let recoverPage;
+let themeToggle;
+let themeDark = false; // Variável para controlar o tema escuro
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	// Desktop
@@ -126,6 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		recoverPage.style.display = 'none';
 		loginPage.style.display = 'block';
 	});
+
+	// Tema escuro
+	themeToggle = document.getElementById('dark-mode-toggle');
+
+	themeToggle.onclick = function() {
+		if(!themeDark){
+			themeDark = true;	
+			document.body.classList.add('dark-mode');
+		}else{
+			themeDark = false;
+			document.body.classList.remove('dark-mode');
+		}
+	}	
 	
 });
 
@@ -143,8 +159,10 @@ function loginUser() {
 		showAlert('Login bem-sucedido!', 'success');
 
 		if (!user.interests || user.interests.length === 0) {
+			updateUserTheme(themeDark);
 			setTimeout(() => window.location.href = "interests.html", 1000);
 		} else {
+			updateUserTheme(themeDark);
 			setTimeout(() => window.location.href = "feed.html", 1000);
 		}
 	} else {
@@ -170,6 +188,7 @@ function registerUser() {
 	localStorage.setItem('user', JSON.stringify(newUser));
 
 	showAlert('Usuário cadastrado com sucesso!', 'success');
+	updateUserTheme(themeDark);
 	setTimeout(() => window.location.href = "interests.html", 1000);
 }
 

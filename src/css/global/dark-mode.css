@@ -1,0 +1,33 @@
+/*Login*/
+body.dark-mode {
+  --main-white: #282A2C;
+  --white: #1e1e1e;
+  --gray: #878C8F;
+
+  background-color: var(--main-white);
+  color: var(--gray);
+}
+
+
+/* Botão de alternar tema */
+#dark-mode-toggle {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 1001;
+  background-color: var(--roxo3);
+  color: var(--white);
+  border: none;
+  border-radius: 20px;
+  width: 45px;
+  height: 45px;
+  font-size: 18px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#dark-mode-icon {
+  font-size: 30px !important;
+  transform: translate(-15px, -4px);
+}
