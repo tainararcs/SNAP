@@ -1,11 +1,12 @@
 import { updateUserTheme } from './User.js';
+
 const configLink = document.querySelector("#link-configs");
 configLink.addEventListener("click", (e) => {
 
     e.preventDefault();
 
     loadPage("configs", "settings.html", ()=>{
-        console.log("Configurações");
+        setupSettingsNavigation();
     });
 
     showPage("page-configs");
@@ -13,58 +14,69 @@ configLink.addEventListener("click", (e) => {
 });
 
 
-document.addEventListener("click", (e) => {
-    // Voltar para a página inicial (feed)
-    if(e.target.id === 'backToFeed') {
+function setupSettingsNavigation() {
+    const settingsSections = {
+        settingsMain: document.getElementById("settingsDesktop"),
+        theme: document.getElementById("theme-div"),
+        help: document.getElementById("help-div"),
+        language: document.getElementById("language-div")
+    };
+   
+
+    function showSettingsSection(sectionId) {
+        Object.values(settingsSections).forEach(section => {
+            section.style.display = (section.id === sectionId) ? "block" : "none";
+        });
+    }
+
+    // Botões de navegação
+    document.getElementById("changeTheme-link").addEventListener("click", e => {
         e.preventDefault();
-        window.location.href = "feed.html";
-    }
-    
-    // Mostrar tema
-    if(e.target.id === 'changeTheme') {
-        document.querySelector("#settingsDesktop").style.display = "none";
-        document.querySelector("#theme-div").style.display = "block";
-    }
-    // Voltar do tema para configurações
-    if(e.target.id === 'TbackToSettings') {
-        document.querySelector("#settingsDesktop").style.display = "block";
-        document.querySelector("#theme-div").style.display = "none";
-    }
-    //Mudando o tema
-    if(e.target.id === 'light-theme'){
+        showSettingsSection("theme-div");
+    });
+
+    document.getElementById("help-link").addEventListener("click", e => {
+        e.preventDefault();
+        showSettingsSection("help-div");
+    });
+
+    document.getElementById("language-link").addEventListener("click", e => {
+        e.preventDefault();
+        showSettingsSection("language-div");
+    });
+
+    // Botões de voltar
+    document.getElementById("backToFeed").addEventListener("click", () => {
+        showPage("page-feed");
+        setActiveLink("link-feed");
+    });
+    document.getElementById("TbackToSettings").addEventListener("click", () => {
+        showSettingsSection("settingsDesktop");
+    });
+
+    document.getElementById("HbackToSettings").addEventListener("click", () => {
+        showSettingsSection("settingsDesktop");
+    });
+
+    document.getElementById("LbackToSettings").addEventListener("click", () => {
+        showSettingsSection("settingsDesktop");
+    });
+
+    //Tema
+     document.getElementById("light-theme").addEventListener("click", (e) => {
         document.body.classList.remove('dark-mode');
         updateUserTheme(false);
-    }
-    if(e.target.id === 'dark-theme'){
+    });
+
+    document.getElementById("dark-theme").addEventListener("click", (e) => {
         document.body.classList.add('dark-mode');
         updateUserTheme(true);
-    }
-
-    // Mostrar ajuda
-    if(e.target.id === 'help') {
-        document.querySelector("#settingsDesktop").style.display = "none";
-        document.querySelector("#help-div").style.display = "block";
-    }
-    // Voltar da ajuda para configurações
-    if(e.target.id === 'HbackToSettings') {
-        document.querySelector("#settingsDesktop").style.display = "block";
-        document.querySelector("#help-div").style.display = "none";
-    }
+    });
     
-    // Mostrar idioma
-    if(e.target.id === 'language') {
-        document.querySelector("#settingsDesktop").style.display = "none";
-        document.querySelector("#language-div").style.display = "block";
-    }
-    // Voltar do idioma para configurações
-    if(e.target.id === 'LbackToSettings') {
-        document.querySelector("#settingsDesktop").style.display = "block";
-        document.querySelector("#language-div").style.display = "none";
-    }
-
     // Logout
-    if(e.target.id === 'logoutBtn') {
+    document.getElementById("btnLogout").addEventListener("click", (e) => {
         e.preventDefault();
         window.location.href = "index.html";
-    }
-});
+    });
+  
+}
