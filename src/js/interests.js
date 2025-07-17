@@ -21,10 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const suggestionsOptions = document.getElementById('suggestion');
     const tagsDiv = document.getElementById('tag');
     const advancePage = document.getElementById('advance');
-   
+    const addButton = document.querySelector('.add-icon');
+
+    addButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        addInterest();
+    });
+
     // Oculta o botão "Avançar" inicialmente.
     advancePage.style.display = 'none';
-   
+
     // Mostrar sugestões ao focar no input.
     interestInput.addEventListener('focus', () => {
         if (interestInput.value.length > 0) {
@@ -34,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Evento de input para mostrar sugestões.
     interestInput.addEventListener('input', () => {
-       
+
         // Trata os interesses em minúsculas.
         const text = interestInput.value.toLowerCase();
         suggestionsOptions.innerHTML = '';
@@ -48,7 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 matchingInterests.forEach(item => {
                     const div = document.createElement('div');
                     div.textContent = item;
-                    div.onclick = () => addInterest(item);
+                    div.onclick = () => {
+                        interestInput.value = item;
+                        toggleSuggestions(false);
+
+                    };
                     suggestionsOptions.appendChild(div);
                 });
                 toggleSuggestions(true);
@@ -59,6 +69,49 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleSuggestions(false);
         }
     });
+
+
+    //Usar as setas do teclado para navegar pelas sugestões
+    let selectedSuggestionIndex = -1;
+
+    interestInput.addEventListener('keydown', (e) => {
+        const suggestions = suggestionsOptions.querySelectorAll('div');
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (suggestions.length > 0) {
+                selectedSuggestionIndex = (selectedSuggestionIndex + 1) % suggestions.length;
+                updateSuggestionHighlight(suggestions);
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (suggestions.length > 0) {
+                selectedSuggestionIndex = (selectedSuggestionIndex - 1 + suggestions.length) % suggestions.length;
+                updateSuggestionHighlight(suggestions);
+            }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (suggestions.length > 0 && selectedSuggestionIndex >= 0) {
+                interestInput.value = suggestions[selectedSuggestionIndex].textContent;
+                toggleSuggestions(false);
+                selectedSuggestionIndex = -1;
+            } else {
+                addInterest();
+            }
+        }
+    });
+
+
+    function updateSuggestionHighlight(suggestions) {
+        suggestions.forEach((el, i) => {
+            if (i === selectedSuggestionIndex) {
+                el.classList.add('highlighted');
+            } else {
+                el.classList.remove('highlighted');
+            }
+        });
+    }
+
 
     // Evento para adicionar com Enter.
     interestInput.addEventListener('keydown', (e) => {
@@ -91,12 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-   
+
     // Mostra/oculta sugestões.
     function toggleSuggestions(show) {
         suggestionsOptions.style.display = show ? 'block' : 'none';
     }
-   
+
     // Mostra alerta personalizado.
     function showAlert(message) {
         $('#alertMessage').text(message);
@@ -132,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         interestsArray.forEach(i => {
             const span = document.createElement('span');
             span.className = 'tag';
-            span.innerHTML = `${i} <span class="remove-tag">×</span>`;
+            span.innerHTML = `${i} <span class="remove-tag" title="Remover Interesse">×</span>`;
             span.onclick = (e) => {
                 if (e.target.classList.contains('remove-tag')) {
                     removeInterest(i);
