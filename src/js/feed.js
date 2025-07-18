@@ -61,7 +61,7 @@ function addPostToFeedDOM(postData) {
   postCard.innerHTML = `
     <div class="post-header">
       <img src="${postData.avatarUrl}" alt="${postData.nomeUsuario}" class="post-avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
-      <span class="post-username">${postData.nomeUsuario}</span>
+      <a href="profile.html?user=${encodeURIComponent(postData.nomeUsuario)}" class="post-username">${postData.nomeUsuario}</a>
       <span class="post-time">${postTime}</span>
     </div>
     <p class="post-content">${postData.conteudo}</p>

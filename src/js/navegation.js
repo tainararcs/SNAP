@@ -4,7 +4,8 @@ const pages = {
         search: document.getElementById("page-search"),
         configs: document.getElementById("page-configs"),
         notifications: document.getElementById("page-notifications"),
-        create: document.getElementById("page-create")
+        create: document.getElementById("page-create"),
+        profile: document.getElementById("page-profile") 
 };
 
 /* Exibe apenas a página desejada.
