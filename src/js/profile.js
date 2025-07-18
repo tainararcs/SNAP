@@ -5,15 +5,13 @@ document.addEventListener("click", (event) => {
     if (event.target.classList.contains("clicavel")) {
         
         // Extrai o nome do usuário da URL.
-        const params = new URLSearchParams(window.location.search);
-        const userName = params.get("user");
-
-        console.log("Avatar clicado! Usuário:", userName);
+        const userName = event.target.dataset.user;
         
         loadPage("profile", "profile.html", () => {
 
             const nomeSpan = document.getElementById("user-name");
             const postListContainer = document.getElementById("user-posts");
+            const profileImage = document.getElementById("profile-img");
 
             // Atualiza o nome no perfil.
             if (nomeSpan) {
@@ -27,12 +25,17 @@ document.addEventListener("click", (event) => {
                 postListContainer.innerHTML = `<p>Usuário não encontrado.</p>`;
                 return;
             }
-
+            if (profileImage) {
+                profileImage.src = usuario.avatarUrl || (usuario.posts.length > 0 ? usuario.posts[0].avatarUrl : 'https://via.placeholder.com/80');
+            }
             if (usuario.posts.length === 0) {
                 postListContainer.innerHTML = `<p class="loading">Este usuário ainda não possui posts.</p>`;
             } else {
-                postListContainer.innerHTML = usuario.posts.map(post => {
-                    return `
+                // Limpa antes de adicionar.
+                postListContainer.innerHTML = "";
+
+                usuario.posts.forEach(post => {
+                    const postHTML = `
                         <div class="post-card">
                             <div class="post-header">
                                 <img src="${post.avatarUrl}" 
@@ -46,7 +49,9 @@ document.addEventListener("click", (event) => {
                             <p class="post-hashtags">${post.hashtags}</p>
                         </div>
                     `;
-                }).join('');
+
+                    postListContainer.insertAdjacentHTML("beforeend", postHTML);
+                });
             }
         });
 
