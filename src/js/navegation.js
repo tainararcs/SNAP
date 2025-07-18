@@ -17,6 +17,13 @@ function showPage(pageId) {
         page.style.display = (page.id === pageId) ? "block" : "none";
     });
 
+    const sidebarDireita = document.querySelector('.sidebar-direita');
+    if(pageId === "page-configs" || pageId === "page-notifications"){
+        sidebarDireita.style.display = "none";
+    } 
+    else{
+        sidebarDireita.style.display = "block";
+    }
 }
 
 /* Define um link como ativo alterando seu estilo.
