@@ -1,8 +1,6 @@
 import { prepararPostParaFeed } from './posts.js';
 import { User } from './User.js';
 
-const generatePostBtn = document.getElementById('generatePostBtn');
-const logoutBtn = document.getElementById('logoutBtn');
 const feedContainer = document.getElementById('feed-container');
 const initialLoadingMessage = document.getElementById('initial-loading-message');
 const userDisplayName = document.getElementById('user-display-name');
@@ -23,24 +21,27 @@ homeLink.addEventListener("click", (e) => {
 if (storedUser) {
   const userData = JSON.parse(storedUser);
 
-  //Carregando tema
-   if (userData.theme === 'dark') {
+  if (userData.theme === 'dark') {
     document.body.classList.add('dark-mode');
-  } else {
-    document.body.classList.remove('dark-mode');
   }
+
   currentUser = new User(
     userData.id || Math.floor(Math.random() * 1000) + 1,
     userData.name || "Usuário Generativo",
     userData.email || "email@example.com",
     userData.senha || "defaultpass"
   );
+
   if (userData.interests && Array.isArray(userData.interests) && userData.interests.length > 0) {
     currentUser.addInterestList(userData.interests);
   } else {
     currentUser.addInterestList(["tecnologia", "inovação", "futuro", "inteligencia artificial", "curiosidades"]);
   }
-  userDisplayName.textContent = currentUser.getName();
+
+  if (userDisplayName) {
+    userDisplayName.textContent = currentUser.getName();
+  }
+
 } else {
   alert("Você precisa estar logado para acessar o feed. Redirecionando para o login.");
   window.location.href = 'index.html';
@@ -95,24 +96,13 @@ async function generateAndAddSinglePost() {
 }
 
 async function startAutomaticPostGeneration(count, interval) {
-  generatePostBtn.disabled = true;
-
   for (let i = 0; i < count; i++) {
     await generateAndAddSinglePost();
     if (i < count - 1) {
       await new Promise(resolve => setTimeout(resolve, interval));
     }
   }
-
-  generatePostBtn.disabled = false;
-  generatePostBtn.textContent = 'Gerar post teste';
 }
-
-generatePostBtn.addEventListener('click', generateAndAddSinglePost);
-
-logoutBtn.addEventListener('click', () => {
-  window.location.href = 'index.html';
-});
 
 document.addEventListener('DOMContentLoaded', () => {
   if (currentUser) {
