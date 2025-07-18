@@ -14,8 +14,8 @@ const storedUser = localStorage.getItem('user');
 const homeLink = document.getElementById("link-home");
 homeLink.addEventListener("click", (e) => {
     e.preventDefault();
-    showPage("page-feed");
     setActiveLink("link-home");
+    showPage("page-feed");
 });
 
 if (storedUser) {
@@ -107,5 +107,6 @@ async function startAutomaticPostGeneration(count, interval) {
 document.addEventListener('DOMContentLoaded', () => {
   if (currentUser) {
     startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
+    setActiveLink('link-home'); // garante que o link esteja ativo no início
   }
 });

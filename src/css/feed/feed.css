@@ -16,7 +16,7 @@
 .sidebar {
     width: 220px;
     background-color: var(--white);
-    border-right: 1px solid var(--light-gray1);
+    border-right: 2px solid var(--purple2);
     height: 100vh;
     position: sticky;
     top: 0;
@@ -64,9 +64,20 @@
 }
 
 .sidebar .nav-link.active {
-    background-color: var(--light-gray1);
+    background-color: var(--light-gray1); 
     color: var(--purple1);
     font-weight: 700;
+}
+
+.sidebar .nav-link.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 4px;
+    background-color: var(--purple1);
+    border-radius: 0 4px 4px 0;
 }
 
 .nav-icon {
@@ -161,7 +172,7 @@
     top: 0;
     height: 100vh;
     background-color: var(--white);
-    border-left: 1px solid var(--light-gray1);
+    border-left: 2px solid var(--blue2);
     overflow-y: auto;
     display: flex;
     flex-direction: column;

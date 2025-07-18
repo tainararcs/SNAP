@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        showPage("page-search");
         setActiveLink("link-search");
+        showPage("page-search");
     });
 });
