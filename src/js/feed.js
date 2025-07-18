@@ -7,9 +7,6 @@ const feedContainer = document.getElementById('feed-container');
 const initialLoadingMessage = document.getElementById('initial-loading-message');
 const userDisplayName = document.getElementById('user-display-name');
 
-// Páginas.
-const profileLink = document.getElementById('profile-link');
-
 const NUMBER_OF_POSTS_TO_GENERATE = 20;
 const INTERVAL_BETWEEN_POSTS_MS = 2500;
 
@@ -61,7 +58,7 @@ function addPostToFeedDOM(postData) {
   postCard.innerHTML = `
     <div class="post-header">
       <img src="${postData.avatarUrl}" alt="${postData.nomeUsuario}" class="post-avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
-      <a href="profile.html?user=${encodeURIComponent(postData.nomeUsuario)}" class="post-username">${postData.nomeUsuario}</a>
+      <a href="#" class="clicavel" data-user="${postData.nomeUsuario}"> ${postData.nomeUsuario}</a>
       <span class="post-time">${postTime}</span>
     </div>
     <p class="post-content">${postData.conteudo}</p>
@@ -122,13 +119,3 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
   }
 });
-
-// Navegação para o perfil.
-if (profileLink) {
-    profileLink.addEventListener('click', (e) => {
-        if (profileLink.dataset.page === 'profile') {
-            e.preventDefault();
-            fetch("profile.html");
-        }
-    });
-}
