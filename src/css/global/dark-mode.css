@@ -1,13 +1,13 @@
-/*Login*/
+/* ===== MODO ESCURO: Página de Login ===== */
 body.dark-mode {
   --main-white: #282A2C;
   --white: #1e1e1e;
   --gray: #878C8F;
+  --main-black: #FCF7FF;
 
   background-color: var(--main-white);
   color: var(--gray);
 }
-
 
 /* Botão de alternar tema */
 #dark-mode-toggle {
@@ -35,20 +35,17 @@ body.dark-mode {
 
 /* ===== MODO ESCURO: Página de Interesses ===== */
 body.dark-mode#interests-page {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
+  --main-white: #282A2C;
+  --dark-gray: #3C3D3F;
+  --main-black: #FCF7FF;
+  --light-gray1: #3C3D3F;
+  
+  --white:#000000;
+  --black:#FFFFFF;
 }
 
 body.dark-mode#interests-page .interests-card {
-  background-color: #2c2c2c;
   border: 1px solid #444;
-  box-shadow: none;
-}
-
-body.dark-mode#interests-page .interests-title,
-body.dark-mode#interests-page .interests-instruction,
-body.dark-mode#interests-page .interests-footer p {
-  color: #e0e0e0;
 }
 
 body.dark-mode#interests-page .form-control.interests-input {
@@ -57,106 +54,47 @@ body.dark-mode#interests-page .form-control.interests-input {
   border: 1px solid #555;
 }
 
-body.dark-mode#interests-page .form-control::placeholder {
-  color: #aaa;
-}
-
-body.dark-mode#interests-page .add-icon {
-  background-color: #444;
-  color: #ddd;
-  border-left: 1px solid #555;
-}
-
-body.dark-mode#interests-page .add-icon:hover {
-  background-color: #555;
-  color: #fff;
-}
-
-body.dark-mode#interests-page .tags span {
-  background-color: #4c4c4c;
-  color: #fff;
-  border: 1px solid #666;
-}
-
-body.dark-mode#interests-page .tags span:hover {
-  background-color: #666;
-}
-
-body.dark-mode#interests-page .suggestions {
-  background-color: #2a2a2a;
-  border: 1px solid #444;
-}
-
-body.dark-mode#interests-page .suggestions div {
-  color: #ddd;
-}
-
-body.dark-mode#interests-page .suggestions div:hover {
-  background-color: #444;
-  color: #fff;
-}
-
-body.dark-mode#interests-page .btn-advance-header {
-  background-color: #6930C3;
-  color: #fff;
-  border: none;
-}
-
-body.dark-mode#interests-page .btn-advance-header:hover {
-  background-color: #5e60ce;
-}
-
-/* Modal no modo escuro */
-body.dark-mode#interests-page .modal-content {
-  background-color: #2b2b2b;
-  color: #fff;
-}
-
-body.dark-mode#interests-page .modal-footer .btn-primary {
-  background-color: #6930C3;
-  border: none;
-}
-
-
 /* ===== MODO ESCURO: Página de Feed ===== */
-
 body.dark-mode#body-feed {
-  --bg-primary: var(--main-black); /* fundo principal */
-  --bg-secondary: #1e1e1e;          /* fundo para sidebars e header */
-  --text-primary: var(--light-gray1);  /* texto padrão claro */
-  --text-secondary: var(--gray);       /* texto secundário */
-  --border-color: #333333;              /* bordas escuras */
-  --highlight-color: var(--blue5);     /* cor de destaque azul claro */
+   --gray: #878C8F;
+  --dark-gray: #3C3D3F;
+  --main-white: #282A2C;
+  --main-black: #FCF7FF;
+  --light-gray1: #3C3D3F;
+  --light-gray2: #C4CAD0;
+  --white:#000000;
+  --black:#FFFFFF;
+  --purple3: #5E60CE;
 
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  --blue5: var(--blue5);
+  background-color: var(--dark-gray);
+  color: var(--light-gray1);
 }
 
 /* Sidebars, header e sidebar-direita */
 body.dark-mode#body-feed .sidebar,
 body.dark-mode#body-feed .sidebar-direita,
 body.dark-mode#body-feed .header {
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  border-color: var(--border-color);
+  background-color: var(--main-white);
+  color: var(--light-gray2);
+  border-color: var(--light-gray1);
 }
 
 /* Links e textos dentro da sidebar */
-body.dark-mode#body-feed .sidebar .nav-link {
-  color: var(--text-primary);
+ body.dark-mode#body-feed .sidebar .nav-link { 
+  color: var(--light-gray2);
 }
 
 body.dark-mode#body-feed .sidebar .nav-link:hover {
-  background-color: #2a2a2a;
-  color: var(--highlight-color);
+  background-color: var(--light-gray1);
+  color: var(--blue5);
 }
 
 body.dark-mode#body-feed .sidebar .nav-link.active {
-  background-color: #333333;
-  color: var(--highlight-color);
-  font-weight: 600;
+  background-color: var(--light-gray1);
+  color: var(--light-gray2);
 }
-
+/*
 /* Rodapé da sidebar */
 body.dark-mode#body-feed .sidebar-footer {
   border-top: 1px solid var(--border-color);
@@ -165,14 +103,14 @@ body.dark-mode#body-feed .sidebar-footer {
 
 /* Feed central */
 body.dark-mode#body-feed .feed-central {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--light-gray1);
+  color: var(--light-gray2);
 }
 
 /* Posts */
 body.dark-mode#body-feed .post-card {
-  background-color: #292929;
-  color: var(--text-primary);
+  background-color: var(--main-white);
+  color: var(--light-gray1);
   box-shadow: none;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
@@ -184,27 +122,26 @@ body.dark-mode#body-feed .post-header,
 body.dark-mode#body-feed .post-content,
 body.dark-mode#body-feed .sidebar-direita h6,
 body.dark-mode#body-feed .profile-suggestion {
-  color: var(--text-primary);
+  color: var(--light-gray1);
 }
 
 /* Elementos com cor de destaque */
 body.dark-mode#body-feed .post-username,
 body.dark-mode#body-feed .post-hashtags,
 body.dark-mode#body-feed .profile-suggestion:hover {
-  color: var(--highlight-color);
+  color: var(--light-gray2);
 }
 
 /* Sidebar direita */
 body.dark-mode#body-feed .sidebar-direita {
-  background-color: var(--bg-secondary);
-  border-color: var(--border-color);
+  border-color: var(--dark-gray);
 }
 
 /* Mensagens de loading / erro / tempo do post */
 body.dark-mode#body-feed .loading,
 body.dark-mode#body-feed .generating-message,
 body.dark-mode#body-feed .post-time {
-  color: var(--text-secondary);
+  color: var(--gray);
 }
 
 body.dark-mode#body-feed .generating-message.active {
@@ -212,7 +149,48 @@ body.dark-mode#body-feed .generating-message.active {
 }
 
 body.dark-mode#body-feed .error-card {
-  background-color: #4d1a1a;
-  border-color: #ff6b6b;
-  color: var(--text-primary);
+  background-color: var(--gray);
+  color: var(--light-gray1);
+}
+
+/* ===== MODO ESCURO: Pesquisa ===== */
+body.dark-mode .text-center h1{
+    color: #5E60CE;
+}
+
+body.dark-mode #search-input{
+  background-color: var(--dark-gray);
+  color: var(--black);
+  
+}
+
+/* ===== MODO ESCURO: Página de Notificações ===== */
+body.dark-mode .notifications-container {
+    background-color: var(--main-white);
+}
+
+body.dark-mode .notification-header{
+
+  background-color: var(--main-white);
+  color: var(--light-gray2);
+}
+
+body.dark-mode .notification-card{
+  background-color: var(--gray);
+  border-color: var(--purple3);
+
+}
+body.dark-mode .notification-time, .bi {
+  color: var(--purple3);
+}
+body.dark-mode .mark-all-read{
+  color: var(--purple3);
+}
+body.dark-mode .mark-as-read{
+  color: var(--purple3);
+}
+
+body.dark-mode .no-notifications{
+  background-color: var(--dark-gray);  
+color: var(--purple3);
 }

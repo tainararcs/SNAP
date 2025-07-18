@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
         "Jardinagem", "Animais de Estimação", "Carros", "Motocicletas"
     ];
 
+    let user = JSON.parse(localStorage.getItem('user'));
+    //Carregando tema
+    if (user.theme === 'dark') {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+
     let interestsArray = [];
 
     const interestInput = document.getElementById('interests-input');
@@ -77,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função unificada do botão Avançar
     function handleAdvanceClick() {
         if (interestsArray.length >= MIN_INTERESTS_TO_PROCEED) {
-            let user = JSON.parse(localStorage.getItem('user')) || {};
+            user  || {};
             user.interests = interestsArray;
             localStorage.setItem('user', JSON.stringify(user));
             window.location.href = "feed.html";
