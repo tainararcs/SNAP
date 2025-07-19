@@ -9,8 +9,8 @@ configLink.addEventListener("click", (e) => {
         setupSettingsNavigation();
     });
 
-    showPage("page-configs");
     setActiveLink("link-configs");
+    showPage("page-configs");
 });
 
 

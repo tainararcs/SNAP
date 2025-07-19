@@ -55,7 +55,7 @@ document.addEventListener("click", (event) => {
             }
         });
 
-        showPage("page-profile");
         setActiveLink("profile-link"); 
+        showPage("page-profile");
     }
 });

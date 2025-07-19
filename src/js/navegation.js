@@ -17,11 +17,10 @@ function showPage(pageId) {
         page.style.display = (page.id === pageId) ? "block" : "none";
     });
 
-    const sidebarDireita = document.querySelector('.sidebar-direita');
-    if(pageId === "page-configs" || pageId === "page-notifications"){
+    const sidebarDireita = document.querySelector('.fixed-sidebar-direita');
+    if (pageId === "page-configs" || pageId === "page-notifications" || pageId === "page-profile") {
         sidebarDireita.style.display = "none";
-    } 
-    else{
+    } else {
         sidebarDireita.style.display = "block";
     }
 }

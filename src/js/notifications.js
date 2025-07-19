@@ -276,8 +276,8 @@ if (notifLink) {
             window.NotificationSystem.updateNotificationBadge();
         });
 
-        showPage("page-notifications");
         setActiveLink("link-notif");
+        showPage("page-notifications");
     });
 }
 

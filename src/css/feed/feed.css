@@ -16,7 +16,7 @@
 .sidebar {
     width: 220px;
     background-color: var(--white);
-    border-right: 2px solid var(--purple2);
+    border-right: 2px solid var(--blue2);
     height: 100vh;
     position: sticky;
     top: 0;
@@ -60,11 +60,11 @@
 }
 
 .sidebar .nav-link:hover {
-    background-color: var(--light-gray1);
+    background-color: #f2f2f2;
 }
 
 .sidebar .nav-link.active {
-    background-color: var(--light-gray1); 
+    background-color: #f2f2f2; 
     color: var(--purple1);
     font-weight: 700;
 }
@@ -88,7 +88,8 @@
 
 .sidebar-footer {
     padding-top: 1rem;
-    margin-top: auto;
+    margin: 0 auto;
+    margin-top: 20px;
     width: 100%;
 }
 
