@@ -13,6 +13,15 @@ document.addEventListener("click", (event) => {
             const postListContainer = document.getElementById("user-posts");
             const profileImage = document.getElementById("profile-img");
 
+            //Limpa o nome
+            nomeSpan.textContent = "";
+
+            // Limpa posts
+            postListContainer.innerHTML = "";
+
+            // Limpa imagem (coloca placeholder ou remove src)
+            profileImage.src = "https://via.placeholder.com/80";
+
             // Atualiza o nome no perfil.
             if (nomeSpan) {
                 nomeSpan.textContent = userName;

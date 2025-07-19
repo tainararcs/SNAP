@@ -56,8 +56,6 @@ function loadPage(pageId, url, callback) {
 
     const pageDiv = pages[pageId];
 
-    if(pageDiv.innerHTML.trim() === ""){
-
         fetch(url)
             .then(response => {
                 if (!response.ok) throw new Error(`Erro ao carregar ${url}`);
@@ -71,5 +69,4 @@ function loadPage(pageId, url, callback) {
             .catch(err => {
                 pageDiv.innerHTML = `<p style="color:red;">${err.message}</p>`;
             });
-    }
 }
