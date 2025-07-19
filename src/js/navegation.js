@@ -5,7 +5,8 @@ const pages = {
         configs: document.getElementById("page-configs"),
         notifications: document.getElementById("page-notifications"),
         create: document.getElementById("page-create"),
-        profile: document.getElementById("page-profile") 
+        profile: document.getElementById("page-profile"),
+        profileUser: document.getElementById("page-profile-user")
 };
 
 /* Exibe apenas a página desejada.
@@ -56,17 +57,17 @@ function loadPage(pageId, url, callback) {
 
     const pageDiv = pages[pageId];
 
-        fetch(url)
-            .then(response => {
-                if (!response.ok) throw new Error(`Erro ao carregar ${url}`);
-                return response.text();
-            })
-            .then(html => {
-                pageDiv.innerHTML = html;
-                if(callback) 
-                    callback(); // Carrega o callback da página.
-            })
-            .catch(err => {
-                pageDiv.innerHTML = `<p style="color:red;">${err.message}</p>`;
-            });
+    fetch(url)
+        .then(response => {
+            if (!response.ok) throw new Error(`Erro ao carregar ${url}`);
+            return response.text();
+        })
+        .then(html => {
+            pageDiv.innerHTML = html;
+            if(callback) 
+                callback(); // Carrega o callback da página.
+        })
+        .catch(err => {
+            pageDiv.innerHTML = `<p style="color:red;">${err.message}</p>`;
+        });
 }
