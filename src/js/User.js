@@ -4,13 +4,15 @@ export class User {
     id = 0;
     name = "";
     email = "";
-    senha = "";
-        
+    senha = ""; 
+
     // Lista de interesses.
     interests = [];
 
     // Lista de objetos Post.
     posts = [];
+
+    
 
     constructor(id, name, email, senha) {
         this.id = id;
@@ -119,5 +121,13 @@ export function updateUserTheme(themeDark = false) {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) return;
     user.theme = themeDark ? 'dark' : 'light';
+    localStorage.setItem('user', JSON.stringify(user));
+}
+
+// Função corrigida para atualizar a biografia do usuário
+export function updateUserBios(userBios= "") {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) return;
+    user.bios = userBios;
     localStorage.setItem('user', JSON.stringify(user));
 }
