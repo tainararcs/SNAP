@@ -56,8 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                         alt="${postData.nomeUsuario}" 
                                         class="post-avatar" 
                                         onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
-                                    <span class="post-username">${postData.nomeUsuario}</span>
-                                    <a href="#" class="clicavel" data-user="${postData.nomeUsuario}"> ${postData.nomeUsuario}</a>
+                                    <span class="post-username"><a href="#" class="clicavel" data-user="${postData.nomeUsuario}"> ${postData.nomeUsuario}</a></span>
                                     <span class="post-time">${postData.data}</span>
                                 </div>
                                 <p class="post-content">${postData.conteudo}</p>
