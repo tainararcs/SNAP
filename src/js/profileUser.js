@@ -21,6 +21,7 @@ function setupBios() {
 
     renderBios(user.bios);
 
+    //Botão salvar
     biosBtn.addEventListener("click", () => {
         biosAtual.innerHTML = `
             <textarea id="editBiosTextarea" rows="4" style="width: 100%;">${user.bios || ""}</textarea>
@@ -33,14 +34,18 @@ function setupBios() {
         });
     });
 
+    //Se a bios estiver vazia um template é apresentado.
     function generateEmptyBios() {
         biosAtual.innerHTML = `<p>Bios vazia, clique no botão "Editar Bios" para colocar um bios daora!</p>`;
     }
 
+    //renderiza a bios do usuário logado
     function renderBios(biosText = "") {
+        //verificando se a bios está vazia
         if (!biosText || !biosText.trim().length)
             generateEmptyBios();
         else
+            //bios não vazia.
             biosAtual.innerHTML = `<p>${biosText}</p>`;
     }
 }

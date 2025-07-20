@@ -1,10 +1,11 @@
 import { getStoredUsers } from './posts.js';
+import { requisitarBiosUsuarioF } from './gemini.js';
+import { updateUserBios } from './User.js';
 
 document.addEventListener("click", (event) => {
 
     if (event.target.classList.contains("clicavel")) {
         
-        // Extrai o nome do usuário da URL.
         const userName = event.target.dataset.user;
         
         loadPage("profile", "profile.html", () => {
@@ -13,19 +14,11 @@ document.addEventListener("click", (event) => {
             const postListContainer = document.getElementById("user-posts");
             const profileImage = document.getElementById("profile-img");
 
-            //Limpa o nome
             nomeSpan.textContent = "";
-
-            // Limpa posts
             postListContainer.innerHTML = "";
-
-            // Limpa imagem (coloca placeholder ou remove src)
             profileImage.src = "https://via.placeholder.com/80";
 
-            // Atualiza o nome no perfil.
-            if (nomeSpan) {
-                nomeSpan.textContent = userName;
-            }
+            if (nomeSpan) nomeSpan.textContent = userName;
 
             const users = getStoredUsers();
             const usuario = users.find(u => u.nome === userName);
@@ -34,15 +27,18 @@ document.addEventListener("click", (event) => {
                 postListContainer.innerHTML = `<p>Usuário não encontrado.</p>`;
                 return;
             }
+
+            setupBiosFicticia(usuario);
+
             if (profileImage) {
-                profileImage.src = usuario.avatarUrl || (usuario.posts.length > 0 ? usuario.posts[0].avatarUrl : 'https://via.placeholder.com/80');
+                profileImage.src = usuario.avatarUrl || 
+                    (usuario.posts.length > 0 ? usuario.posts[0].avatarUrl : 'https://via.placeholder.com/80');
             }
+
             if (usuario.posts.length === 0) {
                 postListContainer.innerHTML = `<p class="loading">Este usuário ainda não possui posts.</p>`;
             } else {
-                // Limpa antes de adicionar.
                 postListContainer.innerHTML = "";
-
                 usuario.posts.forEach(post => {
                     const postHTML = `
                         <div class="post-card">
@@ -58,7 +54,6 @@ document.addEventListener("click", (event) => {
                             <p class="post-hashtags">${post.hashtags}</p>
                         </div>
                     `;
-
                     postListContainer.insertAdjacentHTML("beforeend", postHTML);
                 });
             }
@@ -68,3 +63,32 @@ document.addEventListener("click", (event) => {
         showPage("page-profile");
     }
 });
+
+function setupBiosFicticia(usuario = {}) {
+    const biosUserAI = document.getElementById("user-bios");
+
+    if (!biosUserAI || !usuario || typeof usuario !== "object") return;
+
+    function generateEmptyBios() {
+        biosUserAI.innerHTML = `<p><em>Bios vazia. Aguarde a geração de uma bios pela IA...</em></p>`;
+        
+        const interesses = Array.isArray(usuario.interesses) ? usuario.interesses : [];
+        const username = usuario.nome;
+        requisitarBiosUsuarioF(interesses, username).then(bioGerada => {
+            usuario.bio = bioGerada;
+            biosUserAI.innerHTML = `<p>${bioGerada}</p>`;
+        }).catch(err => {
+            biosUserAI.innerHTML = `<p>Erro ao gerar bios com IA.</p>`;
+            console.error("Erro na geração de bios:", err);
+        });
+    }
+
+    function renderBios(biosText = "") {
+        if (!biosText || !biosText.trim().length)
+            generateEmptyBios();
+        else
+            biosUserAI.innerHTML = `<p>${biosText}</p>`;
+    }
+
+    renderBios(usuario.bio); // Chama o render corretamente
+}

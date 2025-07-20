@@ -130,7 +130,7 @@ app.post('/requisitarImagemPerfil', async (req, res) => {
     const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY3});
 
     const username = req.body;
-    const prompt = `Crie uma imagem 400x400 de uma pessoa com traços aleatórios baseando-se no nome fictício: ${username}. A resposta deve conter apenas uma imagem, sem qualquer texto.`
+    const prompt = `Crie uma : ${username}. A resposta deve conter apenas uma imagem, sem qualquer texto.`
 
     try {
 
@@ -163,6 +163,50 @@ app.post('/requisitarImagemPerfil', async (req, res) => {
         res.status(500).send("Erro ao gerar ou salvar imagem.");
     }
 });
+app.post('/requisitarBiosUsuarioF', async (req, res) => {
+    const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_KEY4 });
+
+    const interessesPredefinidos = req.body.interesses || [];
+    const nome = req.body.nome || ""; // <- agora como string
+    let prompt = 'Crie uma bios de um usuário fictício para uma rede social, como se fosse um jovem da geração Z.';
+
+    if (nome) {
+        prompt += ` O nome do usuário é "${nome}, use os pronomes corretos com base nesse nome fornecido, randomize a escolha de começar ou não com a frase: Meu nome é...".`;
+    }
+
+    prompt += ' A bios deve ser uma apresentação com base nos interesses do usuário e em sua personalidade. Esta bios não deve conter nenhuma hashtag em seu corpo.\n';
+
+    if (interessesPredefinidos.length > 0) {
+        prompt += 'Baseado em pelo menos um dos seguintes interesses: ';
+        prompt += interessesPredefinidos.map(i => `"${i}"`).join(', ') + '.\n';
+    }
+
+    prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo da bios.';
+    prompt += ' O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
+
+    try {
+        const response = await genAI.models.generateContent({
+            model: 'gemini-2.5-flash-lite-preview-06-17',
+            contents: prompt
+        });
+
+        const text = response.text;
+        const jsonMatch = text.match(/{[\s\S]*}/);
+
+        if (!jsonMatch)
+            throw new Error('Resposta fora do formato esperado.');
+
+        const post = JSON.parse(jsonMatch[0]);
+        const texto = post.texto || null;
+        const interesses = post.interesses || [];
+
+        res.json({ texto, interesses });
+    } catch (error) {
+        console.error('Erro:', error);
+        res.status(500).json({ texto: null, interesses: interessesPredefinidos || [] });
+    }
+});
+
 
 // Inicia o servidor na porta especificada.
 app.listen(PORT, () => {
