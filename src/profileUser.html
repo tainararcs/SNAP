@@ -1,28 +1,38 @@
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link rel="stylesheet" href="css/profile/profileUser.css" />
+
 <!-- profileUser.html -->
 <div class="profile">
+  <!-- Imagem -->
+  <div class="profile-picture-wrapper">
+    <div class="profile-picture">
+      <img id="profile-preview" src="" alt="Foto de perfil">
 
-  <div class="cover"></div>
+      <!-- Ícone que aciona o input escondido -->
+      <label for="profile-upload" class="edit-icon-label" title="Alterar foto" style="display: none;">
+        <span class="material-symbols-outlined">edit</span>
+      </label>
 
-  <div class="profile-image">
-    <img id="profileUser-img" src="" alt="Sua foto de perfil">
+      <!-- Input oculto -->
+      <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
+    </div>
   </div>
 
+  <!-- Nome -->
   <div id="profileUser-name" class="user-name"></div>
+  <input type="text" id="name-edit-input" style="display: none;" />
 
   <!-- Bios usuário -->
-  
   <div id="profileUser-bios">
-    <div id="biosText">
-      <!-- Bios do usuário logado será inserida aqui -->
-    </div>
-    <button class="biosBtn">Editar Bios</button>
+    <div id="biosText"></div>
+    <textarea id="bios-edit-textarea" style="display: none;"></textarea>
+    <button class="biosBtn" style="display: none;">Editar Bios</button>
   </div>
 
   <div id="edit-button">
     <button id="editProfileBtn">Editar Perfil</button>
+    <button id="saveProfileBtn" style="display: none;">Salvar Alterações</button>
   </div>
 
-  <div id="profileUser-posts" class="mt-4">
-    <!-- Posts do usuário logado serão inseridos aqui -->
-  </div>
+  <div id="profileUser-posts" class="mt-4"></div>
 </div>
