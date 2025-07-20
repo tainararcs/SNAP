@@ -1,52 +1,91 @@
-document.addEventListener("click", (event) => {
-  const target = event.target;
+const createBtn = document.querySelector("#link-create");
+let previousActiveLink = null;
 
-  if (target.id === "link-create") {
-    event.preventDefault();
+createBtn.addEventListener("click", (e) => {
+  e.preventDefault();
 
-    // Carrega conteúdo da aba "Criar" e mostra a modal
-    loadPage("create", "create.html", () => {
-      const user = JSON.parse(localStorage.getItem("user"));
+  // Guarda qual era o link ativo antes de clicar em "criar"
+  const current = document.querySelector(".nav-link.active");
+  if (current && current.id !== "link-create") {
+      previousActiveLink = current.id;
+  }
 
-      if (user) {
-        document.getElementById("modal-avatar").src = user.profileImage || "https://via.placeholder.com/40";
-        document.getElementById("modal-username").textContent = user.name || "Usuário";
+  const container = document.getElementById("modals-container");
 
-        document.getElementById("postModal").classList.remove("hidden");
+  // Só carrega se ainda não estiver carregado
+  if (!document.getElementById("postModal")) {
+      fetch("create.html")
+      .then(res => res.text())
+      .then(html => {
+          container.innerHTML = html;
+          setupCreateModal();
+      });
+  } else {
+      document.getElementById("postModal").classList.remove("hidden");
+  }
 
-        document.getElementById("closePostModal").addEventListener("click", () => {
-          document.getElementById("postModal").classList.add("hidden");
-        });
+  setActiveLink("link-create");
+});
 
-        document.getElementById("postSubmitBtn").addEventListener("click", () => {
-          const content = document.getElementById("postContent").value;
-          const hashtags = document.getElementById("postHashtags").value;
-          const data = new Date().toLocaleDateString("pt-BR");
+function setupCreateModal() {
+  const modal = document.getElementById("postModal");
+  const closeBtn = document.getElementById("closePostModal");
 
-          if (content.trim()) {
+  // Mostrar modal
+  modal.classList.remove("hidden");
+
+  // Fechar modal ao clicar no X
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    setActiveLink(previousActiveLink);
+  });
+
+  // fechar clicando fora do modal
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.classList.add("hidden");
+    }
+  });
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user) {
+    document.getElementById("modal-avatar").src = user.profileImage;
+    document.getElementById("modal-username").textContent = user.name;
+
+    document.getElementById("postModal").classList.remove("hidden");
+
+    document.getElementById("closePostModal").addEventListener("click", () => {
+      document.getElementById("postModal").classList.add("hidden");
+    });
+
+
+    // Postar
+    const postBtn = document.getElementById("postSubmitBtn");
+    postBtn.addEventListener("click", () => {
+        const content = document.getElementById("postContent").value;
+        const hashtags = document.getElementById("postHashtags").value;
+        const data = new Date().toLocaleDateString("pt-BR");
+
+
+        if (content.trim()) {
             const newPost = {
               conteudo: content,
               hashtags,
               avatarUrl: user.profileImage,
               data
-            };
+        };
+      
 
-            user.posts = user.posts || [];
-            user.posts.unshift(newPost);
-            localStorage.setItem("user", JSON.stringify(user));
-
-            alert("Post criado com sucesso!");
-            document.getElementById("postModal").classList.add("hidden");
-            document.getElementById("postContent").value = "";
-            document.getElementById("postHashtags").value = "";
-          } else {
-            alert("Escreva algo antes de postar.");
-          }
-        });
+        user.posts = user.posts || [];
+        user.posts.unshift(newPost);
+        localStorage.setItem("user", JSON.stringify(user));
+        
+        console.log("Postando:", content, hashtags);
+        modal.classList.add("hidden");
+        document.getElementById("postContent").value = "";
+        document.getElementById("postHashtags").value = "";
       }
     });
-
-    setActiveLink("link-create");
-    showPage("page-create");
   }
-});
+}
