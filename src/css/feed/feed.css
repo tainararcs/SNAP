@@ -16,7 +16,7 @@
 .sidebar {
     width: 220px;
     background-color: var(--white);
-    border-right: 2px solid var(--blue3);
+    border-right: 2px solid var(--purple1);
     height: 100vh;
     position: sticky;
     top: 0;
@@ -173,7 +173,7 @@
     top: 0;
     height: 100vh;
     background-color: var(--white);
-    border-left: 2px solid var(--blue3);
+    border-left: 2px solid var(--purple1);
     overflow-y: auto;
     display: flex;
     flex-direction: column;

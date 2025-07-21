@@ -1,17 +1,116 @@
-.material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24;
-    font-size: 28px;
-    color: var(--roxo-primario, #6930C3);
-    
+#settings-container, 
+#theme-div,
+#help-div,
+#language-div {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px var(--purple3);
 }
 
-.back-btn, .LbackToSettings, .HbackToSettings, .TbackToSettings {
-    vertical-align: middle;
-    margin-right: 10px;
-    cursor: pointer;
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--purple1);
+}
+
+.settings-title,
+.subtitle {
+    color: var(--purple1) !important;
+}
+
+.settings-header h2.subtitle {
+    margin: 0 auto;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.settings-btn {
+    font-size: 16px;
+    line-height: 1px;
+    background-color: var(--white);
+    color: var(--purple1);
+    border: 1px solid var(--purple1) !important;
+}
+
+.settings-btn:hover {
+    background-color: var(--purple1);
+    color: var(--white) !important;
+    border: 1px solid var(--purple1);
+}
+
+.settings-options {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.settings-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    color: var(--purple1);
+    padding: 12px 16px; 
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.settings-option:hover {
+    background-color: var(--purple1);
+    color: var(--white);
+    font-weight: bold;
+}
+
+.settings-option:hover .glyphicon {
+    color: var(--white);
+}
+
+.icon-left {
+    margin-right: 12px;
+    font-size: 20px;
+}
+
+.option-text {
+    flex-grow: 1;
+}
+
+.icon-right {
+    font-size: 14px;
+    margin-left: auto;
+    color: var(--purple1);
+}
+
+.logout-wrapper {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.logout-wrapper .glyphicon {
+    font-size: 18px;
+    line-height: 1;
+    position: relative;
+    top: 1px; 
+}
+
+
+.logout-btn {
+    gap: 4px;
+    padding: 10px 30px !important;
+}
+
+.settings-option,
+.settings-option:hover,
+.settings-option:focus,
+.settings-option:active {
+    text-decoration: none !important;
 }

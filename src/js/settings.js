@@ -16,7 +16,7 @@ configLink.addEventListener("click", (e) => {
 
 function setupSettingsNavigation() {
     const settingsSections = {
-        settingsMain: document.getElementById("settingsDesktop"),
+        settingsMain: document.getElementById("settings-container"),
         theme: document.getElementById("theme-div"),
         help: document.getElementById("help-div"),
         language: document.getElementById("language-div")
@@ -53,15 +53,15 @@ function setupSettingsNavigation() {
 
     // Botões de voltar
     document.getElementById("TbackToSettings").addEventListener("click", () => {
-        showSettingsSection("settingsDesktop");
+        showSettingsSection("settings-container");
     });
 
     document.getElementById("HbackToSettings").addEventListener("click", () => {
-        showSettingsSection("settingsDesktop");
+        showSettingsSection("settings-container");
     });
 
     document.getElementById("LbackToSettings").addEventListener("click", () => {
-        showSettingsSection("settingsDesktop");
+        showSettingsSection("settings-container");
     });
 
     //Tema
@@ -77,8 +77,10 @@ function setupSettingsNavigation() {
     
     // Logout
     document.getElementById("btnLogout").addEventListener("click", (e) => {
-        e.preventDefault();
-        window.location.href = "index.html";
+        if (confirm('Tem certeza que deseja sair de sua conta?')) {
+            e.preventDefault();
+            window.location.href = "index.html";
+        }
     });
   
 }
