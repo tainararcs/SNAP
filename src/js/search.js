@@ -1,6 +1,6 @@
-import { getStoredUsers } from './posts.js';
+import { getStoredUsers } from "./posts.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   const searchLink = document.getElementById("link-search");
 
   searchLink.addEventListener("click", (e) => {
@@ -14,36 +14,51 @@ document.addEventListener('DOMContentLoaded', () => {
         const users = getStoredUsers();
         const results = [];
 
-        users.forEach(user => {
-          user.posts.forEach(post => {
+        users.forEach((user) => {
+          user.posts.forEach((post) => {
             if (post.hashtags.includes(query)) {
               results.push({
                 nomeUsuario: user.nome,
                 conteudo: post.conteudo,
                 hashtags: post.hashtags,
                 avatarUrl: post.avatarUrl,
-                data: post.data
+                data: post.data,
               });
             }
           });
         });
 
-        resultsContainer.innerHTML = results.length === 0
-          ? `<p class="loading">Nenhum post encontrado com a hashtag <strong>${query}</strong>.</p>`
-          : results.map(postData => `
+        resultsContainer.innerHTML =
+          results.length === 0
+            ? `<p class="loading">Nenhum post encontrado com a hashtag <strong>${query}</strong>.</p>`
+            : results
+                .map(
+                  (postData) => `
               <div class="post-card">
                 <div class="post-header">
                   <img src="${postData.avatarUrl}" 
                     alt="${postData.nomeUsuario}" 
                     class="post-avatar" 
                     onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
-                  <a href="#" class="clicavel" data-user="${postData.nomeUsuario}">${postData.nomeUsuario}</a>
+                  <a href="#" class="clicavel" data-user="${
+                    postData.nomeUsuario
+                  }">${postData.nomeUsuario}</a>
                   <span class="post-time">${postData.data}</span>
                 </div>
                 <p class="post-content">${postData.conteudo}</p>
-                <p class="post-hashtags">${postData.hashtags}</p>
+                <p class="post-hashtags">${postData.hashtags
+                  .split(" ")
+                  .filter((tag) => tag.startsWith("#"))
+                  .map(
+                    (tag) =>
+                      `<a href="#" class="hashtag-link" data-hashtag="${tag}">${tag}</a>`
+                  )
+                  .join(" ")}     
+                </p>
               </div>
-          `).join('');
+          `
+                )
+                .join("");
       }
 
       function validateAndSearch(query) {
@@ -70,6 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       searchInput.addEventListener("input", () => {
         validateAndSearch(searchInput.value.trim());
+      });
+      resultsContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("hashtag-link")) {
+          e.preventDefault();
+          const tag = e.target.dataset.hashtag;
+          searchInput.value = tag;
+          validateAndSearch(tag);
+        }
       });
     });
 
