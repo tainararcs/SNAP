@@ -73,12 +73,12 @@ textarea#postContent {
 .hashtags-box {
   margin-top: 10px;
 }
-
-#postHashtags {
+input#postHashtags {
   width: 100%;
   padding: 6px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  background-color: var(--main-white);
 }
 
 .post-actions {

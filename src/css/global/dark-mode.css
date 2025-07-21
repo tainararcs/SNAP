@@ -1,4 +1,3 @@
-/* ===== MODO ESCURO: Página de Login ===== */
 body.dark-mode {
   --main-white: #282A2C;
   --white: #1e1e1e;
@@ -32,6 +31,19 @@ body.dark-mode {
   transform: translate(-15px, -4px);
 }
 
+/* ===== MODO ESCURO: Página de Login ===== */
+body.dark-mode#body-login a {
+	color: #FCF7FF;
+}
+
+body.dark-mode#body-login p{
+  font-weight: bold;
+  color: #1e1e1e;
+}
+
+body.dark-mode#body-login input{
+  color: #FCF7FF;
+}
 
 /* ===== MODO ESCURO: Página de Interesses ===== */
 body.dark-mode#interests-page {
@@ -48,10 +60,31 @@ body.dark-mode#interests-page .interests-card {
   border: 1px solid #444;
 }
 
-body.dark-mode#interests-page .form-control.interests-input {
+body.dark-mode#interests-page .interests-input{
   background-color: #333;
   color: #fff;
   border: 1px solid #555;
+}
+
+body.dark-mode#interests-page .interests-instruction{
+  color: #6930C3;
+}
+
+body.dark-mode#interests-page .add-ico{
+  color: #6930C3;
+}
+body.dark-mode#interests-page .suggestions{
+  color: #C4CAD0;
+  background-color: #3C3D3F;
+}
+
+body.dark-mode#interests-page .suggestions div:hover{
+  color: #282A2C;
+  background-color: #5E60CE;
+}
+body.dark-mode#interests-page p{
+  color:#C4CAD0 ;
+
 }
 
 /* ===== MODO ESCURO: Página de Feed ===== */
@@ -72,9 +105,7 @@ body.dark-mode#body-feed {
 }
 
 /* Sidebars, header e sidebar-direita */
-body.dark-mode#body-feed .sidebar,
-body.dark-mode#body-feed .sidebar-direita,
-body.dark-mode#body-feed .header {
+body.dark-mode#body-feed .sidebar, .header {
   background-color: var(--main-white);
   color: var(--light-gray2);
   border-color: var(--light-gray1);
@@ -94,12 +125,6 @@ body.dark-mode#body-feed .sidebar .nav-link.active {
   background-color: var(--light-gray1);
   color: var(--light-gray2);
 }
-/*
-/* Rodapé da sidebar */
-body.dark-mode#body-feed .sidebar-footer {
-  border-top: 1px solid var(--border-color);
-  color: var(--text-secondary);
-}
 
 /* Feed central */
 body.dark-mode#body-feed .feed-central {
@@ -117,40 +142,24 @@ body.dark-mode#body-feed .post-card {
   padding: 1.25rem;
 }
 
-/* Elementos com cor primária */
-body.dark-mode#body-feed .post-header,
-body.dark-mode#body-feed .post-content,
-body.dark-mode#body-feed .sidebar-direita h6,
+body.dark-mode#body-feed .post-content{
+  color: var(--main-black);
+}
+
+body.dark-mode#body-feed .fixed-sidebar-direita {
+  background-color: var(--light-gray1);
+  border-left: 2px solid var(--purple3);
+}
 body.dark-mode#body-feed .profile-suggestion {
-  color: var(--light-gray1);
+  color: var(--black);
 }
 
-/* Elementos com cor de destaque */
-body.dark-mode#body-feed .post-username,
-body.dark-mode#body-feed .post-hashtags,
-body.dark-mode#body-feed .profile-suggestion:hover {
-  color: var(--light-gray2);
+body.dark-mode#body-feed .loading, .generating-message{
+  color: var(--black);
 }
 
-/* Sidebar direita */
-body.dark-mode#body-feed .sidebar-direita {
-  border-color: var(--dark-gray);
-}
-
-/* Mensagens de loading / erro / tempo do post */
-body.dark-mode#body-feed .loading,
-body.dark-mode#body-feed .generating-message,
-body.dark-mode#body-feed .post-time {
-  color: var(--gray);
-}
-
-body.dark-mode#body-feed .generating-message.active {
-  color: var(--highlight-color);
-}
-
-body.dark-mode#body-feed .error-card {
-  background-color: var(--gray);
-  color: var(--light-gray1);
+body.dark-mode#body-feed .profile-suggestion:hover{
+  color: var(--purple3);
 }
 
 /* ===== MODO ESCURO: Pesquisa ===== */
@@ -180,7 +189,7 @@ body.dark-mode .notification-card{
   border-color: var(--purple3);
 
 }
-body.dark-mode .notification-time, .bi {
+body.dark-mode .notification-time, .bi, .btn {
   color: var(--purple3);
 }
 body.dark-mode .mark-all-read{
@@ -194,3 +203,36 @@ body.dark-mode .no-notifications{
   background-color: var(--dark-gray);  
 color: var(--purple3);
 }
+
+/* ===== MODO ESCURO: Criar ===== */
+
+ body.dark-mode .modal-content{
+  color:  #878C8F;
+  background-color: #282A2C;
+  border-color:#5E60CE;
+ }
+
+body.dark-mode #postContent{
+  border-color: #5E60CE;
+  background-color: #282A2C;
+  color: #D9DCE2;
+}
+
+
+body.dark-mode .modal-username{
+  color: #5E60CE;
+}
+
+body.dark-mode label{
+  color: #5390D9;
+}
+body.dark-mode #postHashtags, .modal-header{
+  border-color: #5E60CE;
+  color: #5390D9;
+}
+
+body.dark-mode .close-button{
+  color: #6930C3;
+}
+
+/* ===== MODO ESCURO: Perfil ===== */

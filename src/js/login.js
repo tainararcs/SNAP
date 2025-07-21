@@ -1,4 +1,4 @@
-import { User, updateUserTheme } from './User.js';
+import { User, updateUserTheme, saveUserProfileImage } from './User.js';
 
 let loginPage;
 let recoverPage;
@@ -186,6 +186,7 @@ function registerUser() {
 
 	const newUser = new User(0, nome, email, senha);
 	localStorage.setItem('user', JSON.stringify(newUser));
+	saveUserProfileImage(null);
 
 	showAlert('Usuário cadastrado com sucesso!', 'success');
 	updateUserTheme(themeDark);

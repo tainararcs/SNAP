@@ -135,7 +135,19 @@ export function updateUserBios(userBios= "") {
 export function saveUserProfileImage(file) {
     const user = JSON.parse(localStorage.getItem('user'));
     
-    if (!user || !file) return;
+    if (!user) return;
+    const img = document.getElementById("profile-preview");
+
+    // Imagem SVG padrão (base64)
+    const defaultImageBase64 =
+        "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9ImdyYXkiIGQ9Ik0xMiAyYy0xLjY2IDAtMyAxLjM0LTMgM3MxLjM0IDMgMyAzIDMtMS4zNCAzLTMtMS4zNC0zLTMtM3ptMCAxMGMtMi42NyAwLTggMS4zNC04IDR2MmgxNnYtMmMwLTIuNjYtNS4zMy00LTgtNHoiLz48L3N2Zz4=";
+
+    if (!file) {
+        user.profileImage = defaultImageBase64;
+        localStorage.setItem('user', JSON.stringify(user));
+        if (img) img.src = defaultImageBase64;
+        return;
+    }
 
     const reader = new FileReader();
     reader.onload = () => {
