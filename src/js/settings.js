@@ -30,6 +30,12 @@ function setupSettingsNavigation() {
     }
 
     // Botões de navegação
+    document.getElementById("profile-link").addEventListener("click", e =>{
+        e.preventDefault();
+        setActiveLink("link-profile-user");
+        showPage("page-profile-user");
+    });
+
     document.getElementById("changeTheme-link").addEventListener("click", e => {
         e.preventDefault();
         showSettingsSection("theme-div");
@@ -46,10 +52,6 @@ function setupSettingsNavigation() {
     });
 
     // Botões de voltar
-    document.getElementById("backToFeed").addEventListener("click", () => {
-        showPage("page-feed");
-        setActiveLink("link-feed");
-    });
     document.getElementById("TbackToSettings").addEventListener("click", () => {
         showSettingsSection("settingsDesktop");
     });

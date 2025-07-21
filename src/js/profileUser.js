@@ -1,4 +1,4 @@
-import { updateUserBios, saveUserProfileImage, loadUserProfileImage } from './User.js';
+import {saveUserProfileImage, loadUserProfileImage } from './User.js';
 
 const profileUserLink = document.querySelector("#link-profile-user");
 
@@ -28,7 +28,6 @@ function setupProfileUser() {
   const editIcon = document.querySelector("label.edit-icon-label");
   const editBtn = document.getElementById("editProfileBtn");
   const saveBtn = document.getElementById("saveProfileBtn");
-  const biosBtn = document.querySelector(".biosBtn");
   const uploadInput = document.getElementById("profile-upload");
 
   if (nameDisplay && nameInput) {
@@ -52,7 +51,7 @@ function setupProfileUser() {
         const postHTML = `
           <div class="post-card">
             <div class="post-header">
-              <img src="${post.avatarUrl || user.profileImage || 'https://via.placeholder.com/40'}"
+              <img src="${user.profileImage}"
                 alt="${user.name}"
                 class="post-avatar"
                 onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
@@ -76,7 +75,6 @@ function setupProfileUser() {
     if (nameInput) nameInput.style.display = "inline-block";
     if (biosText) biosText.style.display = "none";
     if (biosTextarea) biosTextarea.style.display = "block";
-    if (biosBtn) biosBtn.style.display = "inline-block";
 
     const postsContainer = document.getElementById("profileUser-posts");
     if (postsContainer) postsContainer.style.display = "none";
@@ -108,11 +106,9 @@ function setupProfileUser() {
       biosText.style.display = "block";
     }
     if (biosTextarea) biosTextarea.style.display = "none";
-    if (biosBtn) biosBtn.style.display = "none";
     if (saveBtn) saveBtn.style.display = "none";
     if (editIcon) editIcon.style.display = "none";
     if (postsContainer) postsContainer.style.display = "block";
-
   });
 
   uploadInput.addEventListener("change", () => {

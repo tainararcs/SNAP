@@ -130,6 +130,7 @@ export function updateUserBios(userBios= "") {
     user.bios = userBios;
     localStorage.setItem('user', JSON.stringify(user));
 }
+
 //Recebe o arquivo da imagem selecionada e salva ela no localStore.
 export function saveUserProfileImage(file) {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -149,19 +150,6 @@ export function saveUserProfileImage(file) {
 
   reader.readAsDataURL(file);// Converte o arquivo em base64
 }
-
-//Remove a imagem do usuario
-export function removeProfileImage(){
-    const user = JSON.parse(localStorage.getItem('user'));
-     if (!user) return;
-    user.profileImage = "img/icons/circle-user.svg";
-    localStorage.setItem('user', JSON.stringify(user));
-    const img = document.getElementById("profile-preview");
-    if (img) {
-        img.src = user.profileImage;
-    }
-}
-
 
 // Carrega a imagem salva no localStore, se não exisitir nenhuma ele usa uma padrão existente.
 export function loadUserProfileImage() {

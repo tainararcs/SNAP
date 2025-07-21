@@ -1,3 +1,4 @@
+import { loadUserProfileImage } from './User.js';
 const createBtn = document.querySelector("#link-create");
 let previousActiveLink = null;
 
@@ -44,12 +45,13 @@ function setupCreateModal() {
   window.addEventListener("click", (event) => {
     if (event.target === modal) {
       modal.classList.add("hidden");
+      setActiveLink(previousActiveLink);
     }
   });
 
   const user = JSON.parse(localStorage.getItem("user"));
-
   if (user) {
+
     document.getElementById("modal-avatar").src = user.profileImage;
     document.getElementById("modal-username").textContent = user.name;
 
@@ -65,7 +67,6 @@ function setupCreateModal() {
     postBtn.addEventListener("click", () => {
         const content = document.getElementById("postContent").value;
         const hashtags = document.getElementById("postHashtags").value;
-        const data = new Date().toLocaleDateString("pt-BR");
 
 
         if (content.trim()) {
@@ -73,13 +74,13 @@ function setupCreateModal() {
               conteudo: content,
               hashtags,
               avatarUrl: user.profileImage,
-              data
+              data: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
         };
       
 
         user.posts = user.posts || [];
         user.posts.unshift(newPost);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         
         console.log("Postando:", content, hashtags);
         modal.classList.add("hidden");
