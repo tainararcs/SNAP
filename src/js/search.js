@@ -46,21 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
                   <span class="post-time">${postData.data}</span>
                 </div>
                 <p class="post-content">${postData.conteudo}</p>
-                <p class="post-hashtags">${postData.hashtags
-                  .split(" ")
-                  .filter((tag) => tag.startsWith("#"))
-                  .map(
-                    (tag) =>
-                      `<a href="#" class="hashtag-link" data-hashtag="${tag}">${tag}</a>`
-                  )
-                  .join(" ")}     
-                </p>
+               <p class="post-hashtags">${postData.hashtags.split(" ").map( (tag) =>`<a href="#" class="hashtag-link" data-hashtag="${tag}">${tag}</a>`).join(" ")}</p>
               </div>
           `
                 )
                 .join("");
       }
-
       function validateAndSearch(query) {
         if (query.length === 0) {
           resultsContainer.innerHTML = `<p class="loading">Digite algo para começar a pesquisar...</p>`;
@@ -90,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.classList.contains("hashtag-link")) {
           e.preventDefault();
           const tag = e.target.dataset.hashtag;
-          searchInput.value = tag;
+          document.getElementById("search-input").value =tag;
           validateAndSearch(tag);
         }
       });

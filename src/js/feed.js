@@ -56,9 +56,7 @@ function addPostToFeedDOM(postData) {
   postCard.className = 'post-card';
   const postTime = new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
 
-  const hashtagsHtml = postData.hashtags.split(' ')
-  .map(tag => `<a href="#" class="hashtag-link" data-tag="${tag}">${tag}</a>`)
-  .join(' ');
+  const hashtagsHtml = postData.hashtags;
 
   postCard.innerHTML = `
     <div class="post-header">
@@ -76,7 +74,7 @@ function addPostToFeedDOM(postData) {
     link.addEventListener('click', (e) => {
       e.preventDefault();
 
-      const hashtag = e.target.dataset.tag;
+      const hashtag = e.target.dataset.hashtag;
 
       localStorage.setItem('searchQuery', hashtag);
 
