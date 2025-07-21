@@ -227,7 +227,7 @@
 }
 
 .profile-suggestion span {
-    margin-left: 0.5rem;
+    margin-left: 5px;
 }
 
 .loading,
@@ -241,11 +241,6 @@
 .generating-message.active {
     font-weight: 500;
     color: var(--blue1);
-}
-
-.error-card {
-    background-color: #fff3f3;
-    border: 1px solid #ffcccc;
 }
 
 .copyright {
