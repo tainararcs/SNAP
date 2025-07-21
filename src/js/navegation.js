@@ -19,7 +19,7 @@ function showPage(pageId) {
     });
 
     const sidebarDireita = document.querySelector('.fixed-sidebar-direita');
-    if (pageId === "page-configs" || pageId === "page-notifications" || pageId === "page-profile") {
+    if (pageId === "page-configs" || pageId === "page-notifications" || pageId === "page-profile" || pageId === "page-profile-user") {
         sidebarDireita.style.display = "none";
     } else {
         sidebarDireita.style.display = "block";
