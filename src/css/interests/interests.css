@@ -46,13 +46,8 @@
 }
 
 .interests-input {
-    height: 60px !important;
-    border: 1px solid var(--purple1);
-    border-radius: 8px !important; 
-    font-size: 16px;
     padding-left: 20px;
     padding-right: 60px; 
-    width: 100%; 
 }
 
 .interests-input:focus {

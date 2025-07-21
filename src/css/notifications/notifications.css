@@ -17,21 +17,8 @@
     border-bottom: 1px solid var(--purple1);
 }
 
-.notification-title {
-    color: var(--purple1) !important;
-}
-
 .notification-btn {
     font-size: 16px;
-    background-color: var(--white);
-    color: var(--purple1);
-    border: 1px solid var(--purple1) !important;
-}
-
-.notification-btn:hover {
-    background-color: var(--purple1);
-    color: var(--white) !important;
-    border: 1px solid var(--purple1);
 }
 
 .notification-actions {

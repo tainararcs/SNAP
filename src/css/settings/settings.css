@@ -19,7 +19,6 @@
     border-bottom: 1px solid var(--purple1);
 }
 
-.settings-title,
 .subtitle {
     color: var(--purple1) !important;
 }
@@ -33,15 +32,6 @@
 .settings-btn {
     font-size: 16px;
     line-height: 1px;
-    background-color: var(--white);
-    color: var(--purple1);
-    border: 1px solid var(--purple1) !important;
-}
-
-.settings-btn:hover {
-    background-color: var(--purple1);
-    color: var(--white) !important;
-    border: 1px solid var(--purple1);
 }
 
 .settings-options {

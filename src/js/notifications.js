@@ -169,12 +169,12 @@ window.NotificationSystem = {
         
         return `
             <div class="notification-header">
-                <h1 class="notification-title">Notificações</h1>
+                <h1 class="title">Notificações</h1>
                 <div class="notification-actions">
-                    <button id="mark-all-read" class="btn btn-outline-primary notification-btn">
+                    <button id="mark-all-read" class="btn btn-outline-primary standard-btn notification-btn">
                         <i class="bi bi-check-all"></i> Marcar todas como lidas
                     </button>
-                    <button id="clear-all" class="btn btn-outline-danger notification-btn">
+                    <button id="clear-all" class="btn btn-outline-danger standard-btn notification-btn">
                         <i class="bi bi-trash"></i> Limpar todas
                     </button>
                 </div>
