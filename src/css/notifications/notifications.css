@@ -1,4 +1,13 @@
 /* notifications.css */
+.notifications-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px var(--purple3);
+}
+
 .notification-header {
     display: flex;
     justify-content: space-between;
@@ -13,16 +22,16 @@
 }
 
 .notification-btn {
+    font-size: 16px;
     background-color: var(--white);
     color: var(--purple1);
-    border: 1px solid var(--purple1);
+    border: 1px solid var(--purple1) !important;
 }
 
 .notification-btn:hover {
     background-color: var(--purple1);
-    color: var(--white);
+    color: var(--white) !important;
     border: 1px solid var(--purple1);
-    font-weight: bold;
 }
 
 .notification-actions {
@@ -33,15 +42,6 @@
 .notifications-list {
     max-height: calc(100vh - 150px);
     overflow-y: auto;
-}
-
-.notifications-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: var(--white);
-    border-radius: 8px;
-    box-shadow: 0 1px 3px var(--purple3);
 }
 
 .notification-card {
@@ -101,7 +101,6 @@
 .mark-as-read:hover {
     background-color: var(--blue1);
     color: var(--white);
-    font-weight: bold;
 }
 
 .no-notifications {

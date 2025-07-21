@@ -1,42 +1,76 @@
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-<!-- Desktop -->
-<div id="settingsDesktop">
-     <div class="header-settings">
-        
-        <h2>Configurações</h2>
+<div id="settings-container">
+    <div class="settings-header">    
+        <h1 class="settings-title">Configurações</h1>
     </div>
 
-    <div class="settings-links">    
-        <a href="#" id="profile-link">Conta</a>
-        <a href="#" id="changeTheme-link">Mudar tema</a>
-        <a href="#" id="language-link" >Idioma</a>
-        <a href="#" id="help-link">Ajuda</a>
+    <div class="settings-options">
+        <a href="#" id="profile-link" class="settings-option">
+            <span class="glyphicon glyphicon-user icon-left"></span>
+            <span class="option-text">Conta</span>
+            <span class="glyphicon glyphicon-chevron-right icon-right"></span>
+        </a>
+
+        <a href="#" id="changeTheme-link" class="settings-option">
+            <span class="glyphicon glyphicon-adjust icon-left"></span>
+            <span class="option-text">Mudar tema</span>
+            <span class="glyphicon glyphicon-chevron-right icon-right"></span>
+        </a>
+
+        <a href="#" id="language-link" class="settings-option">
+            <span class="glyphicon glyphicon-globe icon-left"></span>
+            <span class="option-text">Idioma</span>
+            <span class="glyphicon glyphicon-chevron-right icon-right"></span>
+        </a>
+
+        <a href="#" id="help-link" class="settings-option">
+            <span class="glyphicon glyphicon-question-sign icon-left"></span>
+            <span class="option-text">Ajuda</span>
+            <span class="glyphicon glyphicon-chevron-right icon-right"></span>
+        </a>
     </div>
 
-    <button id="btnLogout" class="btn btn-secondary ms-2">Sair</button>
-
+    <div class="logout-wrapper">
+        <button id="btnLogout" class="btn settings-btn logout-btn">
+            <span class="glyphicon glyphicon-log-out icon-left"></span>
+            Sair
+        </button>
+    </div>
 </div>
 
 <div id="theme-div" style="display: none;">
-    <button id="TbackToSettings"class="material-symbols-outlined back-btn">arrow_back</button>
-    <h2>Mudar Tema</h2>
+    <div class="settings-header">
+        <button id="TbackToSettings" class="btn settings-btn">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h2 class="subtitle m-auto">Mudar Tema</h2>
+    </div>
     <p>Selecione o tema desejado:</p>
-    <button id="light-theme">Claro</button>
-    <button id="dark-theme">Escuro</button>
-</div>
-
-<div id="help-div" style="display: none;">
-    <button id="HbackToSettings" class="material-symbols-outlined back-btn">arrow_back</button>
-    <h2>Ajuda</h2>
-    <p>Contato: 0000 - 0000</p>
-    <p>Email: teste@teste.com</p>
-    <p>Desenvolvido pela equipe de TSI, Barbacena: 2025</p>
+    <button id="light-theme" class="btn settings-btn">Claro</button>
+    <button id="dark-theme" class="btn settings-btn">Escuro</button>
 </div>
 
 <div id="language-div" style="display: none;">
-    <button id="LbackToSettings" class="material-symbols-outlined back-btn">arrow_back</button>
-    <h2>Idioma</h2>
+    <div class="settings-header">
+        <button id="LbackToSettings" class="btn settings-btn">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h2 class="subtitle m-auto">Idioma</h2>
+    </div>
     <p>Idioma do app <strong> Português do Brasil </strong></p>
     <p>Idioma Principal <strong> Português do Brasil </strong></p>
+</div>
+
+<div id="help-div" style="display: none;">
+    <div class="settings-header">
+        <button id="HbackToSettings" class="btn settings-btn">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h2 class="subtitle m-auto">Ajuda</h2>
+    </div>
+    <p>Contato: 0000 - 0000</p>
+    <p>Email: teste@teste.com</p>
+    <p>Desenvolvido pela equipe de TSI, Barbacena: 2025</p>
 </div>
