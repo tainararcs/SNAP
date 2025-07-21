@@ -86,7 +86,12 @@ app.get('/requisitarUserData', async (req, res) => {
 
     const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY2});
 
-    let prompt = 'Crie dados para um usuário de uma rede social. Os dados gerados serão:\n - nome: um nome composto, sem espaços entre os nomes, cujo primeiro nome seja o nome de alguma celebridade aleatória, personagem fictício, nome popular, mistura de cada um, e o segundo nome aleatório idem.\n - email: relacionado ao nome do usuário.\n - senha: caracteres aleatórios \n';
+    let prompt = `Crie dados para um usuário de uma rede social. Os dados gerados serão:\n
+                 - nome: um nome composto, sem espaços entre os nomes, cujo primeiro nome seja o nome de alguma celebridade
+                   aleatória, personagem fictício, nome popular, mistura de cada um, e o segundo nome aleatório idem.\n
+                 - email: relacionado ao nome do usuário.\n
+                 - senha: caracteres aleatórios\n
+    `;
 
     // Especifica o formato esperado da resposta.
     prompt += 'O retorno deve estar somente no formato JSON: {"nome": "Nome", "email": "email@email.com", "senha": "xxx"}';
@@ -130,7 +135,7 @@ app.post('/requisitarImagemPerfil', async (req, res) => {
     const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY3});
 
     const username = req.body;
-    const prompt = `Crie uma : ${username}. A resposta deve conter apenas uma imagem, sem qualquer texto.`
+    const prompt = `Crie uma imagem de uma pessoa com traços aleatórios baseando-se no nome fictício: ${username}. A resposta deve conter apenas uma imagem, sem qualquer texto.`
 
     try {
 
@@ -163,6 +168,8 @@ app.post('/requisitarImagemPerfil', async (req, res) => {
         res.status(500).send("Erro ao gerar ou salvar imagem.");
     }
 });
+
+
 app.post('/requisitarBiosUsuarioF', async (req, res) => {
     const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_KEY4 });
 
