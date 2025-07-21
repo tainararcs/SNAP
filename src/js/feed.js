@@ -56,6 +56,10 @@ function addPostToFeedDOM(postData) {
   postCard.className = 'post-card';
   const postTime = new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
 
+  const hashtagsHtml = postData.hashtags.split(' ')
+  .map(tag => `<a href="#" class="hashtag-link" data-tag="${tag}">${tag}</a>`)
+  .join(' ');
+
   postCard.innerHTML = `
     <div class="post-header">
       <img src="${postData.avatarUrl}" alt="${postData.nomeUsuario}" class="post-avatar" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
@@ -63,9 +67,24 @@ function addPostToFeedDOM(postData) {
       <span class="post-time">${postTime}</span>
     </div>
     <p class="post-content">${postData.conteudo}</p>
-    <p class="post-hashtags">${postData.hashtags}</p>
+    <p class="post-hashtags">${hashtagsHtml}</p>
   `;
   feedContainer.prepend(postCard);
+
+  postCard.querySelectorAll(".hashtag-link")
+  .forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const hashtag = e.target.dataset.tag;
+
+      localStorage.setItem('searchQuery', hashtag);
+
+      const searchLink = document.getElementById("link-search");
+
+      if(searchLink) searchLink.click();
+    });
+  });
 }
 
 async function generateAndAddSinglePost() {
