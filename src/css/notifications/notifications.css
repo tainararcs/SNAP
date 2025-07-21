@@ -1,14 +1,28 @@
 /* notifications.css */
-
-/* notifications.css */
-
 .notification-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--purple1);
+}
+
+.notification-title {
+    color: var(--purple1) !important;
+}
+
+.notification-btn {
+    background-color: var(--white);
+    color: var(--purple1);
+    border: 1px solid var(--purple1);
+}
+
+.notification-btn:hover {
+    background-color: var(--purple1);
+    color: var(--white);
+    border: 1px solid var(--purple1);
+    font-weight: bold;
 }
 
 .notification-actions {
@@ -25,15 +39,15 @@
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px var(--purple3);
 }
 
 .notification-card {
-    background-color: #ffffff;
+    background-color: var(--white);
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px var(--blue3);
     margin-bottom: 15px;
     padding: 15px;
     display: flex;
@@ -43,19 +57,18 @@
 }
 
 .notification-card.unread {
-    border-left: 4px solid #007bff;
+    border-left: 4px solid var(--blue1);
     background-color: #f0f8ff;
 }
 
 .notification-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .notification-icon {
     font-size: 24px;
     margin-right: 15px;
-    color: #007bff;
+    color: var(--blue1);
 }
 
 .notification-content {
@@ -64,19 +77,20 @@
 
 .notification-message {
     margin: 0 0 5px 0;
-    color: #333;
+    color: var(--main-black);
     font-size: 16px;
 }
 
 .notification-time {
-    color: #777;
+    color: var(--gray);
     font-size: 14px;
 }
 
 .mark-as-read {
     background: none;
     border: none;
-    color: #007bff;
+    color: var(--blue1);
+    border: 1px solid var(--blue1);
     cursor: pointer;
     font-size: 14px;
     padding: 5px 10px;
@@ -85,14 +99,16 @@
 }
 
 .mark-as-read:hover {
-    background-color: #e6f0ff;
+    background-color: var(--blue1);
+    color: var(--white);
+    font-weight: bold;
 }
 
 .no-notifications {
     text-align: center;
     padding: 40px 20px;
-    color: #777;
+    color: var(--gray);
     font-size: 18px;
-    background-color: #f9f9f9;
+    background-color: var(--light-gray1);
     border-radius: 8px;
 }

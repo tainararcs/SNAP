@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-/* Input com ícone embutido */
+/* Input */
 .search-input-container {
   position: relative;
   display: flex;
@@ -18,7 +18,7 @@
   padding: 20px;
   font-size: 1rem;
   border-radius: 1rem;
-  border: 2px solid var(--purple1);
+  border: 2px solid var(--blue3);
   background-color: var(--white);
   color: var(--main-black);
   font-size: 16px;

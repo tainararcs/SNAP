@@ -88,7 +88,6 @@ function addPostToFeedDOM(postData) {
 async function generateAndAddSinglePost() {
   const generatingMessage = document.createElement('p');
   generatingMessage.className = 'generating-message active';
-  generatingMessage.textContent = 'Gerando post...';
   feedContainer.prepend(generatingMessage);
 
   try {
@@ -97,18 +96,11 @@ async function generateAndAddSinglePost() {
 
     if (post) {
       addPostToFeedDOM(post);
-    } else {
-      const errorCard = document.createElement('div');
-      errorCard.className = 'post-card error-card';
-      errorCard.innerHTML = `<p class="post-content" style="color: red;">Erro ao gerar o post.</p>`;
-      feedContainer.prepend(errorCard);
     }
+    // Se o post for null ou undefined, simplesmente não adiciona nada.
   } catch (error) {
     generatingMessage.remove();
-    const errorCard = document.createElement('div');
-    errorCard.className = 'post-card error-card';
-    errorCard.innerHTML = `<p class="post-content" style="color: red;">Erro inesperado: ${error.message}</p>`;
-    feedContainer.prepend(errorCard);
+    console.error("Erro ao gerar post:", error);
   }
 }
 

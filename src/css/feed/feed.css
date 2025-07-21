@@ -16,7 +16,7 @@
 .sidebar {
     width: 220px;
     background-color: var(--white);
-    border-right: 2px solid var(--blue2);
+    border-right: 2px solid var(--blue3);
     height: 100vh;
     position: sticky;
     top: 0;
@@ -173,7 +173,7 @@
     top: 0;
     height: 100vh;
     background-color: var(--white);
-    border-left: 2px solid var(--blue2);
+    border-left: 2px solid var(--blue3);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -233,9 +233,9 @@
 .loading,
 .generating-message {
     text-align: center;
-    color: var(--gray);
+    color: var(--dark-gray);
     padding: 1rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .generating-message.active {
@@ -252,7 +252,7 @@
     margin-top: auto;
     text-align: center;
     padding-top: 1rem;
-    color: var(--gray);
+    color: var(--dark-gray);
     font-size: 1.2rem;
 }
 
@@ -273,7 +273,7 @@
 }
 
 .feed-central::-webkit-scrollbar-thumb {
-    background-color: var(--light-gray2);
+    background-color: var(--light-gray1);
     border-radius: 10px;
     border: 2px solid var(--main-white);
 }

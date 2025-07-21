@@ -169,12 +169,12 @@ window.NotificationSystem = {
         
         return `
             <div class="notification-header">
-                <h1>Notificações</h1>
+                <h1 class="notification-title">Notificações</h1>
                 <div class="notification-actions">
-                    <button id="mark-all-read" class="btn btn-outline-primary">
+                    <button id="mark-all-read" class="btn btn-outline-primary notification-btn">
                         <i class="bi bi-check-all"></i> Marcar todas como lidas
                     </button>
-                    <button id="clear-all" class="btn btn-outline-danger">
+                    <button id="clear-all" class="btn btn-outline-danger notification-btn">
                         <i class="bi bi-trash"></i> Limpar todas
                     </button>
                 </div>
@@ -211,7 +211,7 @@ window.NotificationSystem = {
     generateEmptyStateHTML() {
         return `
             <div class="notification-header">
-                <h1>Notificações</h1>
+                <h1 class="notification-title">Notificações</h1>
             </div>
             <div class="no-notifications">
                 <p>Nenhuma notificação no momento.</p>
