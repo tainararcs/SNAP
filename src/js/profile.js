@@ -75,7 +75,7 @@ function setupBiosFicticia(usuario = {}) {
         const interesses = Array.isArray(usuario.interesses) ? usuario.interesses : [];
         const username = usuario.nome;
         requisitarBiosUsuarioF(interesses, username).then(bioGerada => {
-            usuario.bio = bioGerada;
+            usuario.bios = bioGerada;
             biosUserAI.innerHTML = `<p>${bioGerada}</p>`;
         }).catch(err => {
             biosUserAI.innerHTML = `<p>Erro ao gerar bios com IA.</p>`;
@@ -90,5 +90,5 @@ function setupBiosFicticia(usuario = {}) {
             biosUserAI.innerHTML = `<p>${biosText}</p>`;
     }
 
-    renderBios(usuario.bio); // Chama o render corretamente
+    renderBios(usuario.bios); // Chama o render corretamente
 }
