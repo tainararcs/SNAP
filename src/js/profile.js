@@ -9,7 +9,10 @@ document.addEventListener("click", (event) => {
         const userName = event.target.dataset.user;
         
         loadPage("profile", "profile.html", () => {
-
+            const users = getStoredUsers();
+            const usuario = users.find(u => u.nome === userName);
+            setupBiosFicticia(usuario);
+            
             const nomeSpan = document.getElementById("user-name");
             const postListContainer = document.getElementById("user-posts");
             const profileImage = document.getElementById("profile-img");
@@ -20,15 +23,12 @@ document.addEventListener("click", (event) => {
 
             if (nomeSpan) nomeSpan.textContent = userName;
 
-            const users = getStoredUsers();
-            const usuario = users.find(u => u.nome === userName);
 
             if (!usuario) {
                 postListContainer.innerHTML = `<p>Usuário não encontrado.</p>`;
                 return;
             }
 
-            setupBiosFicticia(usuario);
 
             if (profileImage) {
                 profileImage.src = usuario.avatarUrl || 
