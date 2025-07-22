@@ -109,8 +109,8 @@
 .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin: 20px 0 60px;
+    gap: 8px;
+    margin: 10px 0 40px;
     min-height: 40px;
 }
 
@@ -171,6 +171,8 @@
     display: none;
 }
 
+/* Recomendações */
+
 /* Footer */
 .interests-footer {
     display: flex;
@@ -218,6 +220,10 @@
     font-size: 16px;
     border-radius: 8px;
     min-width: 120px;
+}
+
+.btn-modal {
+    color: var(--white) !important;
 }
 
 /* Responsividade */

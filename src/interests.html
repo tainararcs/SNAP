@@ -32,21 +32,21 @@
                         </div>
                         <p class="interests-instruction">Adicione pelo menos 3 interesses para continuar</p>
 
-                        <!-- Seção de recomendações padrão -->
-                        <div class="default-recommendations">
-                            <h3 class="recommendations-title">Recomendados para você</h3>
-                            <div id="default-tags" class="recommended-tags"></div>
-                        </div>
-
                         <div class="form-group">
                             <div class="input-with-button">
-                                <input type="text" id="interests-input" class="form-control interests-input" placeholder="Ex: Artes, Paisagens, etc." autocomplete="off">
+                                <input type="text" id="interests-input" class="form-control standard-input interests-input" placeholder="Ex: Artes, Paisagens, etc." autocomplete="off">
                                 <span class="add-icon">+</span>
                             </div>
                             <div id="suggestion" class="suggestions"></div>
                         </div>
 
                         <div id="tag" class="tags"></div>
+
+                        <!-- Seção de recomendações padrão -->
+                        <div class="default-recommendations">
+                            <h3 class="recommendations-title">Recomendados para você</h3>
+                            <div id="default-tags" class="recommended-tags"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         <p id="alertMessage"></p>
                     </div>
                     <div class="modal-footer text-center" style="display: block;">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-primary btn-modal" data-dismiss="modal">OK</button>
                     </div>
                 </div>
             </div>

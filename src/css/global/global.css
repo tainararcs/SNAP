@@ -44,6 +44,7 @@ html, body {
     border: 2px solid var(--purple1);
     border-radius: 8px !important; 
     font-size: 14px;
+    cursor: pointer;
     color: var(--main-black);
 }
 

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const MAX_INTERESTS = 5;
     const MIN_INTERESTS_TO_PROCEED = 3;
-    const DEFAULT_SUGGESTIONS_COUNT = 10;
+    const DEFAULT_SUGGESTIONS_COUNT = 8;
 
     const listaGemini = [
         "Séries", "História", "Inteligência Artificial", "Astronomia", "Música",
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         availableRecommendations.forEach(item => {
             const tag = document.createElement('span');
-            tag.className = 'recommended-tag';
+            tag.className = 'recommended-tag tag';
             tag.textContent = item;
             tag.onclick = () => addInterest(item);
             defaultTagsDiv.appendChild(tag);
