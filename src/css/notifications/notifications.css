@@ -19,6 +19,7 @@
 
 .notification-btn {
     font-size: 16px;
+    background-color: var(--white);
 }
 
 .notification-actions {

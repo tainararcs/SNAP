@@ -185,24 +185,60 @@ body.dark-mode .notification-header{
 }
 
 body.dark-mode .notification-card{
-  background-color: var(--gray);
+  background-color: var(--light-gray1);
   border-color: var(--purple3);
-
 }
+
+body.dark-mode .notification-card.unread {
+  border-left: 4px solid var(--light-gray2);
+  background-color: var(--gray);
+}
+
+body.dark-mode .notification-card:not(.unread) p.notification-message {
+  color: var(--light-gray2);
+}
+
+
+body.dark-mode .notification-card:hover {
+  transform: translateY(-2px);
+}
+
 body.dark-mode .notification-time, .bi, .btn {
   color: var(--purple3);
 }
+
 body.dark-mode .mark-all-read{
   color: var(--purple3);
 }
-body.dark-mode .mark-as-read{
-  color: var(--purple3);
+
+body.dark-mode .standard-btn{
+  background-color: var(--main-white);
+}
+
+body.dark-mode .standard-btn:hover{
+  color: var(--main-white) !important;
+  background-color: var(--purple3);
 }
 
 body.dark-mode .no-notifications{
   background-color: var(--dark-gray);  
-color: var(--purple3);
+  color: var(--purple3);
 }
+
+body.dark-mode p.notification-message{
+  color: var(--light-gray1);
+}
+
+body.dark-mode button.mark-as-read{
+  color: var(--purple3);
+  background-color: var(--light-gray2);  
+}
+
+body.dark-mode button.mark-as-read:hover{
+  color: var(--light-gray2);
+  background-color: var(--purple3);
+}
+
 
 /* ===== MODO ESCURO: Criar ===== */
 
@@ -235,4 +271,24 @@ body.dark-mode .close-button{
   color: #6930C3;
 }
 
-/* ===== MODO ESCURO: Perfil ===== */
+body.dark-mode #postSubmitBtn{
+  background-color: var(--purple3);
+  color: var(--main-white);
+}
+
+
+/* ===== MODO ESCURO: Configuração ===== */
+
+body.dark-mode #settings-container, 
+div#theme-div, div#help-div, div#language-div, .settings-btn{
+  background-color: var(--main-white);
+}
+
+body.dark-mode .logout-btn{
+  background-color: var(--main-white);
+
+} 
+
+body.dark-mode .logout-btn:hover{
+  background-color: var(--purple1);
+}
