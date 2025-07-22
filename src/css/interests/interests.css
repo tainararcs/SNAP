@@ -178,6 +178,11 @@
     margin-bottom: 20px;
 }
 
+.recommendations-title span {
+    color: var(--purple3);
+    margin-right: 5px;
+}
+
 .recommended-tags {
     max-width: 850px;
     width: 95%;
@@ -185,6 +190,20 @@
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 20px;
+}
+
+.recommended-tag {
+    background-color: var(--main-white);
+    border: 1px solid var(--purple3);
+    color: var(--purple3);
+    font-weight: bold;
+}
+
+.recommended-tag:hover {
+    background-color: var(--purple3);
+    border: 1px solid var(--purple3);
+    color: var(--main-white);
+    font-weight: bold;
 }
 
 /* Footer */
