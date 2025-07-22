@@ -70,8 +70,6 @@ function setupBiosFicticia(usuario = {}) {
     if (!biosUserAI || !usuario || typeof usuario !== "object") return;
 
     function generateEmptyBios() {
-        biosUserAI.innerHTML = `<p><em>Bios vazia. Aguarde a geração de uma bios pela IA...</em></p>`;
-        
         const interesses = Array.isArray(usuario.interesses) ? usuario.interesses : [];
         const username = usuario.nome;
         requisitarBiosUsuarioF(interesses, username).then(bioGerada => {
