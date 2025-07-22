@@ -32,23 +32,24 @@
                 <button id="editProfileBtn" class="btn standard-btn edit-btn">
                     <span class="material-symbols-outlined">edit</span> Editar Perfil
                 </button>
-
+                
+                <button id="cancelEditBtn" class="btn standard-btn edit-btn" style="display: none;">
+                    <span class="glyphicon glyphicon-remove"></span> Voltar
+                </button>
+                
                 <button id="saveProfileBtn" class="btn standard-btn edit-btn" style="display: none;">
                     <span class="glyphicon glyphicon-ok"></span> Salvar
                 </button>
 
-                <button id="cancelEditBtn" class="btn standard-btn edit-btn" style="display: none;">
-                    <span class="glyphicon glyphicon-remove"></span> Voltar
-                </button>
             </div>
         </div>
 
         <!-- Bio logo abaixo -->
         <div id="profileUser-bios" class="bio-block">
-            <div id="biosText"></div>
+            <div id="bioText"></div>
             <div id="bio-edit-wrapper" class="edit-field" style="display: none;">
-                <label for="bios-edit-textarea" class="edit-label">Bio</label>
-                <textarea id="bios-edit-textarea" style="width: 750px; height: 200px; resize: none;" class="edit-input" rows="3"></textarea>
+                <label for="bio-edit-textarea" class="edit-label">Bio</label>
+                <textarea id="bio-edit-textarea" style="width: 750px; height: 200px; resize: none;" class="edit-input" rows="3"></textarea>
             </div>
         </div>
     </div>

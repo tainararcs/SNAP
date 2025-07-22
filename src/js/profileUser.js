@@ -28,6 +28,7 @@ export function setupProfileUser() {
   const editIcon = document.querySelector("label.edit-icon-label");
   const editBtn = document.getElementById("editProfileBtn");
   const saveBtn = document.getElementById("saveProfileBtn");
+  const cancelBtn = document.getElementById("cancelEditBtn");
   const uploadInput = document.getElementById("profile-upload");
 
   if (nameDisplay && nameInput) {
@@ -84,12 +85,15 @@ export function setupProfileUser() {
   
 
   editBtn.addEventListener("click", () => {
+    editBtn.style.display = "none"; 
+    document.getElementById("cancelEditBtn").style.display = "inline-block"; 
+
     if (editIcon) editIcon.style.display = "block";
     if (saveBtn) saveBtn.style.display = "inline-block";
     if (nameDisplay) nameDisplay.style.display = "none";
     document.getElementById("name-edit-wrapper").style.display = "flex";
 
-    if (biosText) biosText.style.display = "none";
+    if (bioText) bioText.style.display = "none";
     document.getElementById("bio-edit-wrapper").style.display = "flex";
 
     const postsContainer = document.getElementById("profileUser-posts");
@@ -125,6 +129,53 @@ export function setupProfileUser() {
     if (saveBtn) saveBtn.style.display = "none";
     if (editIcon) editIcon.style.display = "none";
     if (postsContainer) postsContainer.style.display = "block";
+
+    editBtn.style.display = "inline-block"; 
+    document.getElementById("cancelEditBtn").style.display = "none"; 
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    const currentName = nameInput.value.trim();
+    const currentBio = bioTextarea.value.trim();
+
+    const originalName = user.name.trim();
+    const originalBio = user.bio?.trim() || "";
+
+    const houveAlteracao = currentName !== originalName || currentBio !== originalBio || tempImageFile;
+
+    if (houveAlteracao) {
+      const confirmExit = confirm("Você fez alterações. Deseja descartá-las?");
+      if (!confirmExit) return;
+    }
+
+    // Reverter valores
+    nameInput.value = originalName;
+    bioTextarea.value = originalBio;
+
+    // Restaurar interface
+    if (editIcon) editIcon.style.display = "none";
+    if (saveBtn) saveBtn.style.display = "none";
+    if (editBtn) editBtn.style.display = "inline-block";
+    cancelBtn.style.display = "none";
+
+    if (nameDisplay) {
+      nameDisplay.style.display = "block";
+    }
+    document.getElementById("name-edit-wrapper").style.display = "none";
+
+    if (bioText) {
+      bioText.style.display = "block";
+    }
+    document.getElementById("bio-edit-wrapper").style.display = "none";
+
+    const postsContainer = document.getElementById("profileUser-posts");
+    if (postsContainer) postsContainer.style.display = "block";
+
+    // Reverter imagem de perfil temporária (recarrega a salva)
+    if (tempImageFile) {
+      loadUserProfileImage();
+      tempImageFile = null;
+    }
   });
 
   uploadInput.addEventListener("change", () => {
