@@ -109,15 +109,15 @@ export async function requisitarImagemPerfil (username) {
     }
 } // function requisitarImagemPerfil
 
-/* Gera uma bios de usuário fictício com base em interesses, usando a API Gemini.
-   Retorna uma string com o texto da bios ou null em caso de erro.
+/* Gera uma bio de usuário fictício com base em interesses, usando a API Gemini.
+   Retorna uma string com o texto da bio ou null em caso de erro.
 
    Exemplo:
-   const bio = await requisitarBiosUsuarioF(["#moda", "#viagem"]);
+   const bio = await requisitarBioUsuarioF(["#moda", "#viagem"]);
 */
-export async function requisitarBiosUsuarioF(interesses = [], nome = {}) {
+export async function requisitarBioUsuarioF(interesses = [], nome = {}) {
     try {
-        const response = await fetch('http://localhost:3001/requisitarBiosUsuarioF', {
+        const response = await fetch('http://localhost:3001/requisitarBioUsuarioF', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ interesses, nome })
@@ -126,7 +126,7 @@ export async function requisitarBiosUsuarioF(interesses = [], nome = {}) {
         const data = await response.json();
         return data.texto || null;
     } catch (error) {
-        console.error('Erro ao gerar bios:', error);
+        console.error('Erro ao gerar bio:', error);
         return null;
     }
 }

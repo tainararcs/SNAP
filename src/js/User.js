@@ -5,7 +5,7 @@ export class User {
     name = "";
     email = "";
     senha = ""; 
-    bios = "";
+    bio = "";
 
     // Lista de interesses.
     interests = [];
@@ -124,10 +124,10 @@ export function updateUserTheme(themeDark = false) {
 }
 
 // Função corrigida para atualizar a biografia do usuário
-export function updateUserBios(userBios= "") {
+export function updateUserBio(userBio= "") {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) return;
-    user.bios = userBios;
+    user.bio = userBio;
     localStorage.setItem('user', JSON.stringify(user));
 }
 

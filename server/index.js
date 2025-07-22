@@ -170,25 +170,25 @@ app.post('/requisitarImagemPerfil', async (req, res) => {
 });
 
 
-app.post('/requisitarBiosUsuarioF', async (req, res) => {
+app.post('/requisitarBioUsuarioF', async (req, res) => {
     const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_KEY4 });
 
     const interessesPredefinidos = req.body.interesses || [];
     const nome = req.body.nome || ""; // <- agora como string
-    let prompt = 'Crie uma bios de um usuário fictício para uma rede social, como se fosse um jovem da geração Z.';
+    let prompt = 'Crie uma bio de um usuário fictício para uma rede social, como se fosse um jovem da geração Z.';
 
     if (nome) {
         prompt += ` O nome do usuário é "${nome}, use os pronomes corretos com base nesse nome fornecido, randomize a escolha de começar ou não com a frase: Meu nome é...".`;
     }
 
-    prompt += ' A bios deve ser uma apresentação com base nos interesses do usuário e em sua personalidade. Esta bios não deve conter nenhuma hashtag em seu corpo.\n';
+    prompt += ' A bio deve ser uma apresentação com base nos interesses do usuário e em sua personalidade. Esta bio não deve conter nenhuma hashtag em seu corpo.\n';
 
     if (interessesPredefinidos.length > 0) {
         prompt += 'Baseado em pelo menos um dos seguintes interesses: ';
         prompt += interessesPredefinidos.map(i => `"${i}"`).join(', ') + '.\n';
     }
 
-    prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo da bios.';
+    prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo da bio.';
     prompt += ' O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
 
     try {

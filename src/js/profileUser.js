@@ -23,8 +23,8 @@ export function setupProfileUser() {
   // Inputs e elementos...
   const nameDisplay = document.getElementById("profileUser-name");
   const nameInput = document.getElementById("name-edit-input");
-  const biosText = document.getElementById("biosText");
-  const biosTextarea = document.getElementById("bios-edit-textarea");
+  const bioText = document.getElementById("bioText");
+  const bioTextarea = document.getElementById("bio-edit-textarea");
   const editIcon = document.querySelector("label.edit-icon-label");
   const editBtn = document.getElementById("editProfileBtn");
   const saveBtn = document.getElementById("saveProfileBtn");
@@ -35,9 +35,9 @@ export function setupProfileUser() {
     nameInput.value = user.name;
   }
 
-  if (biosText && biosTextarea) {
-    biosText.textContent = user.bios || "";
-    biosTextarea.value = user.bios || "";
+  if (bioText && bioTextarea) {
+    bioText.textContent = user.bio || "";
+    bioTextarea.value = user.bio || "";
   }
 
   // Renderiza os posts do usuário logado
@@ -88,8 +88,8 @@ export function setupProfileUser() {
     if (saveBtn) saveBtn.style.display = "inline-block";
     if (nameDisplay) nameDisplay.style.display = "none";
     if (nameInput) nameInput.style.display = "inline-block";
-    if (biosText) biosText.style.display = "none";
-    if (biosTextarea) biosTextarea.style.display = "block";
+    if (bioText) bioText.style.display = "none";
+    if (bioTextarea) bioTextarea.style.display = "block";
 
     const postsContainer = document.getElementById("profileUser-posts");
     if (postsContainer) postsContainer.style.display = "none";
@@ -98,10 +98,10 @@ export function setupProfileUser() {
 
   saveBtn.addEventListener("click", () => {
     const updatedName = nameInput.value.trim();
-    const updatedBios = biosTextarea.value.trim();
+    const updatedBio = bioTextarea.value.trim();
     
     user.name = updatedName;
-    user.bios = updatedBios;
+    user.bio = updatedBio;
 
     localStorage.setItem("user", JSON.stringify(user));
 
@@ -116,11 +116,11 @@ export function setupProfileUser() {
     }
     if (nameInput) nameInput.style.display = "none";
 
-    if (biosText) {
-      biosText.textContent = updatedBios;
-      biosText.style.display = "block";
+    if (bioText) {
+      bioText.textContent = updatedBio;
+      bioText.style.display = "block";
     }
-    if (biosTextarea) biosTextarea.style.display = "none";
+    if (bioTextarea) bioTextarea.style.display = "none";
     if (saveBtn) saveBtn.style.display = "none";
     if (editIcon) editIcon.style.display = "none";
     if (postsContainer) postsContainer.style.display = "block";
