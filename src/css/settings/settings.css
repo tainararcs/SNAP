@@ -32,6 +32,7 @@
 .settings-btn {
     font-size: 16px;
     line-height: 1px;
+    color: var(--purple2);
 }
 
 .settings-options {
