@@ -1,3 +1,5 @@
+const reqLink = "http://localhost:3001";
+
 /* Gera o conteúdo para um post. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
 
     Uma lista de interesses (hashtags) pode ou não ser passada como parâmetro. 
@@ -21,8 +23,8 @@ export async function requisitarPost(interessesPredefinidos = null) {
     
     try{
 
-        // Chama o servidor backend Node.js (rodando localmente), para solicitar uma postagem.
-        const response = await fetch('http://localhost:3001/requisitarPost', {
+        // Chama o servidor backend Node.js, para solicitar uma postagem.
+        const response = await fetch(`${reqLink}/requisitarPost`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ interesses: interessesPredefinidos || [] })
@@ -59,8 +61,8 @@ export async function requisitarUserData() {
     
     try{
 
-        // Chama o servidor backend Node.js (rodando localmente), para solicitar dados para um usuário fictício.
-        const response = await fetch('http://localhost:3001/requisitarUserData', {
+        // Chama o servidor backend Node.js, para solicitar dados para um usuário fictício.
+        const response = await fetch(`${reqLink}/requisitarUserData`, {
             method: 'GET',
         });
 
@@ -91,21 +93,21 @@ export async function requisitarImagemPerfil (username) {
     
     try{
 
-        // Chama o servidor backend Node.js (rodando localmente), para solicitar uma imagem de um usuário fictício.
-        const response = await fetch('http://localhost:3001/requisitarImagemPerfil', {
+        // Chama o servidor backend Node.js, para solicitar uma imagem de um usuário fictício.
+        const response = await fetch(`${reqLink}/requisitarImagemPerfil`, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain' },
             body: username
         });
 
         // Monta a url para acessar a imagem.
-        const imageUrl =  "http://localhost:3001/" + await response.text();
+        const imageUrl =  `${reqLink}/` + await response.text();
         
         return imageUrl;
 
     } catch(error){ // Em caso de erro
         console.error('Erro ao obter imagem:', error);
-        return "http://localhost:3001/default.png";
+        return `${reqLink}/default.png`;
     }
 } // function requisitarImagemPerfil
 
@@ -117,7 +119,7 @@ export async function requisitarImagemPerfil (username) {
 */
 export async function requisitarBioUsuarioF(interesses = [], nome = {}) {
     try {
-        const response = await fetch('http://localhost:3001/requisitarBioUsuarioF', {
+        const response = await fetch(`${reqLink}/requisitarBioUsuarioF`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ interesses, nome })
