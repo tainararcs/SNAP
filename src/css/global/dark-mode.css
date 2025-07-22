@@ -290,5 +290,13 @@ body.dark-mode .logout-btn{
 } 
 
 body.dark-mode .logout-btn:hover{
-  background-color: var(--purple1);
+  background-color: var(--purple2);
+}
+
+body.dark-mode .settings-option{
+    color: var(--purple2);
+}
+body.dark-mode .settings-option:hover{
+  color: var(--white);
+  background-color: var(--purple2);
 }

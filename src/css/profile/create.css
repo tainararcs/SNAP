@@ -140,3 +140,10 @@
 .post-actions {
     margin: auto;
 }
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+}

@@ -65,28 +65,50 @@ function setupCreateModal() {
     // Postar
     const postBtn = document.getElementById("postSubmitBtn");
     postBtn.addEventListener("click", () => {
-        const content = document.getElementById("postContent").value;
-        const hashtags = document.getElementById("postHashtags").value;
+    const content = document.getElementById("postContent").value;
+    const rawHashtags = document.getElementById("postHashtags").value.trim();
+    const errorDiv = document.getElementById("hashtagError");
+
+    const words = rawHashtags.split(" ").filter(word => word !== "");
+    const hashtagRegex = /^#[A-Z][a-zA-Z0-9]*$/;
+    const allHashtagsValid = words.every(word => hashtagRegex.test(word));
 
 
-        if (content.trim()) {
-            const newPost = {
-              conteudo: content,
-              hashtags,
-              avatarUrl: user.profileImage,
-              data: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
-        };
-      
 
-        user.posts = user.posts || [];
-        user.posts.unshift(newPost);
-        localStorage.setItem('user', JSON.stringify(user));
-        
-        console.log("Postando:", content, hashtags);
-        modal.classList.add("hidden");
-        document.getElementById("postContent").value = "";
-        document.getElementById("postHashtags").value = "";
-      }
-    });
+    // Se tiver algo escrito e for inválido
+    if (!allHashtagsValid && rawHashtags.length > 0) {
+      errorDiv.textContent = "Hashtags devem começar com '#' e conter a primeira letra MAIÚSCULA (ex: #Filme)";
+      errorDiv.style.display = "block";
+      return;
+    } else {
+      // Oculta o erro se estiver tudo certo
+      errorDiv.textContent = "";
+      errorDiv.style.display = "none";
+    }
+
+    const hashtags = words.join(" ");
+
+    if (content.trim()) {
+      const newPost = {
+        conteudo: content,
+        hashtags,
+        avatarUrl: user.profileImage,
+        data: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
+      };
+
+      user.posts = user.posts || [];
+      user.posts.unshift(newPost);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      console.log("Postando:", content, hashtags);
+
+      modal.classList.add("hidden");
+      document.getElementById("postContent").value = "";
+      document.getElementById("postHashtags").value = "";
+      errorDiv.textContent = "";
+      errorDiv.style.display = "none";
+    }
+  });
+
   }
 }

@@ -27,6 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           });
         });
+        // Buscar nos seus próprios posts (localStorage 'user')
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+
+        if (currentUser && currentUser.posts) {
+          currentUser.posts.forEach((post) => {
+            const tags = (post.hashtags || "").split(" ").filter(Boolean);
+            if (tags.includes(query)) {
+              results.push({
+                nomeUsuario: currentUser.name ?? currentUser.nome ?? "Você",
+                conteudo: post.conteudo,
+                hashtags: post.hashtags,
+                avatarUrl: currentUser.profileImage ?? post.avatarUrl,
+                data: post.data,
+              });
+            }
+          });
+        }
 
         resultsContainer.innerHTML =
           results.length === 0

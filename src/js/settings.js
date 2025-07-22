@@ -1,4 +1,5 @@
 import { updateUserTheme } from './User.js';
+import { setupProfileUser } from './profileUser.js';
 
 const configLink = document.querySelector("#link-configs");
 configLink.addEventListener("click", (e) => {
@@ -32,6 +33,9 @@ function setupSettingsNavigation() {
     // Botões de navegação
     document.getElementById("profile-link").addEventListener("click", e =>{
         e.preventDefault();
+        loadPage("profileUser", "profileUser.html", () => {
+            setupProfileUser();
+        });
         setActiveLink("link-profile-user");
         showPage("page-profile-user");
     });

@@ -14,7 +14,7 @@ profileUserLink.addEventListener("click", (e) => {
 
 let tempImageFile = null; // variável global temporária
 
-function setupProfileUser() {
+export function setupProfileUser() {
   const user = JSON.parse(localStorage.getItem('user'));
   if (!user) return;
 
