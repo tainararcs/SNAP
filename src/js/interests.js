@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const MAX_INTERESTS = 5;
     const MIN_INTERESTS_TO_PROCEED = 3;
-    const DEFAULT_SUGGESTIONS_COUNT = 8;
+    const DEFAULT_SUGGESTIONS_COUNT = 10;
 
     const listaGemini = [
         "Séries", "História", "Inteligência Artificial", "Astronomia", "Música",
@@ -88,21 +88,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Carrega as recomendações padrão na tela
     function loadDefaultRecommendations() {
-        defaultTagsDiv.innerHTML = '';
-        
-        // Filtra apenas recomendações não selecionadas
-        const availableRecommendations = defaultRecommendations.filter(
-            item => !interestsArray.includes(item)
-        );
+    defaultTagsDiv.innerHTML = '';
 
-        availableRecommendations.forEach(item => {
-            const tag = document.createElement('span');
-            tag.className = 'recommended-tag tag';
-            tag.textContent = item;
-            tag.onclick = () => addInterest(item);
-            defaultTagsDiv.appendChild(tag);
-        });
-    }
+    const availableRecommendations = defaultRecommendations.filter(
+        item => !interestsArray.includes(item)
+    );
+
+    availableRecommendations.slice(0, 10).forEach(item => {
+        const tag = document.createElement('span');
+        tag.className = 'tag recommended-tag';
+        tag.textContent = item;
+        tag.onclick = () => addInterest(item);
+        defaultTagsDiv.appendChild(tag);
+    });
+}
 
     // Função unificada do botão Avançar
     function handleAdvanceClick() {
@@ -189,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         interestsArray.forEach(interest => {
             const span = document.createElement('span');
             span.className = 'tag';
-            span.innerHTML = `${interest} <span class="remove-tag">×</span>`;
+            span.innerHTML = `${interest} <span class="remove-tag">X</span>`;
             span.onclick = (e) => {
                 if (e.target.classList.contains('remove-tag')) {
                     removeInterest(interest);
