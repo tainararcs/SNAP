@@ -6,6 +6,12 @@
     color: var(--main-black);
 }
 
+
+
+.mobile-title {
+    display: none;
+}
+
 .container-fluid,
 .row.g-0 {
     padding: 0;
@@ -64,7 +70,7 @@
 }
 
 .sidebar .nav-link.active {
-    background-color: #f2f2f2; 
+    background-color: #f2f2f2;
     color: var(--purple1);
     font-weight: 700;
 }
@@ -274,7 +280,7 @@
 }
 
 .feed-central::-webkit-scrollbar-thumb:hover {
-     background-color: var(--gray);
+    background-color: var(--gray);
 }
 
 /* Responsividade */
