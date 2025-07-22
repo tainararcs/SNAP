@@ -13,10 +13,16 @@
 
     <div id="user-name"></div>
     
-    <div id="user-bios">
-      <!-- Bios do usuário ficticio será gerada aqui. -->
+    <div id="user-bio">
+      <!-- Tela de loading com mensagem de retentativa -->
+      <div id="bio-loading" class="loading-container" style="display: none;">
+          <div class="spinner"></div>
+          <span id="loading-message">Gerando bio com IA...</span>
+      </div>
+      
+      <!-- Conteúdo da bio será inserido aqui -->
+      <div id="bio-content"></div>
     </div>
-
     <div id="user-posts" class="mt-4">
 
 </div>

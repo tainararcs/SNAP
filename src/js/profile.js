@@ -1,6 +1,6 @@
 import { getStoredUsers } from './posts.js';
-import { requisitarBiosUsuarioF } from './gemini.js';
-import { updateUserBios } from './User.js';
+import { requisitarBioUsuarioF } from './gemini.js';
+import { updateUserBio } from './User.js';
 import { setupProfileUser } from './profileUser.js';
 
 document.addEventListener("click", (event) => {
@@ -23,7 +23,7 @@ document.addEventListener("click", (event) => {
             loadPage("profile", "profile.html", () => {
                 const users = getStoredUsers();
                 const usuario = users.find(u => u.nome === userName);
-                setupBiosFicticia(usuario);
+                setupBioFicticia(usuario);
                 
                 const nomeSpan = document.getElementById("user-name");
                 const postListContainer = document.getElementById("user-posts");
@@ -77,29 +77,71 @@ document.addEventListener("click", (event) => {
     }
 });
 
-function setupBiosFicticia(usuario = {}) {
-    const biosUserAI = document.getElementById("user-bios");
+function setupBioFicticia(usuario = {}) {
+    const bioContainer = document.getElementById("user-bio");
+    const loadingElement = document.getElementById("bio-loading");
+    const bioContent = document.getElementById("bio-content");
+    const loadingMessage = document.getElementById("loading-message");
 
-    if (!biosUserAI || !usuario || typeof usuario !== "object") return;
+    if (!bioContainer || !loadingElement || !bioContent || !usuario || typeof usuario !== "object") return;
 
-    function generateEmptyBios() {
+    // Configuração de retentativas
+    const MAX_RETRIES = 10;
+    const RETRY_DELAY = 3000; // 3 segundos
+    let retryCount = 0;
+    let retryTimer = null;
+
+    function generateEmptyBio() {
         const interesses = Array.isArray(usuario.interesses) ? usuario.interesses : [];
         const username = usuario.nome;
-        requisitarBiosUsuarioF(interesses, username).then(bioGerada => {
-            usuario.bios = bioGerada;
-            biosUserAI.innerHTML = `<p>${bioGerada}</p>`;
-        }).catch(err => {
-            biosUserAI.innerHTML = `<p>Erro ao gerar bios com IA.</p>`;
-            console.error("Erro na geração de bios:", err);
-        });
+        
+        // Mostra o loading
+        loadingElement.style.display = "flex";
+        bioContent.style.display = "none";
+        loadingMessage.textContent = "Carregando Bio...";
+        retryCount = 0;
+
+        clearTimeout(retryTimer); // Limpa qualquer timer anterior
+
+        function attemptGeneration() {
+            requisitarBioUsuarioF(interesses, username)
+                .then(bioGerada => {
+                    if (bioGerada) {
+                        usuario.bio = bioGerada;
+                        bioContent.innerHTML = `<p>${bioGerada}</p>`;
+                        loadingElement.style.display = "none";
+                        bioContent.style.display = "block"
+                    } else {
+                        throw new Error("API retornou bio vazia");
+                    }
+                })
+                .catch(err => {
+                    console.error("Erro na geração de bio:", err);
+                    retryCount++;
+                    
+                    if (retryCount < MAX_RETRIES) {
+                        loadingMessage.textContent = `Tentando novamente (${retryCount}/${MAX_RETRIES})...`;
+                        retryTimer = setTimeout(attemptGeneration, RETRY_DELAY);
+                    } else {
+                        bioContent.innerHTML = `<p>Não foi possível gerar a bio. Tente novamente mais tarde.</p>`;
+                        loadingElement.style.display = "none";
+                        bioContent.style.display = "block";
+                    }
+                });
+        }
+
+        attemptGeneration();
     }
 
-    function renderBios(biosText = "") {
-        if (!biosText || !biosText.trim().length)
-            generateEmptyBios();
-        else
-            biosUserAI.innerHTML = `<p>${biosText}</p>`;
+    function renderBio(bioText = "") {
+        if (!bioText || !bioText.trim().length) {
+            generateEmptyBio();
+        } else {
+            loadingElement.style.display = "none";
+            bioContent.innerHTML = `<p>${bioText}</p>`;
+            bioContent.style.display = "block";
+        }
     }
 
-    renderBios(usuario.bios); // Chama o render corretamente
+    renderBio(usuario.bio);
 }
