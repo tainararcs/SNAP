@@ -37,6 +37,7 @@
     padding: 1.5rem 1rem;
     color: var(--blue1);
     text-align: center;
+    border-bottom: 1px solid var(--purple2);
 }
 
 .sidebar .logo img {
