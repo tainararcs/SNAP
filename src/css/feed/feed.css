@@ -6,8 +6,6 @@
     color: var(--main-black);
 }
 
-
-
 .mobile-title {
     display: none;
 }
@@ -22,7 +20,7 @@
 .sidebar {
     width: 220px;
     background-color: var(--white);
-    border-right: 2px solid var(--purple1);
+    box-shadow: 1px 0px 3px .5px rgba(0, 0, 0, 0.1);
     height: 100vh;
     position: sticky;
     top: 0;
@@ -112,13 +110,18 @@
 
 #feed-container {
     padding: 0 1rem 2rem 1rem;
+    max-width: 820px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .post-card {
     background-color: var(--white);
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    margin-bottom: 1rem;
+    border-radius: 17px;
+    box-shadow: 1px 1px 1px .5px rgba(105, 48, 195, 0.8);
+    margin-bottom: 18px;
+    max-height: 200px;
+    height: 95%;
     padding: 1.25rem;
     opacity: 0;
     transform: translateY(20px);
@@ -135,7 +138,9 @@
 .post-header {
     display: flex;
     align-items: center;
-    margin-bottom: 0.75rem;
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
 
 .post-avatar {
@@ -154,7 +159,7 @@
 }
 
 .post-time {
-    font-size: 1rem;
+    font-size: 12px;
     color: var(--gray);
     margin-left: auto;
 }
@@ -162,15 +167,19 @@
 .post-content {
     color: var(--dark-gray);
     line-height: 1.5;
+    width: 95%;
+    margin: 0 auto;
     margin-bottom: 0.75rem;
     white-space: pre-wrap;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .post-hashtags {
     color: var(--blue3);
-    font-size: 1rem;
-    margin-top: 0.5rem;
+    font-size: 14px;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
 /* Sidebar Direita */
@@ -179,7 +188,7 @@
     top: 0;
     height: 100vh;
     background-color: var(--white);
-    border-left: 2px solid var(--purple1);
+    box-shadow: -1px 0px 3px .5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     display: flex;
     flex-direction: column;

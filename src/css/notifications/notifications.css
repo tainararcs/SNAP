@@ -84,6 +84,7 @@
     padding: 5px 10px;
     border-radius: 4px;
     transition: background-color 0.2s;
+    margin-left: 5px;
 }
 
 .mark-as-read:hover {

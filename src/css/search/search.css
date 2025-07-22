@@ -10,6 +10,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 #search-input {
