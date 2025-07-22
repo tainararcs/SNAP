@@ -15,8 +15,10 @@
 
         <link rel="icon" href="./img/logo-site.png" type="image/x-icon"/>
         <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/interests.css"/>
 
         <script>document.documentElement.classList.add("js");</script>
+
     </head>
 
     <body id="interests-page">
@@ -30,9 +32,15 @@
                         </div>
                         <p class="interests-instruction">Adicione pelo menos 3 interesses para continuar</p>
 
+                        <!-- Seção de recomendações padrão -->
+                        <div class="default-recommendations">
+                            <h3 class="recommendations-title">Recomendados para você</h3>
+                            <div id="default-tags" class="recommended-tags"></div>
+                        </div>
+
                         <div class="form-group">
                             <div class="input-with-button">
-                                <input type="text" id="interests-input" class="form-control standard-input interests-input" placeholder="Ex: Artes, Paisagens, etc." autocomplete="off">
+                                <input type="text" id="interests-input" class="form-control interests-input" placeholder="Ex: Artes, Paisagens, etc." autocomplete="off">
                                 <span class="add-icon">+</span>
                             </div>
                             <div id="suggestion" class="suggestions"></div>
@@ -63,8 +71,8 @@
             <p>Seus interesses serão usados para exibir<br>as melhores postagens para você</p>
         </div>
 
-        <script type="module" src="js/interests.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="module" src="js/interests.js"></script>
     </body>
 </html>

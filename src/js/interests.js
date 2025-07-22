@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const MAX_INTERESTS = 5;
     const MIN_INTERESTS_TO_PROCEED = 3;
+    const DEFAULT_SUGGESTIONS_COUNT = 10;
 
     const listaGemini = [
         "Séries", "História", "Inteligência Artificial", "Astronomia", "Música",
@@ -14,21 +15,28 @@ document.addEventListener('DOMContentLoaded', () => {
         "Jardinagem", "Animais de Estimação", "Carros", "Motocicletas"
     ];
 
-    let user = JSON.parse(localStorage.getItem('user'));
-    //Carregando tema
+    let user = JSON.parse(localStorage.getItem('user')) || {};
+    let interestsArray = [];
+    let defaultRecommendations = [];
+
+    // Elementos DOM
+    const interestInput = document.getElementById('interests-input');
+    const suggestionsOptions = document.getElementById('suggestion');
+    const tagsDiv = document.getElementById('tag');
+    const defaultTagsDiv = document.getElementById('default-tags');
+    const advanceDesktop = document.getElementById('advance-desktop');
+    const advanceMobile = document.getElementById('advance-mobile');
+
+    // Carregando tema
     if (user.theme === 'dark') {
         document.body.classList.add('dark-mode');
     } else {
         document.body.classList.remove('dark-mode');
     }
 
-    let interestsArray = [];
-
-    const interestInput = document.getElementById('interests-input');
-    const suggestionsOptions = document.getElementById('suggestion');
-    const tagsDiv = document.getElementById('tag');
-    const advanceDesktop = document.getElementById('advance-desktop');
-    const advanceMobile = document.getElementById('advance-mobile');
+    // Inicialização
+    initDefaultRecommendations();
+    loadDefaultRecommendations();
 
     // Oculta os botões "Avançar" inicialmente
     advanceDesktop.style.display = 'none';
@@ -37,31 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mostrar sugestões ao focar no input
     interestInput.addEventListener('focus', () => {
         if (interestInput.value.length > 0) {
-            toggleSuggestions(true);
+            showSuggestions(interestInput.value);
         }
     });
 
     // Evento de input para mostrar sugestões
     interestInput.addEventListener('input', () => {
         const text = interestInput.value.toLowerCase();
-        suggestionsOptions.innerHTML = '';
-
         if (text.length > 0) {
-            const matchingInterests = listaGemini.filter(i =>
-                i.toLowerCase().includes(text) && !interestsArray.includes(i)
-            );
-
-            if (matchingInterests.length > 0) {
-                matchingInterests.forEach(item => {
-                    const div = document.createElement('div');
-                    div.textContent = item;
-                    div.onclick = () => addInterest(item);
-                    suggestionsOptions.appendChild(div);
-                });
-                toggleSuggestions(true);
-            } else {
-                toggleSuggestions(false);
-            }
+            showSuggestions(text);
         } else {
             toggleSuggestions(false);
         }
@@ -75,6 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Evento para adicionar com clique no ícone +
+    document.querySelector('.add-icon').addEventListener('click', () => {
+        addInterest();
+    });
+
     // Fecha sugestões ao clicar fora
     document.addEventListener('click', (e) => {
         if (!interestInput.contains(e.target) && !suggestionsOptions.contains(e.target)) {
@@ -82,10 +79,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Função para inicializar as recomendações padrão (10 aleatórias)
+    function initDefaultRecommendations() {
+        // Embaralha a lista e pega os 10 primeiros
+        const shuffled = [...listaGemini].sort(() => 0.5 - Math.random());
+        defaultRecommendations = shuffled.slice(0, DEFAULT_SUGGESTIONS_COUNT);
+    }
+
+    // Carrega as recomendações padrão na tela
+    function loadDefaultRecommendations() {
+        defaultTagsDiv.innerHTML = '';
+        
+        // Filtra apenas recomendações não selecionadas
+        const availableRecommendations = defaultRecommendations.filter(
+            item => !interestsArray.includes(item)
+        );
+
+        availableRecommendations.forEach(item => {
+            const tag = document.createElement('span');
+            tag.className = 'recommended-tag';
+            tag.textContent = item;
+            tag.onclick = () => addInterest(item);
+            defaultTagsDiv.appendChild(tag);
+        });
+    }
+
     // Função unificada do botão Avançar
     function handleAdvanceClick() {
         if (interestsArray.length >= MIN_INTERESTS_TO_PROCEED) {
-            user  || {};
             user.interests = interestsArray;
             localStorage.setItem('user', JSON.stringify(user));
             window.location.href = "feed.html";
@@ -102,6 +123,27 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestionsOptions.style.display = show ? 'block' : 'none';
     }
 
+    // Mostra sugestões baseadas no texto digitado
+    function showSuggestions(text) {
+        suggestionsOptions.innerHTML = '';
+        
+        const matchingInterests = listaGemini.filter(i =>
+            i.toLowerCase().includes(text.toLowerCase()) && !interestsArray.includes(i)
+        );
+
+        if (matchingInterests.length > 0) {
+            matchingInterests.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = item;
+                div.onclick = () => addInterest(item);
+                suggestionsOptions.appendChild(div);
+            });
+            toggleSuggestions(true);
+        } else {
+            toggleSuggestions(false);
+        }
+    }
+
     // Mostra alerta personalizado
     function showAlert(message) {
         $('#alertMessage').text(message);
@@ -110,57 +152,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Adiciona interesse
     function addInterest(value) {
-        const newInterest = value || interestInput.value.trim();
+        const newInterest = (value || interestInput.value.trim()).trim();
 
-        if (newInterest && listaGemini.includes(newInterest) && !interestsArray.includes(newInterest)) {
-            if (interestsArray.length < MAX_INTERESTS) {
-                interestsArray.push(newInterest);
-                updateTags();
-                interestInput.value = '';
-                toggleSuggestions(false);
+        if (!newInterest) return;
+
+        if (listaGemini.includes(newInterest)) {
+            if (!interestsArray.includes(newInterest)) {
+                if (interestsArray.length < MAX_INTERESTS) {
+                    interestsArray.push(newInterest);
+                    updateTags();
+                    interestInput.value = '';
+                    toggleSuggestions(false);
+                    loadDefaultRecommendations();
+                } else {
+                    showAlert(`Você pode adicionar no máximo ${MAX_INTERESTS} interesses.`);
+                }
             } else {
-                showAlert("Você pode adicionar no máximo 5 interesses.");
+                showAlert("Este interesse já foi adicionado.");
             }
+        } else {
+            showAlert("Por favor, selecione um interesse válido da lista.");
         }
     }
 
     // Remove interesse
-    function removeInterest(interesseRemover) {
-        interestsArray = interestsArray.filter(i => i !== interesseRemover);
+    function removeInterest(interestToRemove) {
+        interestsArray = interestsArray.filter(i => i !== interestToRemove);
         updateTags();
+        loadDefaultRecommendations();
     }
 
     // Atualiza exibição das tags e botões
     function updateTags() {
         tagsDiv.innerHTML = '';
 
-        interestsArray.forEach(i => {
+        interestsArray.forEach(interest => {
             const span = document.createElement('span');
             span.className = 'tag';
-            span.innerHTML = `${i} <span class="remove-tag">×</span>`;
+            span.innerHTML = `${interest} <span class="remove-tag">×</span>`;
             span.onclick = (e) => {
                 if (e.target.classList.contains('remove-tag')) {
-                    removeInterest(i);
+                    removeInterest(interest);
                 }
             };
             tagsDiv.appendChild(span);
         });
 
-        // Verifica se é tela mobile
+        // Mostra/oculta botões de avançar conforme necessário
+        const shouldShowAdvance = interestsArray.length >= MIN_INTERESTS_TO_PROCEED;
         const isMobile = window.innerWidth <= 768;
 
-        // Mostra apenas o botão da plataforma atual
-        if (interestsArray.length >= MIN_INTERESTS_TO_PROCEED) {
-            if (isMobile) {
-                advanceMobile.style.display = 'inline-block';
-                advanceDesktop.style.display = 'none';
-            } else {
-                advanceDesktop.style.display = 'inline-block';
-                advanceMobile.style.display = 'none';
-            }
-        } else {
-            advanceDesktop.style.display = 'none';
-            advanceMobile.style.display = 'none';
-        }
+        advanceDesktop.style.display = shouldShowAdvance && !isMobile ? 'inline-block' : 'none';
+        advanceMobile.style.display = shouldShowAdvance && isMobile ? 'inline-block' : 'none';
     }
 });
