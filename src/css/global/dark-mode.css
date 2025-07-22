@@ -51,13 +51,10 @@ body.dark-mode#interests-page {
   --dark-gray: #3C3D3F;
   --main-black: #FCF7FF;
   --light-gray1: #3C3D3F;
+  --purple1:  #5E60CE;
   
   --white:#000000;
   --black:#FFFFFF;
-}
-
-body.dark-mode#interests-page .interests-card {
-  border: 1px solid #444;
 }
 
 body.dark-mode#interests-page .interests-input{
@@ -67,7 +64,7 @@ body.dark-mode#interests-page .interests-input{
 }
 
 body.dark-mode#interests-page .interests-instruction{
-  color: #6930C3;
+  color: var(--purple1);
 }
 
 body.dark-mode#interests-page .add-ico{
@@ -241,7 +238,6 @@ body.dark-mode button.mark-as-read:hover{
 
 
 /* ===== MODO ESCURO: Criar ===== */
-
  body.dark-mode .modal-content{
   color:  #878C8F;
   background-color: #282A2C;
@@ -253,7 +249,6 @@ body.dark-mode #postContent{
   background-color: #282A2C;
   color: #D9DCE2;
 }
-
 
 body.dark-mode .modal-username{
   color: #5E60CE;
@@ -275,10 +270,11 @@ body.dark-mode #postSubmitBtn{
   background-color: var(--purple3);
   color: var(--main-white);
 }
-
+body.dark-mode .error-message{
+  color:#FCF7FF;
+}
 
 /* ===== MODO ESCURO: Configuração ===== */
-
 body.dark-mode #settings-container, 
 div#theme-div, div#help-div, div#language-div, .settings-btn{
   background-color: var(--main-white);
@@ -286,15 +282,22 @@ div#theme-div, div#help-div, div#language-div, .settings-btn{
 
 body.dark-mode .logout-btn{
   background-color: var(--main-white);
-
 } 
+
+body.dark-mode .settings-btn{
+  color: var(--purple3);
+}
+body.dark-mode .standard-btn{
+  border-color: var(--purple3) !important;
+}
 
 body.dark-mode .logout-btn:hover{
   background-color: var(--purple2);
+  border:  var(--purple2) !important;
 }
 
 body.dark-mode .settings-option{
-    color: var(--purple2);
+    color: var(--purple3);
 }
 body.dark-mode .settings-option:hover{
   color: var(--white);

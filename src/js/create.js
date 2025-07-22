@@ -79,6 +79,10 @@ function setupCreateModal() {
     if (!allHashtagsValid && rawHashtags.length > 0) {
       errorDiv.textContent = "Hashtags devem começar com '#' e conter a primeira letra MAIÚSCULA (ex: #Filme)";
       errorDiv.style.display = "block";
+
+      setTimeout(() => {
+        errorDiv.style.display = "none";
+      }, 3000);
       return;
     } else {
       // Oculta o erro se estiver tudo certo
