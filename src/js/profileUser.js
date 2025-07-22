@@ -59,14 +59,29 @@ function setupProfileUser() {
               <span class="post-time">${post.data || ''}</span>
             </div>
             <p class="post-content">${post.conteudo}</p>
-            <p class="post-hashtags">${post.hashtags || ''}</p>
+           <p class="post-hashtags">
+              ${transformarHashtagsEmLinks(post.hashtags)}
+          </p>
           </div>
         `;
         postsContainer.insertAdjacentHTML("beforeend", postHTML);
       });
+      // Adiciona os eventos de clique para hashtags
+      document.querySelectorAll(".hashtag-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const hashtag = e.target.dataset.hashtag;
+          localStorage.setItem("searchQuery", hashtag);
+
+          const searchLink = document.getElementById("link-search");
+          if (searchLink) searchLink.click();
+        });
+      });
+
     }
   }
-
+  
 
   editBtn.addEventListener("click", () => {
     if (editIcon) editIcon.style.display = "block";
@@ -125,4 +140,13 @@ function setupProfileUser() {
       reader.readAsDataURL(file);
     }
   });
+}
+
+function transformarHashtagsEmLinks(hashtagsString) {
+  if (!hashtagsString) return '';
+  const tags = hashtagsString.trim().split(/\s+/); // separa por espaço
+  return tags.map(tag => {
+    const hashtag = tag.replace(/\s/g, '_');
+    return `<a href="#" class="hashtag-link" data-hashtag="${hashtag}">${hashtag}</a>`;
+  }).join(' ');
 }
