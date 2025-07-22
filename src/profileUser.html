@@ -1,37 +1,59 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-<link rel="stylesheet" href="css/profile/profileUser.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-<!-- profileUser.html -->
 <div class="profile">
-  <!-- Imagem -->
-  <div class="profile-picture-wrapper">
-    <div class="profile-picture">
-      <img id="profile-preview" src="" alt="Foto de perfil">
+    <div class="profile-header">
+        <!-- Linha superior com imagem, nome e botão -->
+        <div class="profile-header-top">
+            <div class="profile-header-left">
+                <div class="profile-picture-wrapper">
+                    <div class="profile-picture">
+                        <img id="profile-preview" src="" alt="Foto de perfil">
 
-      <!-- Ícone que aciona o input escondido -->
-      <label for="profile-upload" class="edit-icon-label" title="Alterar foto" style="display: none;">
-        <span class="material-symbols-outlined">edit</span>
-      </label>
+                        <!-- Ícone que aciona o input escondido -->
+                        <label for="profile-upload" class="edit-icon-label" title="Alterar foto" style="display: none;">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </label>
 
-      <!-- Input oculto -->
-      <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
+                        <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
+                    </div>
+                </div>
+
+                <div class="user-name-group">
+                    <div id="profileUser-name" class="user-name"></div>
+                    <div id="name-edit-wrapper" class="edit-field" style="display: none;">
+                        <label for="name-edit-input" class="edit-label">Nome de usuário</label>
+                        <input type="text" id="name-edit-input" class="edit-input" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="edit-button">
+                <button id="editProfileBtn" class="btn standard-btn edit-btn">
+                    <span class="material-symbols-outlined">edit</span> Editar Perfil
+                </button>
+
+                <button id="saveProfileBtn" class="btn standard-btn edit-btn" style="display: none;">
+                    <span class="glyphicon glyphicon-ok"></span> Salvar
+                </button>
+
+                <button id="cancelEditBtn" class="btn standard-btn edit-btn" style="display: none;">
+                    <span class="glyphicon glyphicon-remove"></span> Voltar
+                </button>
+            </div>
+        </div>
+
+        <!-- Bio logo abaixo -->
+        <div id="profileUser-bios" class="bio-block">
+            <div id="biosText"></div>
+            <div id="bio-edit-wrapper" class="edit-field" style="display: none;">
+                <label for="bios-edit-textarea" class="edit-label">Bio</label>
+                <textarea id="bios-edit-textarea" style="width: 750px; height: 200px; resize: none;" class="edit-input" rows="3"></textarea>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Nome -->
-  <div id="profileUser-name" class="user-name"></div>
-  <input type="text" id="name-edit-input" style="display: none;" />
-
-  <!-- Bio usuário -->
-  <div id="profileUser-bio">
-    <div id="bioText"></div>
-    <textarea id="bio-edit-textarea" style="display: none;"></textarea>
-  </div>
-
-  <div id="edit-button">
-    <button id="editProfileBtn">Editar Perfil</button>
-    <button id="saveProfileBtn" style="display: none;">Salvar Alterações</button>
-  </div>
-
-  <div id="profileUser-posts" class="mt-4"></div>
+    <div class="posts-container">
+        <div id="profileUser-posts" class="mt-4 profile-posts"></div> 
+    </div>
 </div>

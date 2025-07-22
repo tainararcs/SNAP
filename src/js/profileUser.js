@@ -31,7 +31,7 @@ export function setupProfileUser() {
   const uploadInput = document.getElementById("profile-upload");
 
   if (nameDisplay && nameInput) {
-    nameDisplay.textContent = `@${user.name}`;
+    nameDisplay.textContent = `${user.name}`;
     nameInput.value = user.name;
   }
 
@@ -87,9 +87,10 @@ export function setupProfileUser() {
     if (editIcon) editIcon.style.display = "block";
     if (saveBtn) saveBtn.style.display = "inline-block";
     if (nameDisplay) nameDisplay.style.display = "none";
-    if (nameInput) nameInput.style.display = "inline-block";
-    if (bioText) bioText.style.display = "none";
-    if (bioTextarea) bioTextarea.style.display = "block";
+    document.getElementById("name-edit-wrapper").style.display = "flex";
+
+    if (biosText) biosText.style.display = "none";
+    document.getElementById("bio-edit-wrapper").style.display = "flex";
 
     const postsContainer = document.getElementById("profileUser-posts");
     if (postsContainer) postsContainer.style.display = "none";
@@ -114,13 +115,13 @@ export function setupProfileUser() {
       nameDisplay.textContent = `@${updatedName}`;
       nameDisplay.style.display = "block";
     }
-    if (nameInput) nameInput.style.display = "none";
+    document.getElementById("name-edit-wrapper").style.display = "none";
 
     if (bioText) {
       bioText.textContent = updatedBio;
       bioText.style.display = "block";
     }
-    if (bioTextarea) bioTextarea.style.display = "none";
+    document.getElementById("bio-edit-wrapper").style.display = "none";
     if (saveBtn) saveBtn.style.display = "none";
     if (editIcon) editIcon.style.display = "none";
     if (postsContainer) postsContainer.style.display = "block";

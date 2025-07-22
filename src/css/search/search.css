@@ -18,6 +18,12 @@
     background-color: var(--white);
 }
 
+#search-input:focus {
+    border-color: var(--blue1);
+    box-shadow: 0 0 0 3px rgba(83, 144, 217, 0.2);
+    outline: none;
+}
+
 .search-icon {
     position: absolute;
     right: 1rem;

@@ -37,7 +37,6 @@
     padding: 1.5rem 1rem;
     color: var(--blue1);
     text-align: center;
-    border-bottom: 1px solid var(--purple2);
 }
 
 .sidebar .logo img {
@@ -100,7 +99,6 @@
 
 /* Feed Central */
 .feed-central {
-    background-color: var(--main-white);
     height: 100vh;
     overflow-y: auto;
     padding-left: 1rem;
@@ -168,7 +166,7 @@
 .post-content {
     color: var(--dark-gray);
     line-height: 1.5;
-    width: 95%;
+    width: 92%;
     margin: 0 auto;
     margin-bottom: 0.75rem;
     white-space: pre-wrap;
@@ -178,7 +176,7 @@
 .post-hashtags {
     color: var(--blue3);
     font-size: 14px;
-    width: 95%;
+    width: 92%;
     margin: 0 auto;
     margin-top: 10px;
 }

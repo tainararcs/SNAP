@@ -51,7 +51,7 @@
 }
 
 .interests-input:focus {
-    border-color: var(--purple1);
+    border-color: var(--blue1);
     box-shadow: 0 0 0 3px rgba(83, 144, 217, 0.2);
     outline: none;
 }
