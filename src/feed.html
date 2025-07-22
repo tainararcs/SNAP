@@ -1,103 +1,112 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR">
-    <head>
-        <title>Rede Social</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Feed de rede social com posts gerados por IA baseados em interesses do usuário." />
 
-        <!-- Roboto + Bootstrap apenas para botões e ícones (não usamos grid) -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet" />
-        <link rel="icon" href="img/logo-site.png" type="image/x-icon" />
-        <link rel="stylesheet" href="css/style.css"/>
+<head>
+    <title>Rede Social</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Feed de rede social com posts gerados por IA baseados em interesses do usuário." />
 
-        <script>document.documentElement.classList.add("js");</script>
-    </head>
+    <!-- Roboto + Bootstrap apenas para botões e ícones (não usamos grid) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet" />
+    <link rel="icon" href="img/logo-site.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.css" />
 
-    <body id="body-feed">
-        <div class="layout-wrapper">
+    <script>document.documentElement.classList.add("js");</script>
+</head>
 
-            <!-- Sidebar Esquerda -->
-            <div class="sidebar">
-                <div class="logo text-center py-3">
-                    <img src="img/logo-site.png" alt="Logo da Rede Social" />
-                </div>
+<body id="body-feed">
 
-                <div id="all-links">
-                    <nav class="nav flex-column px-2 flex-grow-1">
-                        <a id="link-home" class="nav-link" href="#">
-                            <img src="img/icons/home.svg" class="nav-icon" alt="Página Inicial"/>Página Inicial
-                        </a>
+    <div class="mobile-title">
+        FEED
+    </div>
+    <div class="layout-wrapper">
 
-                        <a id="link-search" class="nav-link" href="#">
-                            <img src="img/icons/search.svg" class="nav-icon" alt="Pesquisa"/>Pesquisa
-                        </a>
-
-                        <a id="link-notif" class="nav-link" href="#">
-                            <img src="img/icons/bell.svg" class="nav-icon" alt="Notificações"/>Notificações
-                        </a>
-
-                        <a id="link-create" class="nav-link" href="#">
-                            <img src="img/icons/add.svg" class="nav-icon" alt="Criar"/>Criar
-                        </a>
-
-                        <a id="link-profile-user" class="nav-link" href="#">
-                            <img src="img/icons/circle-user.svg" class="nav-icon" alt="Perfil"/>Perfil
-                        </a>
-
-                        <div class="sidebar-footer mt-auto">
-                            <a id="link-configs" class="nav-link" href="#">
-                                <img src="img/icons/settings.svg" class="nav-icon" alt="Configurações"/>Configurações
-                            </a>
-                        </div>
-                    </nav>
-                </div>
+        <!-- Sidebar Esquerda -->
+        <div class="sidebar">
+            <div class="logo text-center py-3">
+                <img src="img/logo-site.png" alt="Logo da Rede Social" />
             </div>
 
-            <!-- Feed Central -->
-            <div class="feed-central">
-                <div id="page-feed" class="page">
-                    <div id="feed-container">
-                        <p class="loading" id="initial-loading-message"></p>
+            <div id="all-links">
+                <nav class="nav flex-column px-2 flex-grow-1">
+                    <a id="link-home" class="nav-link" href="#">
+                        <img src="img/icons/home.svg" class="nav-icon" alt="Página Inicial" /><span>Página
+                            Inicial</span>
+                    </a>
+
+                    <a id="link-search" class="nav-link" href="#">
+                        <img src="img/icons/search.svg" class="nav-icon" alt="Pesquisa" /><span>Pesquisa</span>
+                    </a>
+
+                    <a id="link-notif" class="nav-link" href="#">
+                        <img src="img/icons/bell.svg" class="nav-icon" alt="Notificações" /><span>Notificações</span>
+                    </a>
+
+                    <a id="link-create" class="nav-link" href="#">
+                        <img src="img/icons/add.svg" class="nav-icon" alt="Criar" /><span>Criar</span>
+                    </a>
+
+                    <a id="link-profile-user" class="nav-link" href="#">
+                        <img src="img/icons/circle-user.svg" class="nav-icon" alt="Perfil" /><span>Perfil</span>
+                    </a>
+
+                    <div class="sidebar-footer mt-auto">
+                        <a id="link-configs" class="nav-link" href="#">
+                            <img src="img/icons/settings.svg" class="nav-icon"
+                                alt="Configurações" /><span>Configurações</span>
+                        </a>
                     </div>
-                </div>
-
-                <!-- Páginas ocultas -->
-                <div id="page-search" class="page" style="display: none;"></div>
-                <div id="page-notifications" class="page" style="display: none;"></div>
-                <div id="page-create" class="page" style="display: none;"></div>
-                <div id="page-profile" class="page" style="display: none;"></div>
-                <div id="page-profile-user" class="page" style="display: none;"></div>
-                <div id="page-configs" class="page" style="display: none;"></div>
-            </div>
-
-            <!-- Sidebar Direita -->
-            <div class="fixed-sidebar-direita">
-                <h6 class="suggestions-title">Sugestões</h6>
-                <div class="suggestions-list">
-                    <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
-                    <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
-                    <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
-                    <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
-                </div>
-                <div class="mt-5 text-muted small copyright">Direitos Autorais.</div>
+                </nav>
             </div>
         </div>
-        <!-- Container para modais -->
-        <div id="modals-container"></div>
 
-        <!-- Scripts -->
-        <script src="./js/navegation.js"></script>
-        <script src="./js/notifications.js"></script>
-        <script type="module" src="./js/settings.js"></script>
-        <script type="module" src="./js/search.js"></script>
-        <script type="module" src="./js/profile.js"></script>
-        <script type="module" src="./js/profileUser.js"></script>
-        <script type="module" src="./js/create.js"></script>
-        <script type="module" src="./js/feed.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </body>
+        <!-- Feed Central -->
+        <div class="feed-central">
+            <div id="page-feed" class="page">
+                <div id="feed-container">
+                    <p class="loading" id="initial-loading-message"></p>
+                </div>
+            </div>
+
+            <!-- Páginas ocultas -->
+            <div id="page-search" class="page" style="display: none;"></div>
+            <div id="page-notifications" class="page" style="display: none;"></div>
+            <div id="page-create" class="page" style="display: none;"></div>
+            <div id="page-profile" class="page" style="display: none;"></div>
+            <div id="page-profile-user" class="page" style="display: none;"></div>
+            <div id="page-configs" class="page" style="display: none;"></div>
+        </div>
+
+        <!-- Sidebar Direita -->
+        <div class="fixed-sidebar-direita">
+            <h6 class="suggestions-title">Sugestões</h6>
+            <div class="suggestions-list">
+                <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
+                <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
+                <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
+                <a href="#" class="profile-suggestion"><span>Nome Perfil</span></a>
+            </div>
+            <div class="mt-5 text-muted small copyright">Direitos Autorais.</div>
+        </div>
+    </div>
+    <!-- Container para modais -->
+    <div id="modals-container"></div>
+
+    <!-- Scripts -->
+    <script src="./js/navegation.js"></script>
+    <script src="./js/notifications.js"></script>
+    <script type="module" src="./js/settings.js"></script>
+    <script type="module" src="./js/search.js"></script>
+    <script type="module" src="./js/profile.js"></script>
+    <script type="module" src="./js/profileUser.js"></script>
+    <script type="module" src="./js/create.js"></script>
+    <script type="module" src="./js/feed.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+
 </html>
