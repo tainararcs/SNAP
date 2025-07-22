@@ -8,6 +8,11 @@ body.dark-mode {
   color: var(--gray);
 }
 
+body.dark-mode .title {
+    color: #5E60CE !important;
+  
+}
+
 /* Botão de alternar tema */
 #dark-mode-toggle {
   position: fixed;
@@ -63,7 +68,7 @@ body.dark-mode#interests-page .interests-input{
   border: 1px solid #555;
 }
 
-body.dark-mode#interests-page .interests-instruction{
+body.dark-mode#interests-page{
   color: var(--purple1);
 }
 
@@ -79,7 +84,7 @@ body.dark-mode#interests-page .suggestions div:hover{
   color: #282A2C;
   background-color: #5E60CE;
 }
-body.dark-mode#interests-page p{
+body.dark-mode#interests-page p,  .interests-instruction{
   color:#C4CAD0 ;
 
 }
@@ -167,7 +172,10 @@ body.dark-mode .text-center h1{
 body.dark-mode #search-input{
   background-color: var(--dark-gray);
   color: var(--black);
-  
+  border-color: #5E60CE ;
+}
+body.dark-mode  .form-control::placeholder{
+color: var(--black);
 }
 
 /* ===== MODO ESCURO: Página de Notificações ===== */
@@ -179,6 +187,11 @@ body.dark-mode .notification-header{
 
   background-color: var(--main-white);
   color: var(--light-gray2);
+ 
+
+}
+body.dark-mode .notification-header {
+  border-bottom: 1px solid #5E60CE ;
 }
 
 body.dark-mode .notification-card{
@@ -302,4 +315,16 @@ body.dark-mode .settings-option{
 body.dark-mode .settings-option:hover{
   color: var(--white);
   background-color: var(--purple2);
+}
+
+ body.dark-mode .settings-header{
+border-bottom: 1px solid #5E60CE ;
+}
+
+body.dark-mode .icon-right{
+  color: #5E60CE ;
+}
+
+body.dark-mode .subtitle{
+    color: #5E60CE !important;
 }
