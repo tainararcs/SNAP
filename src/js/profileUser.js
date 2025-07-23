@@ -82,6 +82,19 @@ export function setupProfileUser() {
           if (searchLink) searchLink.click();
         });
       });
+      // Evento para deletar post
+      document.querySelectorAll(".delete-post-btn").forEach(button => {
+        button.addEventListener("click", (e) => {
+          const index = parseInt(e.target.dataset.index);
+          if (!isNaN(index)) {
+            if (confirm("Tem certeza que deseja excluir este post?")) {
+              user.posts.splice(index, 1);
+              localStorage.setItem("user", JSON.stringify(user));
+              setupProfileUser(); // Re-renderiza os posts
+            }
+          }
+        });
+      });
 
     }
   }
