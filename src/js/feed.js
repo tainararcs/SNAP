@@ -119,3 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setActiveLink('link-home'); // garante que o link esteja ativo no início
   }
 });
+
+
+document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault(); // Previne navegação, se necessário
+
+            const newTitle = this.getAttribute('data-title');
+            document.querySelector('.mobile-title').textContent = newTitle;
+        });
+    });
