@@ -105,3 +105,10 @@
 .settings-option:active {
     text-decoration: none !important;
 }
+
+
+@media (max-width: 768px) {
+    #settings-container{
+        margin-top: 90px;
+    }
+}

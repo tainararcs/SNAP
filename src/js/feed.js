@@ -121,11 +121,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.querySelectorAll('.nav-link').forEach(link => {
+ document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function (e) {
-            e.preventDefault(); // Previne navegação, se necessário
+            e.preventDefault();
 
             const newTitle = this.getAttribute('data-title');
-            document.querySelector('.mobile-title').textContent = newTitle;
+            const mobileTitle = document.querySelector('.mobile-title');
+
+            if (newTitle === 'Configurações') {
+                mobileTitle.style.display = 'none';
+            } else {
+                mobileTitle.textContent = newTitle;
+                mobileTitle.style.display = 'flex';
+            }
         });
     });
