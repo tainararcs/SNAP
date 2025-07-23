@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const MAX_INTERESTS = 5;
     const MIN_INTERESTS_TO_PROCEED = 3;
-    const DEFAULT_SUGGESTIONS_COUNT = 10;
+    const DEFAULT_SUGGESTIONS_COUNT = 8;
 
     const listaGemini = [
         "Séries", "História", "Inteligência Artificial", "Astronomia", "Música",
@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let user = JSON.parse(localStorage.getItem('user')) || {};
     let interestsArray = [];
     let defaultRecommendations = [];
+    let selectedSuggestionIndex = -1;
+    let currentSuggestions = [];
+
 
     // Elementos DOM
     const interestInput = document.getElementById('interests-input');
@@ -59,11 +62,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function updateHighlightedSuggestion(items) {
+        items.forEach((item, index) => {
+            if (index === selectedSuggestionIndex) {
+                item.classList.add('highlighted');
+            } else {
+                item.classList.remove('highlighted');
+            }
+        });
+    }
+
     // Evento para adicionar com Enter
     interestInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
+        const items = suggestionsOptions.querySelectorAll('div');
+        if (e.key === 'ArrowDown') {
             e.preventDefault();
-            addInterest();
+            if (items.length > 0) {
+                selectedSuggestionIndex = (selectedSuggestionIndex + 1) % items.length;
+                updateHighlightedSuggestion(items);
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (items.length > 0) {
+                selectedSuggestionIndex = (selectedSuggestionIndex - 1 + items.length) % items.length;
+                updateHighlightedSuggestion(items);
+            }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (selectedSuggestionIndex >= 0 && selectedSuggestionIndex < currentSuggestions.length) {
+                const selected = currentSuggestions[selectedSuggestionIndex];
+                interestInput.value = selected;
+                addInterest(selected);
+                selectedSuggestionIndex = -1;
+                toggleSuggestions(false);
+            } else {
+                addInterest();
+            }
         }
     });
 
@@ -88,20 +122,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Carrega as recomendações padrão na tela
     function loadDefaultRecommendations() {
-    defaultTagsDiv.innerHTML = '';
+        defaultTagsDiv.innerHTML = '';
 
-    const availableRecommendations = defaultRecommendations.filter(
-        item => !interestsArray.includes(item)
-    );
+        // Filtra apenas recomendações não selecionadas
+        const availableRecommendations = defaultRecommendations.filter(
+            item => !interestsArray.includes(item)
+        );
 
-    availableRecommendations.slice(0, 10).forEach(item => {
-        const tag = document.createElement('span');
-        tag.className = 'tag recommended-tag';
-        tag.textContent = item;
-        tag.onclick = () => addInterest(item);
-        defaultTagsDiv.appendChild(tag);
-    });
-}
+        availableRecommendations.forEach(item => {
+            const tag = document.createElement('span');
+            tag.className = 'recommended-tag tag';
+            tag.textContent = item;
+            tag.onclick = () => addInterest(item);
+            defaultTagsDiv.appendChild(tag);
+        });
+    }
 
     // Função unificada do botão Avançar
     function handleAdvanceClick() {
@@ -125,16 +160,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mostra sugestões baseadas no texto digitado
     function showSuggestions(text) {
         suggestionsOptions.innerHTML = '';
-        
-        const matchingInterests = listaGemini.filter(i =>
+        selectedSuggestionIndex = -1;
+
+        currentSuggestions = listaGemini.filter(i =>
             i.toLowerCase().includes(text.toLowerCase()) && !interestsArray.includes(i)
         );
 
-        if (matchingInterests.length > 0) {
-            matchingInterests.forEach(item => {
+        if (currentSuggestions.length > 0) {
+            currentSuggestions.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.textContent = item;
-                div.onclick = () => addInterest(item);
+                div.dataset.index = index;
+                div.onclick = () => {
+                    interestInput.value = item;
+                    toggleSuggestions(false);
+                    interestInput.focus();
+                };
                 suggestionsOptions.appendChild(div);
             });
             toggleSuggestions(true);
@@ -142,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleSuggestions(false);
         }
     }
+
 
     // Mostra alerta personalizado
     function showAlert(message) {
@@ -188,7 +230,14 @@ document.addEventListener('DOMContentLoaded', () => {
         interestsArray.forEach(interest => {
             const span = document.createElement('span');
             span.className = 'tag';
-            span.innerHTML = `${interest} <span class="remove-tag">X</span>`;
+            span.innerHTML = `
+  ${interest}
+  <span class="remove-tag" title="Remover Interesse">
+    ×
+    <span class="custom-tooltip">Remover Interesse</span>
+  </span>
+`;
+
             span.onclick = (e) => {
                 if (e.target.classList.contains('remove-tag')) {
                     removeInterest(interest);
