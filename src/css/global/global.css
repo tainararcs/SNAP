@@ -59,3 +59,11 @@ html, body {
     color: var(--white) !important;
     border: 1px solid var(--purple1);
 }
+
+.clicavel {
+    color: var(--main-black);
+}
+
+.clicavel:hover {
+    color: var(--purple3);
+}

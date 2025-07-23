@@ -1,29 +1,30 @@
-<head>
-  <title>Profile</title>
-  
-</head>
-
 <div class="profile">
-
-    <div class="cover"></div>
-
-    <div class="profile-image">
-        <img id="profile-img" src="" alt="Foto do usuário">
-    </div>
-
-    <div id="user-name"></div>
-    
-    <div id="user-bio">
-      <!-- Tela de loading com mensagem de retentativa -->
-      <div id="bio-loading" class="loading-container" style="display: none;">
-          <div class="spinner"></div>
-          <span id="loading-message">Gerando bio com IA...</span>
+  <div class="profile-header ia-profile-header">
+    <div class="profile-header-top">
+      <!-- Lado esquerdo: imagem + nome -->
+      <div class="generated-profile">
+        <div class="profile-picture-wrapper">
+          <div class="profile-picture">
+            <img id="profile-img" src="" alt="Foto de perfil">
+          </div>
+        </div>
+        <div id="user-name" class="user-name"></div>
       </div>
-      
-      <!-- Conteúdo da bio será inserido aqui -->
-      <div id="bio-content"></div>
+
+      <!-- Lado direito: bio -->
+      <div class="generated-bio">
+        <div id="user-bio">
+          <div id="bio-loading" class="loading-container" style="display: none;">
+            <div class="spinner"></div>
+            <span id="loading-message">Gerando bio com IA...</span>
+          </div>
+          <div id="bio-content"></div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div id="user-posts" class="mt-4 profile-posts">
-
+  <div class="posts-container">
+    <div id="user-posts" class="mt-4 profile-posts"></div>
+  </div>
 </div>

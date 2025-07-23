@@ -15,6 +15,13 @@
         -1px -1px 1px .5px rgba(0, 0, 0, 0.1);
 }
 
+.posts-container {
+    margin-top: 20px;
+    padding-top: 30px;
+    border-top: 1px solid var(--purple1);
+}
+
+/* Perfil do Usuário */
 .profile-header {
     margin-bottom: 20px; 
     max-width: 80%;
@@ -90,7 +97,7 @@
 }
 
 .edit-btn {
-    border-radius: 15px !important;
+    border-radius: 8px !important;
 }
 
 .edit-field {
@@ -132,12 +139,60 @@
     overflow-wrap: break-word;
     max-width: 100%;
     width: 100%;
-
 }
 
-.posts-container {
-    margin-top: 20px;
-    padding-top: 30px;
-    border-top: 1px solid var(--purple1);
+/* Perfis gerados pelo Gemini */
+.ia-profile {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 
+.ia-profile-header {
+    max-width: 95%;
+}
+
+.generated-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+}
+
+.generated-profile .profile-picture-wrapper {
+    width: 100px;
+    height: 100px;
+}
+
+.generated-profile .user-name {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.generated-bio {
+    flex: 1;
+    width: 900px;
+    max-width: 75%;
+    margin: 0 auto;
+    border-left: 1px solid var(--light-gray1);
+    padding-left: 10px;
+}
+
+.generated-bio #bio-content {
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+@media (max-width: 600px) {
+    .ia-profile {
+        flex-direction: column;
+        align-items: center;
+    }
+    .generated-bio {
+        width: 100%;
+    }
+}
