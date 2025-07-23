@@ -13,9 +13,9 @@ const storedUser = localStorage.getItem('user');
 
 const homeLink = document.getElementById("link-home");
 homeLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    setActiveLink("link-home");
-    showPage("page-feed");
+  e.preventDefault();
+  setActiveLink("link-home");
+  showPage("page-feed");
 });
 
 if (storedUser) {
@@ -70,19 +70,19 @@ function addPostToFeedDOM(postData) {
   feedContainer.prepend(postCard);
 
   postCard.querySelectorAll(".hashtag-link")
-  .forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
+    .forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
 
-      const hashtag = e.target.dataset.hashtag;
+        const hashtag = e.target.dataset.hashtag;
 
-      localStorage.setItem('searchQuery', hashtag);
+        localStorage.setItem('searchQuery', hashtag);
 
-      const searchLink = document.getElementById("link-search");
+        const searchLink = document.getElementById("link-search");
 
-      if(searchLink) searchLink.click();
+        if (searchLink) searchLink.click();
+      });
     });
-  });
 }
 
 async function generateAndAddSinglePost() {
@@ -121,18 +121,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
- document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
 
-            const newTitle = this.getAttribute('data-title');
-            const mobileTitle = document.querySelector('.mobile-title');
+    const newTitle = this.getAttribute('data-title');
+    const mobileTitle = document.querySelector('.mobile-title');
 
-            if (newTitle === 'Configurações') {
-                mobileTitle.style.display = 'none';
-            } else {
-                mobileTitle.textContent = newTitle;
-                mobileTitle.style.display = 'flex';
-            }
-        });
-    });
+    if (newTitle === 'Configurações') {
+      mobileTitle.style.display = 'none';
+    } else if (newTitle === 'Notificações') {
+      mobileTitle.style.display = 'none';
+    }
+    else {
+      mobileTitle.textContent = newTitle;
+      if (window.innerWidth <= 768) {
+        mobileTitle.style.display = 'flex';
+      }
+    }
+  });
+});

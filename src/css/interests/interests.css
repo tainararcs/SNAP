@@ -1,3 +1,13 @@
+body {
+    padding-top: 0 !important;
+}
+
+.logo-interests {
+    display: flex;
+    width: 200px;
+    margin-left: -50px;
+}
+
 #interests-page {
     background-color: var(--main-white);
     padding: 40px 0;
@@ -5,8 +15,10 @@
 }
 
 .interests-card {
+    display: flex;
+    flex-direction: column;
     padding: 60px;
-    margin-top: 30px;
+    padding-top: 0;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
@@ -80,9 +92,9 @@
     max-height: 300px;
     overflow-y: auto;
     background: #6930C3;
-    background: linear-gradient(90deg, rgb(119, 59, 216) 0%, rgb(164, 107, 255) 27%, rgba(79, 247, 247, 0.795) 71%, rgba(100, 223, 223, 0.5) 100%);
+    background: linear-gradient(90deg, var(--purple1) 0%, rgb(164, 107, 255) 27%, rgba(79, 247, 247, 0.795) 71%, rgba(100, 223, 223, 0.5) 100%);
     border: 1px solid var(--light-gray1);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(3px);
     border-top: none;
     border-radius: 8px;
     z-index: 1000;
@@ -144,11 +156,11 @@
     background-color: var(--purple3);
 }
 
-.remove-tag {  
+.remove-tag {
     position: relative;
     margin-left: 8px;
     cursor: pointer;
-     font-size: 25px;
+    font-size: 25px;
     color: var(--white);
     opacity: 0.7;
     transition: all 0.2s;
@@ -161,25 +173,25 @@
 }
 
 .custom-tooltip {
-  position: absolute;
-  top: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease;
-  z-index: 10;
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 10;
 }
 
 .remove-tag:hover .custom-tooltip {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 
@@ -347,9 +359,43 @@
 }
 
 @media (max-width: 768px) {
+    .logo-interests {
+        margin-left: 0;
+        align-self: center;
+    }
+
+    .interests-card {
+        padding-bottom: 0 !important;
+    }
+
+    .recommended-tags {
+        margin-bottom: 10px;
+    }
+
+    .p-footer {
+        display: block;
+        margin-bottom: 20px !important;
+    }
+
     .btn-desktop {
         display: none !important;
     }
+
+    #advance-mobile {
+        position: fixed;
+        bottom: 2%;
+        background-color: var(--white);
+    }
+
+    #advance-mobile:hover {
+        background-color: var(--purple1);
+        color: var(--white);
+    }
+
+    .suggestions {
+        position: relative;
+    }
+
 
     .btn-mobile {
         display: inline-block;
@@ -367,8 +413,12 @@
     }
 
     .interests-title {
-        font-size: 24px;
-        max-width: none;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .interests-footer {
+        position: relative;
     }
 
     body.interests-page {

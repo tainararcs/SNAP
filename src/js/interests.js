@@ -254,3 +254,27 @@ document.addEventListener('DOMContentLoaded', () => {
         advanceMobile.style.display = shouldShowAdvance && isMobile ? 'inline-block' : 'none';
     }
 });
+
+
+function ajustarFraseResponsiva() {
+        const frase = document.querySelector('.interests-title');
+        if (!frase) return;
+
+        // Texto base sem <br>
+        const textoSemBr = 'Conte-nos o que mais interessa você';
+        const larguraTela = window.innerWidth;
+
+        if (larguraTela < 768) {
+            // Remove <br> se existir
+            frase.innerHTML = textoSemBr;
+        } else {
+            // Recoloca o <br> se não estiver lá
+            if (!frase.innerHTML.includes('<br>')) {
+                frase.innerHTML = 'Conte-nos o que mais<br>interessa você';
+            }
+        }
+    }
+
+    // Roda ao carregar e quando redimensionar a janela
+    window.addEventListener('load', ajustarFraseResponsiva);
+    window.addEventListener('resize', ajustarFraseResponsiva);
