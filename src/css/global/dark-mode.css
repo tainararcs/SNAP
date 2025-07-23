@@ -104,6 +104,8 @@ body.dark-mode#body-feed {
   --blue5: var(--blue5);
   background-color: var(--dark-gray);
   color: var(--light-gray1);
+
+  scrollbar-color: var(--purple3) var(--dark-gray);
 }
 
 /* Sidebars, header e sidebar-direita */
@@ -132,6 +134,7 @@ body.dark-mode#body-feed .sidebar .nav-link.active {
 body.dark-mode#body-feed .feed-central {
   background-color: var(--light-gray1);
   color: var(--light-gray2);
+  
 }
 
 /* Posts */
@@ -150,7 +153,7 @@ body.dark-mode#body-feed .post-content{
 
 body.dark-mode#body-feed .fixed-sidebar-direita {
   background-color: var(--light-gray1);
-  border-left: 2px solid var(--purple3);
+  border-left: 4px solid #3C3D3F;
 }
 body.dark-mode#body-feed .profile-suggestion {
   color: var(--black);
@@ -275,6 +278,11 @@ body.dark-mode #postHashtags, .modal-header{
   color: #5390D9;
 }
 
+body.dark-mode .modal-header{
+  border-bottom: 1px solid var(--purple3);
+
+}
+
 body.dark-mode .close-button{
   color: #6930C3;
 }
@@ -327,4 +335,36 @@ body.dark-mode .icon-right{
 
 body.dark-mode .subtitle{
     color: #5E60CE !important;
+}
+
+/* ===== MODO ESCURO: Perfil do usuario ===== */
+
+body.dark-mode .profile{
+  background-color: var(--main-white);
+}
+
+body.dark-mode .posts-container{
+  border-top: 1px solid var(--purple3);
+
+}
+
+body.dark-mode .delete-post-btn:hover{
+  color: var(--purple1);
+}
+
+body.dark-mode .delete-post-btn{
+  color: var(--purple3);
+}
+
+
+body.dark-mode .edit-input{
+  border: 2px solid var(--purple3);
+  color: var(--black);
+  background-color: var(--light-gray1);
+}
+
+
+
+body.dark-mode #bioText{
+  color: var(--light-gray2);
 }
