@@ -312,18 +312,18 @@
     }
 
 
+
     .mobile-title {
         display: flex;
-        font-weight: bold;
-        justify-content: center;
+        justify-content: flex-start;
+        padding: 10px;
         font-size: 35px;
         position: absolute;
+        padding-left: 90px;
+        background-color: white;
         width: 100%;
-        border-bottom: 3px solid var(--purple1);
-        background-color: rgba(255, 255, 255, 0.134);
-        backdrop-filter: blur(10px);
         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.423);
-        z-index: 1000;
+        z-index: 998;
     }
 
     .feed-central {
@@ -332,12 +332,13 @@
     }
 
     .post-card {
+        max-height: initial;
         width: 80vw;
     }
 
     .post-header {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .post-content {
@@ -365,6 +366,7 @@
         background-color: white;
         top: initial;
         bottom: 0;
+        overflow-y: hidden;
         z-index: 999;
     }
 
@@ -392,10 +394,13 @@
 
     .fixed-sidebar-direita {
         border: none;
-        margin-top: 40px;
+        margin-top: 90px;
         display: flex;
         align-self: center;
-        width: 70vw;
+        width: 85vw;
+        border: none;
+        border-radius: 10px;
+        padding: 20px;
         height: fit-content;
         overflow-x: hidden;
         background-color: transparent;
@@ -437,10 +442,12 @@
 
     .sidebar-footer {
         padding: 0;
+        margin: 0;
         position: fixed;
-        top: 8%;
-        right: 5%;
+        top: 2%;
+        right: 12%;
         width: fit-content;
+        z-index: 999;
     }
 
 }

@@ -147,3 +147,29 @@
   margin-top: 4px;
   display: none;
 }
+
+
+
+
+@media (max-width: 768px) {
+    .modal-content{
+        width: 95vw;
+        max-height: 600px;
+    }
+
+    #closePostModal{
+        scale: 1.4;
+    }
+    
+    .modal-header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .modal-header h2{
+        margin: 20px;
+    }
+
+}

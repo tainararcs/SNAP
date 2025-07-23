@@ -100,3 +100,58 @@
     background-color: var(--light-gray1);
     border-radius: 8px;
 }
+
+
+
+@media (max-width: 768px) {
+
+    .notifications-container{
+        margin-top: 40px;
+    }
+
+    .notification-card {
+        display: flex;
+        width: 90vw;
+    }
+
+    .notification-header {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+@media (max-width: 450px) {
+    
+    .notification-card{
+        width: 100%;
+        flex-direction: column;
+        min-height: fit-content;
+    }
+
+    .notification-actions {
+        display: flex;
+        width: 70vw;
+        flex-direction: column;
+    }
+
+    .title{
+        white-space: normal;
+        /* permite quebra de linha */
+        word-wrap: break-word;
+        /* quebra palavras longas */
+        overflow-wrap: break-word;
+        /* suporte adicional para quebra */
+        text-align: center;
+    }
+
+    .notification-actions button {
+        white-space: normal;
+        /* permite quebra de linha */
+        word-wrap: break-word;
+        /* quebra palavras longas */
+        overflow-wrap: break-word;
+        /* suporte adicional para quebra */
+        text-align: center;
+    }
+}

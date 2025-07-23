@@ -10,7 +10,7 @@
 }
 
 .profile-posts .post-card {
-    box-shadow: 
+    box-shadow:
         1px 1px 1px .5px rgba(105, 48, 195, 0.8),
         -1px -1px 1px .5px rgba(0, 0, 0, 0.1);
 }
@@ -23,7 +23,7 @@
 
 /* Perfil do Usuário */
 .profile-header {
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     max-width: 80%;
     margin: 0 auto;
 }
@@ -59,7 +59,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 1px solid var(--purple3);
+    border: 3px solid var(--purple3);
     object-fit: cover;
 }
 
@@ -88,6 +88,7 @@
 #edit-button {
     display: flex;
     gap: 10px;
+    margin-top: 20px;
     flex-wrap: wrap;
 }
 
@@ -113,7 +114,7 @@
 
 .edit-input {
     border: 2px solid var(--purple1);
-    border-radius: 8px !important; 
+    border-radius: 8px !important;
     font-size: 14px;
     cursor: pointer;
     color: var(--main-black);
@@ -187,11 +188,64 @@
     word-wrap: break-word;
 }
 
-@media (max-width: 600px) {
+#bio-edit-textarea {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+
+    .profile-header {
+        width: 70vw;
+    }
+
+    #name-edit-wrapper{
+        width: 60vw;
+    }
+
+    .profile-header-top {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profile-header-left{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .edit-label {
+        font-size: 2.1rem !important;
+    }
+
+    .profile {
+        margin-top: 80px;
+    }
+
+    .edit-btn{
+        max-height: fit-content;
+    }
+
+
+    #edit-button{
+        width: fit-content;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .loading {
+        font-size: 15px;
+    }
+
+    #editProfileBtn {
+        margin-top: 20px;
+    }
+
     .ia-profile {
         flex-direction: column;
         align-items: center;
     }
+
     .generated-bio {
         width: 100%;
     }
