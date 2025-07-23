@@ -18,8 +18,8 @@
 }
 
 #body-login p {
-	font-size: 14px;
-	font-weight: 100;
+	font-size: 18px;
+	font-weight: 400;
 	line-height: 20px;
 	letter-spacing: 0.5px;
 	margin: 20px 0 30px;
@@ -82,19 +82,19 @@
 }
 
 .top-logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin-top: -20px;
 }
 
 .top-logo img {
-    width: 120px;
+	width: 160px;
 }
 
 .desktop-logo {
-    width: 100px;
-    margin-bottom: 10px;
+	width: 200px;
+	margin-bottom: 10px;
 }
 
 .global-alert {
@@ -111,7 +111,7 @@
 .container-login {
 	background-color: var(--white);
 	border-radius: 10px;
-	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 	position: relative;
 	overflow: hidden;
 	width: 890px;
@@ -151,11 +151,15 @@
 }
 
 @keyframes show {
-	0%, 49.99% {
+
+	0%,
+	49.99% {
 		opacity: 0;
 		z-index: 1;
 	}
-	50%, 100% {
+
+	50%,
+	100% {
 		opacity: 1;
 		z-index: 5;
 	}
@@ -232,26 +236,26 @@
 
 /* Recuperar senha */
 .forgot-password-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  z-index: 10;
-  display: none;
-  transition: all 0.6s ease-in-out;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
+	z-index: 10;
+	display: none;
+	transition: all 0.6s ease-in-out;
 }
 
-#back-to-login{
+#back-to-login {
 	margin-top: 20px;
 }
 
 footer {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+	text-align: center;
+	font-size: 14px;
 	color: var(--gray);
 }
 
@@ -261,14 +265,19 @@ footer {
 	}
 }
 
-@media (max-width: 768px) {	
-	#login-page {
-        display: block;
-    }
+@media (max-width: 768px) {
 
-    #signup-page {
-        display: none;
-    }
+	* {
+		box-sizing: border-box !important;
+	}
+
+	#login-page {
+		display: block;
+	}
+
+	#signup-page {
+		display: none;
+	}
 
 	.container-login {
 		display: none !important;
@@ -276,39 +285,63 @@ footer {
 
 	#body-login {
 		height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0;
 	}
 
 	.mobile-page {
-		display: block;
-		width: 100%;
-		max-width: 400px;
-		padding: 0 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.mobile-form-container {
 		background-color: var(--white);
 		border-radius: 10px;
-		box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-		padding: 30px;
-		width: 100%;
+		box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+		width: 90vw;
+		padding: 20px;
+		align-self: center;
 		text-align: center;
 	}
 
 	.mobile-form-container h1 {
 		font-weight: bold;
-		margin: 0 0 20px;
 	}
 
 	.mobile-form-container input {
 		background-color: var(--main-white);
 		border: none;
 		padding: 12px 15px;
-		margin: 8px 0;
 		width: 100%;
+	}
+
+	.desktop-logo {
+		width: 220px !important;
+	}
+
+	input {
+		font-size: 20px;
+	}
+
+	#mobile-login-form button {
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 17px !important;
+	}
+
+	#dark-mode-toggle{
+		position: fixed;
+		top:4%;
+	}
+
+	#mobile-login-form,
+	#mobile-register-form {
+		padding: 0px 0px !important;
 	}
 
 	.mobile-form-container button {
@@ -327,7 +360,7 @@ footer {
 
 	.mobile-form-container a {
 		color: var(--gray);
-		font-size: 14px;
+		font-size: 20px !important;
 		text-decoration: none;
 		display: block;
 		margin: 15px 0;
@@ -340,6 +373,7 @@ footer {
 }
 
 @media (min-width: 769px) {
+
 	.mobile-form-container,
 	#login-page,
 	#signup-page {

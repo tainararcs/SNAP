@@ -24,6 +24,7 @@
     height: 100vh;
     position: sticky;
     top: 0;
+    font-size: 20px !important;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -108,9 +109,12 @@
 }
 
 #feed-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 0 1rem 2rem 1rem;
-    max-width: 820px;
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -118,9 +122,8 @@
     background-color: var(--white);
     border-radius: 17px;
     box-shadow: 1px 1px 1px .5px rgba(105, 48, 195, 0.8);
+    max-width: 800px;
     margin-bottom: 18px;
-    max-height: 200px;
-    height: 95%;
     padding: 1.25rem;
     opacity: 0;
     transform: translateY(20px);
@@ -138,13 +141,14 @@
     display: flex;
     align-items: center;
     width: 95%;
+    font-size: 1.9rem;
     margin: 0 auto;
     margin-bottom: 10px;
 }
 
 .post-avatar {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     margin-right: 0.75rem;
     object-fit: cover;
@@ -158,7 +162,7 @@
 }
 
 .post-time {
-    font-size: 12px;
+    text-align: center;
     color: var(--gray);
     margin-left: auto;
 }
@@ -170,12 +174,12 @@
     margin: 0 auto;
     margin-bottom: 0.75rem;
     white-space: pre-wrap;
-    font-size: 14px;
+    font-size: 1.8rem;
 }
 
 .post-hashtags {
     color: var(--blue3);
-    font-size: 14px;
+    font-size: 1.8rem;
     width: 92%;
     margin: 0 auto;
     margin-top: 10px;
@@ -300,6 +304,23 @@
         border-bottom: 1px solid var(--light-gray1);
     }
 
+
+
+#feed-container {
+    width: 100% !important;
+}
+
+    .post-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+    }
+
+    .post-time{
+        margin-left: 0;
+    }
+
     .feed-central {
         height: auto;
     }
@@ -311,33 +332,6 @@
         overflow-y: auto;
     }
 
-    @keyframes mobileGradientFlow {
-        0% {
-            background-position: 0% 50%;
-        }
-
-        50% {
-            background-position: 100% 50%;
-        }
-
-        100% {
-            background-position: 0% 50%;
-        }
-    }
-
-    @keyframes diamondGradientFlow {
-        0% {
-            background-position: center;
-        }
-
-        50% {
-            background-position: top left;
-        }
-
-        100% {
-            background-position: center;
-        }
-    }
 
     .mobile-title {
         display: flex;
@@ -350,12 +344,13 @@
         background-color: white;
         color: var(--purple1);
         width: 100%;
-        /* Gradiente diamante animado */
-        background: radial-gradient(circle at left,var(--white),#cfb2ff, var(--blue5));
-        background-size: 200% 200%;
-        animation: diamondGradientFlow 8s ease-in-out infinite;
         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.423);
         z-index: 998;
+    }
+
+
+    #feed-container{
+        width: 100%;
     }
 
     .feed-central {
@@ -370,6 +365,7 @@
 
     .post-header {
         display: flex;
+        flex-direction: row;
         justify-content: flex-start;
     }
 
@@ -384,7 +380,6 @@
     .post-time {
         text-align: center;
         margin-left: 15px;
-        font-size: 15px;
     }
 
     .sidebar {
@@ -486,7 +481,7 @@
 }
 
 
-@media (max-width: 450px) {
+@media (max-width: 512px) {
     .post-header {
         display: flex;
         flex-direction: column;

@@ -121,23 +121,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
+ document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('.nav-link');
+        const mobileTitleWrapper = document.querySelector('.mobile-title');
+        const mobileTitleText = mobileTitleWrapper.querySelector('span');
 
-    const newTitle = this.getAttribute('data-title');
-    const mobileTitle = document.querySelector('.mobile-title');
+        links.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
 
-    if (newTitle === 'Configurações') {
-      mobileTitle.style.display = 'none';
-    } else if (newTitle === 'Notificações') {
-      mobileTitle.style.display = 'none';
-    }
-    else {
-      mobileTitle.textContent = newTitle;
-      if (window.innerWidth <= 768) {
-        mobileTitle.style.display = 'flex';
-      }
-    }
-  });
-});
+                const newTitle = link.getAttribute('data-title');
+
+                if (newTitle === "Configurações" || newTitle === "Notificações") {
+                    // Esconde o título
+                    mobileTitleWrapper.style.display = 'none';
+                } else if (newTitle === "Criar") {
+                    // Não altera o título atual nem mostra/oculta nada
+                    return;
+                } else {
+                    // Mostra e atualiza o título normalmente
+                    mobileTitleWrapper.style.display = 'block';
+                    mobileTitleText.textContent = newTitle;
+                }
+            });
+        });
+    });
