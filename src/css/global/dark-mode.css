@@ -118,10 +118,6 @@ body.dark-mode#body-feed .feed-central {
 body.dark-mode#body-feed .post-card {
   background-color: var(--main-white);
   color: var(--light-gray1);
-  box-shadow: none;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 1.25rem;
 }
 
 body.dark-mode#body-feed .post-content{
@@ -144,6 +140,16 @@ body.dark-mode#body-feed .profile-suggestion:hover{
   color: var(--purple3);
 }
 
+
+body.dark-mode#body-feed .profile-suggestion img.recommended-user-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--purple3);
+  }
+
+
 /* ===== MODO ESCURO: Pesquisa ===== */
 body.dark-mode .text-center h1{
     color: #5E60CE;
@@ -161,6 +167,7 @@ color: var(--black);
 /* ===== MODO ESCURO: Página de Notificações ===== */
 body.dark-mode .notifications-container {
     background-color: var(--main-white);
+    box-shadow: 0 1px 2px var(--purple3);
 }
 
 body.dark-mode .notification-header{
@@ -180,7 +187,7 @@ body.dark-mode .notification-card{
 }
 
 body.dark-mode .notification-card.unread {
-  border-left: 4px solid var(--light-gray2);
+  border-left: 4px solid var(--purple3);
   background-color: var(--gray);
 }
 
@@ -284,6 +291,7 @@ body.dark-mode .error-message{
 body.dark-mode #settings-container, 
 div#theme-div, div#help-div, div#language-div, .settings-btn{
   background-color: var(--main-white);
+  box-shadow: 0 1px 2px var(--purple3);
 }
 
 body.dark-mode .logout-btn{
@@ -326,6 +334,7 @@ body.dark-mode .subtitle{
 
 body.dark-mode .profile{
   background-color: var(--main-white);
+  box-shadow: 0 1px 2px var(--purple3);
 }
 
 body.dark-mode .posts-container{
@@ -378,10 +387,15 @@ body.dark-mode .edit-icon-label{
   body.dark-mode#body-feed  .mobile-title{
     background-color: var(--main-white);
     color: var(--purple3);
+    border-bottom: 1px solid var(--purple3);
+
   }
   body.dark-mode .sidebar .nav-link.active::before{
     background-color: var(--purple3);
   }
+  body.dark-mode h6 {
+    color: var(--purple3) !important;
+    }
   
   /* ===== MODO ESCURO: Perfil do usuario ===== */
   body.dark-mode #bio-edit-textarea{
