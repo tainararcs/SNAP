@@ -13,29 +13,6 @@ body.dark-mode .title {
   
 }
 
-/* Botão de alternar tema */
-#dark-mode-toggle {
-  position: fixed;
-  bottom: 10px;
-  right: 20px;
-  z-index: 1001;
-  background-color: var(--roxo3);
-  color: var(--white);
-  border: none;
-  border-radius: 20px;
-  width: 45px;
-  height: 45px;
-  font-size: 18px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-#dark-mode-icon {
-  font-size: 30px !important;
-  transform: translate(-15px, -4px);
-}
-
 /* ===== MODO ESCURO: Página de Login ===== */
 body.dark-mode#body-login a {
 	color: #FCF7FF;
@@ -284,13 +261,21 @@ body.dark-mode .modal-header{
 }
 
 body.dark-mode .close-button{
-  color: #6930C3;
+  color: var(--purple3);
+   border-radius: 5px;
+}
+
+body.dark-mode .close-button:hover{
+  color: var(--main-white);
+  background-color: var(--purple3);
 }
 
 body.dark-mode #postSubmitBtn{
   background-color: var(--purple3);
   color: var(--main-white);
+  border: 1px solid var(--purple3);
 }
+
 body.dark-mode .error-message{
   color:#FCF7FF;
 }
@@ -363,8 +348,46 @@ body.dark-mode .edit-input{
   background-color: var(--light-gray1);
 }
 
-
-
 body.dark-mode #bioText{
   color: var(--light-gray2);
+}
+
+body.dark-mode #bio-edit-textarea{
+  background-color: var(--light-gray1);
+  border: 2px solid var(--purple3);
+}
+
+body.dark-mode .edit-icon-label{
+  color: var(--purple1);
+  background-color: var(--purple3);
+}
+
+@media (max-width: 768px) {
+  
+  /* ===== MODO ESCURO: Página de Login ===== */
+  body.dark-mode#body-login p{
+    color: var(--main-black);
+  }
+
+  /* ===== MODO ESCURO: Página de Interesses ===== */
+  body.dark-mode #advance-mobile {
+    background-color: var(--main-white);
+  }
+
+  /* ===== MODO ESCURO: Página de Feed ===== */
+  body.dark-mode#body-feed  .mobile-title{
+    background-color: var(--main-white);
+    color: var(--purple3);
+  }
+  body.dark-mode .sidebar .nav-link.active::before{
+    background-color: var(--purple3);
+  }
+  
+  /* ===== MODO ESCURO: Perfil do usuario ===== */
+  body.dark-mode #bio-edit-textarea{
+      background-color: var(--light-gray1);
+      border: 2px solid var(--purple3);
+  }
+
+  
 }

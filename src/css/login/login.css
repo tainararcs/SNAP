@@ -250,6 +250,30 @@
 	margin-top: 20px;
 }
 
+
+/* Botão de alternar tema */
+#dark-mode-toggle {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 1001;
+  background-color: var(--roxo3);
+  color: var(--white);
+  border: none;
+  border-radius: 20px;
+  width: 45px;
+  height: 45px;
+  font-size: 18px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#dark-mode-icon {
+  font-size: 30px !important;
+  transform: translate(-15px, -4px);
+}
+
 footer {
 	position: absolute;
 	bottom: 10px;
@@ -336,7 +360,15 @@ footer {
 
 	#dark-mode-toggle{
 		position: fixed;
-		top:4%;
+		bottom: 30px;
+  		left: 50%;
+		height: 30px;
+		
+  		transform: translateX(-50%);
+	}
+	#dark-mode-icon {
+		font-size: 25px !important;
+		transform: translate(-10px, -8px);
 	}
 
 	#mobile-login-form,
