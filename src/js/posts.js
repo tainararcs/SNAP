@@ -1,21 +1,6 @@
 import { User } from './User.js'; // Importe a classe User
 import {requisitarPost, requisitarUserData} from './gemini.js'
 
-/* Controle de Taxa.
-*  Define o tempo mínimo de atraso (em milissegundos) entre as requisições à API, 
-*  evitando sobrecarga ou chamadas excessivas em curto intervalo.
-*/
-const TEMPO_CONTROLE = 1500; // 1,5 seg - Mantenha esse controle para as requisições combinadas.
-let lastRequestTime = 0; // Armazena o timestamp da última requisição.
-
-/**
- * Função utilitária para introduzir um atraso.
- * @param {number} ms - Milissegundos para atrasar.
- */
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 /**
  * Prepara um post para o feed, solicitando conteúdo e dados de usuário fictício separadamente ao backend (Gemini).
  * O conteúdo do post será baseado nos interesses do usuário logado.
@@ -33,16 +18,6 @@ export async function prepararPostParaFeed(currentUser) {
     console.log("Solicitando post e dados de usuário fictício do backend com base nos interesses:", interessesDoUsuario);
 
     try {
-
-        // Controle de Taxa: Verifica e aplica atraso antes das requisições combinadas.
-        const now = Date.now();
-        const timeSinceLastRequest = now - lastRequestTime;
-        if (timeSinceLastRequest < TEMPO_CONTROLE) {
-            const timeToWait = TEMPO_CONTROLE - timeSinceLastRequest;
-            console.log(`Aguardando ${timeToWait}ms para respeitar o limite de taxa para requisições múltiplas.`);
-            await delay(timeToWait);
-        }
-        lastRequestTime = Date.now(); // Atualiza o tempo da última requisição.
 
         // Faz as duas requisições em paralelo.
         const [postContentArray, userData] = await Promise.all([
