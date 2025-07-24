@@ -30,7 +30,7 @@ function initializeUser() {
     }
 
     const userData = JSON.parse(storedUser);
-    
+
     if (userData.theme === 'dark') {
         document.body.classList.add('dark-mode');
     }
@@ -44,8 +44,8 @@ function initializeUser() {
 
     const defaultInterests = ["tecnologia", "inovação", "futuro", "inteligencia artificial", "curiosidades"];
     currentUser.addInterestList(
-        userData.interests && Array.isArray(userData.interests) && userData.interests.length > 0 
-            ? userData.interests 
+        userData.interests && Array.isArray(userData.interests) && userData.interests.length > 0
+            ? userData.interests
             : defaultInterests
     );
 
@@ -74,7 +74,7 @@ function addPostToFeedDOM(postData) {
 
         const postCard = document.createElement('div');
         postCard.className = 'post-card';
-        
+
         postCard.innerHTML = `
             <div class="post-header">
                 <img src="${avatarUrl}" alt="${postData.nomeUsuario}" class="post-avatar" 
@@ -160,24 +160,24 @@ function loadRecommendations() {
 
         const users = getStoredUsers();
         const currentUserData = JSON.parse(localStorage.getItem('user'));
-        
+
         if (!users?.length || !currentUserData) {
             container.innerHTML = '<p class="small">Nenhuma recomendação disponível</p>';
             return;
         }
 
         const recommendations = users
-            .filter(user => 
-                user.nome && 
-                user.nome !== currentUserData.name && 
+            .filter(user =>
+                user.nome &&
+                user.nome !== currentUserData.name &&
                 user.posts?.length > 0
             )
             .slice(0, 4)
             .map(user => {
-                const userPhoto = user.profileImage || 
-                                 user.posts?.[0]?.avatarUrl || 
-                                 'https://i.pravatar.cc/150?img=3';
-                
+                const userPhoto = user.profileImage ||
+                    user.posts?.[0]?.avatarUrl ||
+                    'https://i.pravatar.cc/150?img=3';
+
                 return `
                     <a href="#" class="profile-suggestion" data-user="${user.nome}">
                         <img src="${userPhoto}" 
@@ -189,13 +189,13 @@ function loadRecommendations() {
                 `;
             });
 
-        container.innerHTML = recommendations.length 
-            ? recommendations.join('') 
+        container.innerHTML = recommendations.length
+            ? recommendations.join('')
             : '<p class="small">Nenhuma recomendação disponível</p>';
 
         // Configura eventos de clique para recomendações
         container.querySelectorAll('.profile-suggestion').forEach(link => {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const userName = this.dataset.user;
                 const event = new MouseEvent('click', {
@@ -223,6 +223,31 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
     setActiveLink('link-home');
     loadRecommendations();
+
+
+    const links = document.querySelectorAll('.nav-link');
+    const mobileTitleWrapper = document.querySelector('.mobile-title');
+    const mobileTitleText = mobileTitleWrapper.querySelector('span');
+
+    links.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            const newTitle = link.getAttribute('data-title');
+
+            if (newTitle === "Configurações" || newTitle === "Notificações") {
+                // Esconde o título
+                mobileTitleWrapper.style.display = 'none';
+            } else if (newTitle === "Criar") {
+                // Não altera o título atual nem mostra/oculta nada
+                return;
+            } else {
+                // Mostra e atualiza o título normalmente
+                mobileTitleWrapper.style.display = 'block';
+                mobileTitleText.textContent = newTitle;
+            }
+        });
+    });
 });
 
 // Limpeza quando a página for fechada

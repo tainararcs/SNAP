@@ -196,6 +196,15 @@
 
 @media (max-width: 768px) {
 
+    .post-username{
+        font-size: 2.2rem;
+    }
+
+    .post-avatar{
+        width: 64px;
+        height: 64px;
+    }
+
     .profile-header {
         width: 70vw;
     }
