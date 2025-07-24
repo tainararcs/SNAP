@@ -118,6 +118,7 @@ body.dark-mode#body-feed .feed-central {
 body.dark-mode#body-feed .post-card {
   background-color: var(--main-white);
   color: var(--light-gray1);
+  box-shadow: 0 1px 2px var(--purple3);
 }
 
 body.dark-mode#body-feed .post-content{
@@ -302,7 +303,7 @@ body.dark-mode .settings-btn{
   color: var(--purple3);
 }
 body.dark-mode .standard-btn{
-  border-color: var(--purple3) !important;
+  border-color: var(--main-white) !important;
 }
 
 body.dark-mode .logout-btn:hover{
@@ -395,7 +396,21 @@ body.dark-mode .edit-icon-label{
   }
   body.dark-mode h6 {
     color: var(--purple3) !important;
-    }
+  }
+
+  body.dark-mode#body-feed .post-card {
+    background-color: var(--main-white);
+    color: var(--light-gray1);
+    box-shadow: 0 1px 2px var(--purple3);
+  }
+  body.dark-mode#body-feed .suggestions-list {
+    font-size: 15px;
+    gap: 20px;
+    overflow-x: scroll;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+  }
   
   /* ===== MODO ESCURO: Perfil do usuario ===== */
   body.dark-mode #bio-edit-textarea{

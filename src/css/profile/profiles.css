@@ -99,6 +99,7 @@
 
 .edit-btn {
     border-radius: 8px !important;
+    border-color: var(--purple3) !important;
 }
 
 .edit-field {
@@ -148,7 +149,7 @@
     right: 0;
     margin-left: 5px;
     color: var(--purple3) !important;
-    border-color: var(--purple3) !important;
+    border-color: var(--white) !important;
 }
 
 .delete-btn:focus {
@@ -204,7 +205,7 @@
 }
 
 .generated-bio #bio-content {
-    font-size: 14px;
+    font-size: 13px;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
@@ -216,12 +217,12 @@
 @media (max-width: 768px) {
 
     .post-username{
-        font-size: 2.2rem;
+        font-size: 1.5rem;
     }
 
     .post-avatar{
-        width: 64px;
-        height: 64px;
+        width: 60px;
+        height: 60px;
     }
 
     .profile-header {

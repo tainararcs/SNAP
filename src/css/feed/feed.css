@@ -410,11 +410,11 @@
     }
 
     .post-content {
-        font-size: 20px;
+        font-size: 15px;
     }
 
     .post-hashtags {
-        font-size: 20px;
+        font-size: 14px;
     }
 
     .post-time {
@@ -477,7 +477,7 @@
 
 
     .suggestions-list {
-        font-size: 20px;
+        font-size: 15px;
         gap: 20px;
         overflow-x: scroll;
         display: flex;
@@ -562,7 +562,8 @@
     }
 
     .bio-gene {
-        font-size: 20px;
+        margin-top: 20px;
+        font-size: 15px;
     }
 
     .profile-suggestion {
