@@ -1,4 +1,3 @@
-import { loadUserProfileImage } from './User.js';
 const createBtn = document.querySelector("#link-create");
 let previousActiveLink = null;
 
@@ -70,14 +69,14 @@ function setupCreateModal() {
     const errorDiv = document.getElementById("hashtagError");
 
     const words = rawHashtags.split(" ").filter(word => word !== "");
-    const hashtagRegex = /^#[A-Z][a-zA-Z0-9]*$/;
+    const hashtagRegex = /^#[A-Za-z][a-zA-Z0-9]*$/;
     const allHashtagsValid = words.every(word => hashtagRegex.test(word));
 
 
 
     // Se tiver algo escrito e for inválido
     if (!allHashtagsValid && rawHashtags.length > 0) {
-      errorDiv.textContent = "Hashtags devem começar com '#' e conter a primeira letra MAIÚSCULA (ex: #Filme)";
+      errorDiv.textContent = "Hashtags devem começar com '#'(ex: #Filme #musica)";
       errorDiv.style.display = "block";
 
       setTimeout(() => {

@@ -112,13 +112,14 @@
     font-weight: bold;
 }
 
-.edit-input {
+.edit-input, #bio-edit-textarea {
     border: 2px solid var(--purple1);
     border-radius: 8px !important;
     font-size: 14px;
     cursor: pointer;
     color: var(--main-black);
     padding: 5px 5px;
+    background-color: var(--white);
 }
 
 .edit-input:focus {
@@ -140,6 +141,7 @@
     overflow-wrap: break-word;
     max-width: 100%;
     width: 100%;
+    color: var(--dark-gray);
 }
 
 /* Perfis gerados pelo Gemini */

@@ -48,7 +48,7 @@ export function setupProfileUser() {
     if (user.posts.length === 0) {
       postsContainer.innerHTML = `<p class="loading">Você ainda não publicou nenhum post.</p>`;
     } else {
-      user.posts.forEach(post => {
+      user.posts.forEach((post,index) => {
         const postHTML = `
           <div class="post-card">
             <div class="post-header">
@@ -58,6 +58,9 @@ export function setupProfileUser() {
                 onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
               <span class="post-username">${user.name}</span>
               <span class="post-time">${post.data || ''}</span>
+              <button class="delete-post-btn material-icons" title="Excluir post" data-index="${index}">
+                  delete
+              </button>
             </div>
             <p class="post-content">${post.conteudo}</p>
            <p class="post-hashtags">
@@ -77,6 +80,19 @@ export function setupProfileUser() {
 
           const searchLink = document.getElementById("link-search");
           if (searchLink) searchLink.click();
+        });
+      });
+      // Evento para deletar post
+      document.querySelectorAll(".delete-post-btn").forEach(button => {
+        button.addEventListener("click", (e) => {
+          const index = parseInt(e.target.dataset.index);
+          if (!isNaN(index)) {
+            if (confirm("Tem certeza que deseja excluir este post?")) {
+              user.posts.splice(index, 1);
+              localStorage.setItem("user", JSON.stringify(user));
+              setupProfileUser(); // Re-renderiza os posts
+            }
+          }
         });
       });
 
