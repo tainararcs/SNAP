@@ -1,13 +1,3 @@
-body {
-    padding-top: 0 !important;
-}
-
-.logo-interests {
-    display: flex;
-    width: 140px;
-    margin-left: -25px;
-}
-
 #interests-page {
     background-color: var(--main-white);
     padding: 40px 0;
@@ -63,26 +53,32 @@ body {
     padding-right: 60px;
 }
 
-.interests-input:focus {
-    border-color: var(--purple1);
-    box-shadow: 0 0 0 4px rgba(137, 83, 217, 0.458);
-    outline: none;
-}
-
 .add-icon {
     position: absolute;
     right: 0;
     top: 0;
     height: 100%;
     width: 40px;
-    color: var(--purple1);
-    font-size: 20px;
-    font-weight: 700;
+    padding: 10px 30px;
+    cursor: pointer;
+    font-size: 25px !important;
+    font-weight: bold;
+    color: var(--blue1);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s;
     z-index: 1;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+}
+
+.add-icon:hover {
+    background-color: var(--blue1);
+    color: var(--white);
+    border-radius: 6px;
 }
 
 /* Sugestões */
@@ -92,10 +88,8 @@ body {
     max-width: 600px;
     max-height: 300px;
     overflow-y: auto;
-    background: #6930C3;
-    background: linear-gradient(90deg, var(--purple1) 0%, var(--purple1) 27%, rgba(79, 247, 247, 0.795) 71%, rgba(100, 223, 223, 0.5) 100%);
+    background: var(--white);
     border: 1px solid var(--light-gray1);
-    backdrop-filter: blur(3px);
     border-top: none;
     border-radius: 8px;
     z-index: 1000;
@@ -129,15 +123,12 @@ body {
   scrollbar-color: var(--purple1) transparent;
 }
 
-
 .suggestions div {
-    color: var(--white);
-    font-weight: bold;
     padding: 12px 20px;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.2s;
-    border-bottom: 1px solid var(--main-white);
+    border-bottom: 1px solid var(--light-gray2);
 }
 
 .suggestions div:last-child {
@@ -145,26 +136,16 @@ body {
 }
 
 .suggestions div:hover {
-    background: #6930C3;
-    background: linear-gradient(90deg, #64dfdf 0%, #6830c370 27%, #4ff7f7 71%, #6930c3 100%);
+    background: var(--blue1);
     color: var(--white);
 }
-
 
 /* Destaque da sugestão selecionada via teclado */
 .suggestions div.highlighted {
-    background: #6930C3;
-    background: linear-gradient(90deg, #64dfdf 0%, #6930c3 27%, #4ff7f75e 71%, #6930c3 100%);
+    background: var(--purple3);
     color: var(--white);
     font-weight: bold;
 }
-
-/* Tags */
-
-.recommended-tag{
-    background-color: var(--purple3) !important;
-}
-
 
 .tags {
     display: flex;
@@ -175,9 +156,9 @@ body {
 }
 
 .tag {
-    background-color: var(--purple1);
+    background-color: var(--purple3);
     color: var(--white);
-    padding: 8px 16px;
+    padding: 2px 16px;
     border-radius: 20px;
     font-size: 16px;
     display: inline-flex;
@@ -187,7 +168,7 @@ body {
 }
 
 .tag:hover {
-    background-color: var(--purple3);
+    background-color: var(--blue1);
 }
 
 .remove-tag {
@@ -211,8 +192,8 @@ body {
     top: -28px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #333;
-    color: #fff;
+    background-color: var(--dark-gray);
+    color: var(--white);
     font-size: 12px;
     padding: 4px 8px;
     border-radius: 4px;
@@ -227,7 +208,6 @@ body {
     visibility: visible;
     opacity: 1;
 }
-
 
 /* Botão avançar */
 .btn-advance-header {
@@ -254,10 +234,38 @@ body {
 }
 
 /* Recomendações */
+.recommendations-title {
+    color: var(--main-black);
+    margin-bottom: 20px;
+}
+
+.recommendations-title span {
+    color: var(--purple3);
+    margin-right: 5px;
+}
+
 .recommended-tags {
+    max-width: 850px;
+    width: 95%;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.recommended-tag {
+    background-color: var(--main-white);
+    border: 1px solid var(--purple3);
+    color: var(--purple3);
+    padding: 6px 12px;
+    font-weight: bold;
+}
+
+.recommended-tag:hover {
+    background-color: var(--purple3);
+    border: 1px solid var(--purple3);
+    color: var(--main-white);
+    font-weight: bold;
 }
 
 /* Footer */
@@ -310,71 +318,17 @@ body {
     min-width: 120px;
 }
 
-
-@keyframes spinGradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 .input-with-button {
-    border: 2px solid var(--purple1);
-    border-radius: 10px;
-    border-right: none;
-
+    border-radius: 6px;
+    box-shadow: 0 0 10px var(--blue1), 0 0 10px var(--purple3);
 }
 
 .input-with-button .form-control.standard-input.interests-input {
     border: none;
     border-radius: 8px;
     outline: none;
-    background-color: #fff;
     width: 100%;
     font-size: 16px;
-}
-
-
-
-
-@keyframes gradientFlow {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.add-icon {
-    cursor: pointer;
-    font-size: 30px !important;
-    color: white;
-    padding: 10px 30px;
-    border-radius: 8px;
-
-    /* Gradiente animado futurista */
-    background: linear-gradient(270deg, #6930C3 40%, #72EFDD, #6930C3);
-    background-size: 800% 800%;
-    animation: gradientFlow 4s ease infinite;
-
-    /* Adicionando quebra de linha e centralização caso o texto transborde */
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    text-align: center;
 }
 
 .btn-modal {
@@ -389,11 +343,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    .logo-interests {
-        margin-left: 0;
-        align-self: center;
-    }
-
     .interests-card {
         padding-bottom: 0 !important;
     }

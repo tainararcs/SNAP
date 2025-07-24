@@ -12,7 +12,7 @@
 .profile-posts .post-card {
     box-shadow:
         1px 1px 1px .5px rgba(105, 48, 195, 0.8),
-        -1px -1px 1px .5px rgba(0, 0, 0, 0.1);
+        -1px -1px 1px .5px rgba(0, 0, 0, 0.2);
 }
 
 .posts-container {
@@ -144,7 +144,26 @@
     color: var(--dark-gray);
 }
 
+.delete-btn {
+    right: 0;
+    margin-left: 5px;
+    color: var(--purple3) !important;
+    border-color: var(--purple3) !important;
+}
+
+.delete-btn:focus {
+    color: var(--white) !important;
+    background-color: var(--purple3) !important;
+    border-color: var(--purple3) !important;
+}
+
+
 /* Perfis gerados pelo Gemini */
+.profile-posts .post-card {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .ia-profile {
     display: flex;
     gap: 20px;

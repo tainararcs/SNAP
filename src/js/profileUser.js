@@ -58,7 +58,7 @@ export function setupProfileUser() {
                 onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
               <span class="post-username">${user.name}</span>
               <span class="post-time">${post.data || ''}</span>
-              <button class="delete-post-btn material-icons" title="Excluir post" data-index="${index}">
+              <button class="delete-post-btn material-icons btn standard-btn delete-btn" title="Excluir post" data-index="${index}">
                   delete
               </button>
             </div>

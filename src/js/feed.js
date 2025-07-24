@@ -127,7 +127,6 @@ async function generateAndAddSinglePost() {
 
     const generatingMessage = document.createElement('p');
     generatingMessage.className = 'generating-message active';
-    generatingMessage.textContent = 'Gerando post...';
     feedContainer.prepend(generatingMessage);
 
     try {

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const MAX_INTERESTS = 5;
     const MIN_INTERESTS_TO_PROCEED = 3;
-    const DEFAULT_SUGGESTIONS_COUNT = 8;
+    const DEFAULT_SUGGESTIONS_COUNT = 10;
 
     const listaGemini = [
         "Séries", "História", "Inteligência Artificial", "Astronomia", "Música",
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectedSuggestionIndex = -1;
                 toggleSuggestions(false);
             } else {
-                addInterest();
+                addInterest(interestInput.value.trim());
             }
         }
     });
