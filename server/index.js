@@ -53,7 +53,7 @@ app.post('/requisitarPost', async (req, res) => {
     try{
        
         const response = await genAI.models.generateContent({
-            model: 'gemini-2.5-flash-lite-preview-06-17',
+            model: 'gemini-2.5-flash-lite',
             contents: prompt
         }); // Obtém resposta.
        
@@ -86,20 +86,79 @@ app.get('/requisitarUserData', async (req, res) => {
 
     const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY2});
 
-    let prompt = `Crie dados para um usuário de uma rede social. Os dados gerados serão:\n
-                 - nome: um nome composto, sem espaços entre os nomes, cujo primeiro nome seja o nome de alguma celebridade
-                   aleatória, personagem fictício, nome popular, mistura de cada um, e o segundo nome aleatório idem.\n
-                 - email: relacionado ao nome do usuário.\n
-                 - senha: caracteres aleatórios\n
-    `;
+    const categorias = [
+        "um cientista famoso do século XX",
+        "um personagem de um videogame de RPG japonês",
+        "um pintor do período renascentista",
+        "uma figura da mitologia grega",
+        "um diretor de cinema de Hollywood dos anos 80",
+        "um atleta olímpico medalhista de ouro",
+        "um vilão de um livro de fantasia",
+        "uma celebridade",
+        "um personagem fictício",
+        "um explorador histórico",
+        "um inventor do século XIX",
+        "um líder revolucionário",
+        "um personagem de anime",
+        "um astronauta da era espacial",
+        "um filósofo da Grécia Antiga",
+        "um mago de histórias de fantasia",
+        "um herói de histórias em quadrinhos",
+        "um músico do século XX",
+        "um monarca europeu do período medieval",
+        "um personagem de ficção científica",
+        "um protagonista ou personagem de um jogo",
+        "uma IA",
+        "um robô da ficção",
+        "um elemento da natureza",
+        "um conceito abstrato",
+        "um termo científico (ex: Entropia, Neutrino, Singularidade)",
+        "uma constelação ou astro",
+        "um mineral",
+        "uma criatura mítica",
+        "um termo antigo",
+        "um artefato mágico fictício",
+        "um termo em latim",
+        "uma planta",
+        "um cientista",
+        "um personagem de ficção científica",
+        "um vilão de quadrinhos",
+        "um escritor clássico",
+        "um filósofo",
+        "uum personagem de anime",
+        "um super-herói ou anti-herói",
+        "um artista moderno",
+        "um hacker fictício",
+        "um engenheiro famoso",
+        "um diretor de cinema",
+    ];
 
-    // Especifica o formato esperado da resposta.
-    prompt += 'O retorno deve estar somente no formato JSON: {"nome": "Nome", "email": "email@email.com", "senha": "xxx"}';
+    const categoriaPrimeiroNome = categorias[Math.floor(Math.random() * categorias.length)];
+    const categoriaSobrenome = categorias[Math.floor(Math.random() * categorias.length)];
+
+    // Agora, construa o prompt:
+    let prompt = `
+        Crie dados para um usuário de uma rede social. Siga estritamente estas regras:
+        1.  Primeiro Nome: Escolha o nome de ${categoriaPrimeiroNome}.
+        2.  Segundo Nome: Escolha ${categoriaSobrenome}.
+        3.  Nome de Usuário Final: Junte o Primeiro e o Segundo Nome, sem espaços e em CamelCase (ex: "HulkNewtonQuasar").
+        4.  Email: Crie um email baseado no nome de usuário gerado.
+        5.  Senha: Crie uma senha forte com 12 caracteres aleatórios.
+
+        Formate a saída exatamente como no exemplo abaixo, em JSON, sem texto adicional.
+
+        Exemplo de Saída:
+        {
+            "nome": "MarieCuriePulsar",
+            "email": "marie.curie.pulsar@emailaleatorio.com",
+            "senha": "aK3!pZ$tG9@v"
+        }
+    `
 
     try{
     
         const response = await genAI.models.generateContent({
-            model: 'gemini-2.5-flash-lite-preview-06-17',
+            model: 'gemini-2.5-flash-lite',
             contents: prompt,
             generationConfig: {
                 responseMimeType: 'application/json',
@@ -193,7 +252,7 @@ app.post('/requisitarBioUsuarioF', async (req, res) => {
 
     try {
         const response = await genAI.models.generateContent({
-            model: 'gemini-2.5-flash-lite-preview-06-17',
+            model: 'gemini-2.5-flash-lite',
             contents: prompt
         });
 
@@ -217,5 +276,5 @@ app.post('/requisitarBioUsuarioF', async (req, res) => {
 
 // Inicia o servidor na porta especificada.
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
