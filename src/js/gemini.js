@@ -1,4 +1,4 @@
-const reqLink = "http://localhost:3001";
+const reqLink = "https://gemini-api-requests.onrender.com";
 
 /* Gera o conteúdo para um post. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
 
