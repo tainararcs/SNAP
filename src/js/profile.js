@@ -108,7 +108,7 @@ function setupBioFicticia(usuario = {}) {
                 .then(bioGerada => {
                     if (bioGerada) {
                         usuario.bio = bioGerada;
-                        bioContent.innerHTML = `<p>${bioGerada}</p>`;
+                        bioContent.innerHTML = `<p class = "bio-gene">${bioGerada}</p>`;
                         loadingElement.style.display = "none";
                         bioContent.style.display = "block"
                     } else {

@@ -14,6 +14,7 @@
 }
 
 #search-input {
+    font-size: 2.2rem !important;
     padding: 20px;
     background-color: var(--white);
 }

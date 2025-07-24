@@ -4,8 +4,8 @@ body {
 
 .logo-interests {
     display: flex;
-    width: 200px;
-    margin-left: -50px;
+    width: 140px;
+    margin-left: -25px;
 }
 
 #interests-page {
@@ -18,7 +18,8 @@ body {
     display: flex;
     flex-direction: column;
     padding: 60px;
-    padding-top: 0;
+    padding-bottom: 0px;
+    padding-top: 10px !important;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
@@ -47,7 +48,7 @@ body {
     color: var(--main-black);
     font-size: 16px;
     line-height: 1.5;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 /* Input */
@@ -64,7 +65,7 @@ body {
 
 .interests-input:focus {
     border-color: var(--purple1);
-    box-shadow: 0 0 0 3px rgba(83, 144, 217, 0.2);
+    box-shadow: 0 0 0 4px rgba(137, 83, 217, 0.458);
     outline: none;
 }
 
@@ -92,15 +93,42 @@ body {
     max-height: 300px;
     overflow-y: auto;
     background: #6930C3;
-    background: linear-gradient(90deg, var(--purple1) 0%, rgb(164, 107, 255) 27%, rgba(79, 247, 247, 0.795) 71%, rgba(100, 223, 223, 0.5) 100%);
+    background: linear-gradient(90deg, var(--purple1) 0%, var(--purple1) 27%, rgba(79, 247, 247, 0.795) 71%, rgba(100, 223, 223, 0.5) 100%);
     border: 1px solid var(--light-gray1);
     backdrop-filter: blur(3px);
     border-top: none;
     border-radius: 8px;
     z-index: 1000;
     margin-top: -1px;
+    scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
     display: none;
 }
+
+
+/* WebKit (Chrome, Edge, Safari) */
+.suggestions::-webkit-scrollbar {
+  height: 8px;
+}
+
+.suggestions::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+  background-color: var(--purple1);
+  border-radius: 10px;
+}
+
+.suggestions::-webkit-scrollbar-thumb:hover {
+  background-color: var(--purple2);
+}
+
+/* Firefox */
+.suggestions {
+  scrollbar-color: var(--purple1) transparent;
+}
+
 
 .suggestions div {
     color: var(--white);
@@ -132,16 +160,22 @@ body {
 }
 
 /* Tags */
+
+.recommended-tag{
+    background-color: var(--purple3) !important;
+}
+
+
 .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin: 10px 0 40px;
+    margin: 10px 0 10px;
     min-height: 40px;
 }
 
 .tag {
-    background-color: var(--purple2);
+    background-color: var(--purple1);
     color: var(--white);
     padding: 8px 16px;
     border-radius: 20px;
@@ -226,8 +260,6 @@ body {
     gap: 10px;
 }
 
-
-
 /* Footer */
 .interests-footer {
     display: flex;
@@ -237,8 +269,9 @@ body {
     font-size: 16px;
     line-height: 1.5;
     padding: 20px;
+    padding-top:0;
     width: 100%;
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     z-index: 100;
@@ -293,13 +326,10 @@ body {
 }
 
 .input-with-button {
-    padding: 2px;
-    /* espaço para a borda animada */
+    border: 2px solid var(--purple1);
     border-radius: 10px;
-    background: linear-gradient(270deg, #6930C3, #72EFDD, #a7fff2);
-    background-size: 800% 800%;
-    animation: spinGradient 6s linear infinite;
-    box-shadow: 0 0 12px #72EFDD, 0 0 20px #6930C3;
+    border-right: none;
+
 }
 
 .input-with-button .form-control.standard-input.interests-input {
