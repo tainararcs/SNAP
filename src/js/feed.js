@@ -7,7 +7,7 @@ const initialLoadingMessage = document.getElementById('initial-loading-message')
 const userDisplayName = document.getElementById('user-display-name');
 
 const NUMBER_OF_POSTS_TO_GENERATE = 10;
-const INTERVAL_BETWEEN_POSTS_MS = 2500;
+const INTERVAL_BETWEEN_POSTS_MS = 0;
 const MAX_RETRY_ATTEMPTS = 3;
 
 let currentUser;
