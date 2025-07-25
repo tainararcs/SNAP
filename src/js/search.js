@@ -5,70 +5,82 @@ document.addEventListener("DOMContentLoaded", () => {
 
   searchLink.addEventListener("click", (e) => {
     e.preventDefault();
-
     loadPage("search", "search.html", () => {
       const searchInput = document.getElementById("search-input");
       const resultsContainer = document.getElementById("search-results");
 
-      function performSearch(query) {
-        const users = getStoredUsers();
-        const results = [];
+function performSearch(query) {
+    const users = getStoredUsers();
+    const allPosts = [];
+    
+    const cleanQuery = query.startsWith('#') ? query.substring(1) : query;
+    const queryLower = cleanQuery.toLowerCase();
 
-        users.forEach((user) => {
-          user.posts.forEach((post) => {
-            if (post.hashtags.includes(query)) {
-              results.push({
-                nomeUsuario: user.nome,
-                conteudo: post.conteudo,
-                hashtags: post.hashtags,
-                avatarUrl: post.avatarUrl,
-                data: post.data,
-              });
-            }
-          });
-        });
-        // Buscar nos seus próprios posts (localStorage 'user')
-        const currentUser = JSON.parse(localStorage.getItem("user"));
+    // Coletar todos os posts (de usuários fictícios e do usuário atual)
+    users.forEach((user) => {
+        if (user.posts && Array.isArray(user.posts)) {
+            user.posts.forEach(post => {
+                allPosts.push({
+                    nomeUsuario: user.nome,
+                    conteudo: post.conteudo,
+                    hashtags: post.hashtags,
+                    avatarUrl: post.avatarUrl,
+                    data: post.data
+                });
+            });
+        }
+    });
 
-        if (currentUser && currentUser.posts) {
-          currentUser.posts.forEach((post) => {
-            const tags = (post.hashtags || "").split(" ").filter(Boolean);
-            if (tags.includes(query)) {
-              results.push({
+    // Adicionar posts do usuário atual
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    if (currentUser && currentUser.posts && Array.isArray(currentUser.posts)) {
+        currentUser.posts.forEach((post) => {
+            allPosts.push({
                 nomeUsuario: currentUser.name ?? currentUser.nome ?? "Você",
                 conteudo: post.conteudo,
                 hashtags: post.hashtags,
                 avatarUrl: currentUser.profileImage ?? post.avatarUrl,
-                data: post.data,
-              });
-            }
-          });
-        }
+                data: post.data
+            });
+        });
+    }
 
-        resultsContainer.innerHTML =
-          results.length === 0
-            ? `<p class="loading">Nenhum post encontrado com a hashtag <strong>${query}</strong>.</p>`
-            : results
-                .map(
-                  (postData) => `
-              <div class="post-card">
+    // Filtrar posts que correspondam à pesquisa
+    const results = allPosts.filter(post => {
+        if (!post.conteudo) return false;
+
+        const content = post.conteudo.toLowerCase();
+        const hashtags = post.hashtags 
+            ? post.hashtags.toLowerCase().replace(/#/g, '').split(/\s+/) 
+            : [];
+        const username = post.nomeUsuario.toLowerCase();
+
+        // Verifica no conteúdo, hashtags OU nome do usuário
+        return content.includes(queryLower) || 
+               hashtags.some(tag => tag.includes(queryLower)) ||
+               username.includes(queryLower);
+    });
+
+    // Exibir resultados
+    resultsContainer.innerHTML = results.length === 0
+        ? `<p class="loading">Nenhum post encontrado com <strong>${query}</strong>.</p>`
+        : results.map(postData => `
+            <div class="post-card">
                 <div class="post-header">
-                  <img src="${postData.avatarUrl}" 
-                    alt="${postData.nomeUsuario}" 
-                    class="post-avatar" 
-                    onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
-                  <a href="#" class="clicavel" data-user="${
-                    postData.nomeUsuario
-                  }">${postData.nomeUsuario}</a>
-                  <span class="post-time">${postData.data}</span>
+                    <img src="${postData.avatarUrl}" 
+                        alt="${postData.nomeUsuario}" 
+                        class="post-avatar" 
+                        onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                    <a href="#" class="clicavel" data-user="${postData.nomeUsuario}">${postData.nomeUsuario}</a>
+                    <span class="post-time">${postData.data}</span>
                 </div>
                 <p class="post-content">${postData.conteudo}</p>
-               <p class="post-hashtags">${postData.hashtags.split(" ").map( (tag) =>`<a href="#" class="hashtag-link" data-hashtag="${tag}">${tag}</a>`).join(" ")}</p>
-              </div>
-          `
-                )
-                .join("");
-      }
+                ${postData.hashtags ? `<p class="post-hashtags">${postData.hashtags.split(" ").map(tag => 
+                    `<a href="#" class="hashtag-link" data-hashtag="${tag}">${tag}</a>`
+                ).join(" ")}</p>` : ''}
+            </div>
+        `).join('');
+}
       function validateAndSearch(query) {
         if (query.length === 0) {
           resultsContainer.innerHTML = `<p class="loading">Digite algo para começar a pesquisar...</p>`;
@@ -76,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (query.length < 2) {
-          resultsContainer.innerHTML = `<p class="loading">Digite uma hashtag válida (ex: #Jogos)</p>`;
+          resultsContainer.innerHTML = `<p class="loading">Você digitou: <strong>"${query}"</strong> - digite pelo menos 2 caracteres para pesquisar</p>`;
           return;
         }
 
