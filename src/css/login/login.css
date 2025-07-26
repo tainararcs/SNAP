@@ -253,25 +253,25 @@
 
 /* Botão de alternar tema */
 #dark-mode-toggle {
-  position: fixed;
-  bottom: 10px;
-  right: 20px;
-  z-index: 1001;
-  background-color: var(--roxo3);
-  color: var(--white);
-  border: none;
-  border-radius: 20px;
-  width: 45px;
-  height: 45px;
-  font-size: 18px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: background-color 0.3s;
+	position: fixed;
+	bottom: 10px;
+	right: 20px;
+	z-index: 1001;
+	background-color: var(--roxo3);
+	color: var(--white);
+	border: none;
+	border-radius: 20px;
+	width: 45px;
+	height: 45px;
+	font-size: 18px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
 
 #dark-mode-icon {
-  font-size: 30px !important;
-  transform: translate(-15px, -4px);
+	font-size: 30px !important;
+	transform: translate(-15px, -4px);
 }
 
 footer {
@@ -283,6 +283,11 @@ footer {
 	color: var(--gray);
 }
 
+.top-mobile-logo{
+	display: none;
+}
+
+
 @media (max-width: 1000px) {
 	#body-login {
 		padding: 0px 40px;
@@ -291,8 +296,15 @@ footer {
 
 @media (max-width: 768px) {
 
-	* {
-		box-sizing: border-box !important;
+	#dark-mode-toggle {
+		position: relative;
+		right: 0;
+		bottom: 0;
+		margin: 20px;
+	}
+
+	footer {
+		position: relative;
 	}
 
 	#login-page {
@@ -307,11 +319,14 @@ footer {
 		display: none !important;
 	}
 
+	html, body{
+		overflow-y: auto !important;
+	}
+
 	#body-login {
-		height: 100%;
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		height: fit-content;
+		min-height: 100vh;
 		margin: 0;
 	}
 
@@ -325,11 +340,13 @@ footer {
 		background-color: var(--white);
 		border-radius: 10px;
 		box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-		width: 90vw;
-		padding: 20px;
+		width: 85vw;
+		padding: 30px;
+		padding-bottom: 0;
 		align-self: center;
 		text-align: center;
 	}
+
 
 	.mobile-form-container h1 {
 		font-weight: bold;
@@ -342,8 +359,20 @@ footer {
 		width: 100%;
 	}
 
-	.desktop-logo {
-		width: 220px !important;
+	.top-logo {
+		display: none;
+	}
+
+	/* Estilo para a logo no mobile */
+	.top-mobile-logo {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.top-mobile-logo img.mobile-logo {
+		width: 120px;
+		height: auto;
 	}
 
 	input {
@@ -356,19 +385,6 @@ footer {
 		align-items: center;
 		justify-content: center;
 		font-size: 17px !important;
-	}
-
-	#dark-mode-toggle{
-		position: fixed;
-		bottom: 30px;
-  		left: 50%;
-		height: 30px;
-		
-  		transform: translateX(-50%);
-	}
-	#dark-mode-icon {
-		font-size: 25px !important;
-		transform: translate(-10px, -8px);
 	}
 
 	#mobile-login-form,
