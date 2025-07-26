@@ -87,8 +87,6 @@
 
 #edit-button {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
     flex-wrap: wrap;
 }
 
@@ -113,7 +111,8 @@
     font-weight: bold;
 }
 
-.edit-input, #bio-edit-textarea {
+.edit-input,
+#bio-edit-textarea {
     border: 2px solid var(--purple1);
     border-radius: 8px !important;
     font-size: 14px;
@@ -216,33 +215,76 @@
 
 @media (max-width: 768px) {
 
-    .post-username{
-        font-size: 1.5rem;
+    .profile-header-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
     }
 
-    .post-avatar{
-        width: 60px;
-        height: 60px;
+    .profile-picture-wrapper {
+        width: fit-content;
+        height: fit-content;
+    }
+
+    #profile-preview {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .post-avatar {
+        width: 56px;
+        height: 56px;
     }
 
     .profile-header {
+        display: flex;
+        align-items: center;
         width: 70vw;
     }
 
-    #name-edit-wrapper{
+    #name-edit-wrapper {
         width: 60vw;
+    }
+
+    .profile-header {
+        justify-content: center;
+        align-items: center;
     }
 
     .profile-header-top {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        width: 100%;
         align-items: center;
+        gap: 20px;
     }
 
-    .profile-header-left{
+    #editProfileBtn {
+        font-weight: bold;
+        margin-top: 0 !important;
+    }
+
+    #edit-button {
+        display: flex;
+        gap: 20px;
+    }
+
+    .profile-header-left {
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+    }
+
+    .user-name {
+        font-size: 2.4rem;
     }
 
     .edit-label {
@@ -253,12 +295,11 @@
         margin-top: 80px;
     }
 
-    .edit-btn{
+    .edit-btn {
         max-height: fit-content;
     }
 
-
-    #edit-button{
+    #edit-button {
         width: fit-content;
         display: flex;
         flex-wrap: wrap;
@@ -277,7 +318,60 @@
         align-items: center;
     }
 
+
+    /* Bio */
     .generated-bio {
-        width: 100%;
+        max-width: initial;
+    }
+
+    .bio-gene{
+        text-align: justify;
+        font-size: 1.rem;
+    }
+
+
+    /* Posts */
+
+    .posts-container {
+        margin-top: 0;
+    }
+
+    .post-username {
+        font-size: 1.6rem !important;
+        margin: 0px 5px;
+    }
+
+    .post-time {
+        font-size: 1.6rem;
+        margin-right: 10px;
+    }
+
+    .post-content {
+        font-size: 1.6rem;
+    }
+
+    .post-hashtags {
+        font-size: 1.7rem;
+    }
+
+    .hashtag-link {
+        font-size: 1.6rem;
+    }
+
+    .delete-post-btn {
+        background-color: var(--light-gray1);
+        font-size: 25px !important;
+        display: flex;
+        position: absolute;
+        right: 4%;
+    }
+}
+
+
+@media (max-width:300px) {
+    .delete-post-btn {
+        background-color: var(--light-gray1);
+        font-size: 25px !important;
+        position: relative;
     }
 }

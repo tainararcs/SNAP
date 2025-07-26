@@ -429,12 +429,13 @@
         height: 70px;
         background-color: transparent;
         align-items: center;
-        position: absolute;
+        position: fixed;
         background-color: white;
         top: initial;
-        bottom: 0;
+        bottom: 0 !important;
         overflow-y: hidden;
         z-index: 999;
+        transition: none !important;
     }
 
     #all-links {

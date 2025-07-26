@@ -1,4 +1,4 @@
-#settings-container, 
+#settings-container,
 #theme-div,
 #help-div,
 #language-div {
@@ -50,7 +50,7 @@
     justify-content: space-between;
     font-size: 18px;
     color: var(--purple1);
-    padding: 12px 16px; 
+    padding: 12px 16px;
     border-radius: 6px;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -90,7 +90,7 @@
     font-size: 18px;
     line-height: 1;
     position: relative;
-    top: 1px; 
+    top: 1px;
 }
 
 
@@ -108,7 +108,7 @@
 
 
 @media (max-width: 768px) {
-    #settings-container{
+    #settings-container {
         margin-top: 90px;
     }
 }

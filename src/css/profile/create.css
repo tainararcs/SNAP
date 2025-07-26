@@ -22,7 +22,6 @@
     width: 100%;
     max-width: 600px;
     max-height: 400px;
-    height: 100%;
     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     position: relative;
 }
@@ -149,8 +148,6 @@
 }
 
 
-
-
 @media (max-width: 768px) {
     .modal-content{
         width: 95vw;
@@ -160,16 +157,46 @@
     #closePostModal{
         scale: 1.4;
     }
+
+    .modal-avatar{
+        width: 80px;
+        height: 80px;
+    }
     
     .modal-header{
         display: flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
+        gap: 10px;
     }
 
     .modal-header h2{
-        margin: 20px;
+       font-size: 2.6rem;
+    }
+
+    .modal-username{
+        font-size: 2.6rem;
+    }
+
+    #postContent{
+        font-size: 1.8rem;
+    }
+
+    #postHashtags{
+        margin-bottom: 50px;
+    }
+
+    .close-button{
+        font-size: 2.6rem;
+    }
+
+    .create-btn{
+        font-size: 2rem !important;
+        position: absolute;
+        bottom: 0;
+        right: 4%;
+        margin-bottom: 20px;
     }
 
 }
