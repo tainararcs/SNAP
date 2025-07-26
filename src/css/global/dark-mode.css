@@ -386,7 +386,7 @@ body.dark-mode .edit-icon-label{
   body.dark-mode#body-feed  .mobile-title{
     background-color: var(--main-white);
     color: var(--purple3);
-    border-bottom: 1px solid var(--purple3);
+    border-color: var(--purple3);
 
   }
   body.dark-mode .sidebar .nav-link.active::before{

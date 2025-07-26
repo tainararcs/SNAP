@@ -275,6 +275,15 @@
         gap: 20px;
     }
 
+    #edit-button button:focus{
+        outline: none;
+        border: none;
+    }
+    #edit-button button:active{
+        outline: none;
+        border: none;
+    }
+
     .profile-header-left {
         display: flex;
         flex-direction: column;

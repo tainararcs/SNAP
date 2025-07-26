@@ -3,7 +3,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/profile/profileUser.css" />
 
+
 <div class="profile">
+    <div class="settings-header">
+           <!-- Aqui o JS vai inserir o botão "Voltar" -->
+       </div>
+   
     <div class="profile-header">
         <!-- Linha superior com imagem, nome e botão -->
         <div class="profile-header-top">
@@ -34,11 +39,11 @@
                 <button id="editProfileBtn" class="btn standard-btn edit-btn">
                     <span class="material-symbols-outlined">edit</span> Editar Perfil
                 </button>
-                
+
                 <button id="cancelEditBtn" class="btn standard-btn edit-btn" style="display: none;">
                     <span class="glyphicon glyphicon-remove"></span> Voltar
                 </button>
-                
+
                 <button id="saveProfileBtn" class="btn standard-btn edit-btn" style="display: none;">
                     <span class="glyphicon glyphicon-ok"></span> Salvar
                 </button>
@@ -51,12 +56,13 @@
             <div id="bioText"></div>
             <div id="bio-edit-wrapper" class="edit-field" style="display: none;">
                 <label for="bio-edit-textarea" class="edit-label">Bio</label>
-                <textarea id="bio-edit-textarea" style="width: 750px; height: 200px; resize: none;" class="edit-input" rows="3"></textarea>
+                <textarea id="bio-edit-textarea" style="width: 750px; height: 200px; resize: none;" class="edit-input"
+                    rows="3"></textarea>
             </div>
         </div>
     </div>
 
     <div class="posts-container">
-        <div id="profileUser-posts" class="mt-4 profile-posts"></div> 
+        <div id="profileUser-posts" class="mt-4 profile-posts"></div>
     </div>
 </div>

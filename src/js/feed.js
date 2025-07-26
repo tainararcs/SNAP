@@ -234,14 +234,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const newTitle = link.getAttribute('data-title');
 
-            if (newTitle === "Configurações" || newTitle === "Notificações") {
+            if(newTitle != "Configurações"){
+                document.getElementById('link-configs').style.display = 'flex'
+            }
+
+            if (newTitle === "Notificações") {
                 // Esconde o título
                 mobileTitleWrapper.style.display = 'none';
-            } else if (newTitle === "Criar") {
+            } else if (newTitle === "Configurações"){
+                if(window.innerWidth<768)
+                {
+                    document.getElementById('link-configs').style.display = 'none'
+                 mobileTitleText.textContent = "Configurações";
+                }
+            }
+            else if (newTitle === "Criar") {
                 // Não altera o título atual nem mostra/oculta nada
                 return;
             } else {
                 // Mostra e atualiza o título normalmente
+                 document.getElementById('link-configs').style.display = 'flex'
                 mobileTitleWrapper.style.display = 'block';
                 mobileTitleText.textContent = newTitle;
             }

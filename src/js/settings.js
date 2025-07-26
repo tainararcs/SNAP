@@ -31,14 +31,40 @@ function setupSettingsNavigation() {
     }
 
     // Botões de navegação
-    document.getElementById("profile-link").addEventListener("click", e =>{
-        e.preventDefault();
-        loadPage("profileUser", "profileUser.html", () => {
-            setupProfileUser();
+    document.getElementById("profile-link").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  loadPage("profileUser", "profileUser.html", () => {
+    setupProfileUser();
+
+    // Aguarda DOM da página injetada e insere o botão
+    setTimeout(() => {
+      const header = document.querySelector(".settings-header");
+      if (header && !document.getElementById("PbackToSettings")) {
+        const backButton = document.createElement("button");
+        backButton.id = "PbackToSettings";
+        backButton.className = "btn standard-btn settings-btn";
+        backButton.innerHTML =
+          '<span class="glyphicon glyphicon-chevron-left"></span> Voltar';
+
+        // Insere o botão no início do header
+        header.insertBefore(backButton, header.firstChild);
+
+        backButton.addEventListener("click", () => {
+          loadPage("configs", "settings.html", () => {
+            setupSettingsNavigation();
+          });
+          setActiveLink("link-configs");
+          showPage("page-configs");
         });
-        setActiveLink("link-profile-user");
-        showPage("page-profile-user");
-    });
+      }
+    }, 100);
+  });
+
+  setActiveLink("link-profile-user");
+  showPage("page-profile-user");
+});
+
 
     document.getElementById("changeTheme-link").addEventListener("click", e => {
         e.preventDefault();

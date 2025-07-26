@@ -10,6 +10,20 @@
     display: none;
 }
 
+
+/* Solução para o dark mode */
+.nav-icon {
+  filter: initial;
+  transition: filter 0.3s ease;
+}
+
+body.dark-mode .nav-icon {
+  filter: invert(1);
+}
+
+
+
+
 .container-fluid,
 .row.g-0 {
     padding: 0;
@@ -611,6 +625,22 @@
         word-break: break-all;
         text-wrap: wrap;
         flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 400px) {
+    .mobile-title{
+       text-align: center;
+       padding-left: 0;
+       font-size: 3.5rem;
+    }
+
+    .mobile-title span{
+       font-size: clamp(14px, 10vw, 30px);
+    }
+
+    .nav-icon{
+        width: 8vw;
     }
 }
 
