@@ -151,7 +151,8 @@
 @media (max-width: 768px) {
     .modal-content{
         width: 95vw;
-        max-height: 600px;
+        max-height: 500px;
+        padding-top: 0;
     }
 
     #closePostModal{
@@ -159,16 +160,16 @@
     }
 
     .modal-avatar{
-        width: 80px;
-        height: 80px;
+        width: 48px;
+        height: 48px;
     }
     
     .modal-header{
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
         flex-wrap: wrap;
-        gap: 10px;
     }
 
     .modal-header h2{
@@ -176,11 +177,11 @@
     }
 
     .modal-username{
-        font-size: 2.6rem;
+        font-size: 2rem;
     }
 
     #postContent{
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     #postHashtags{

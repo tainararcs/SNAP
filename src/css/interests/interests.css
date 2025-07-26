@@ -385,6 +385,7 @@
         margin-top: 20px;
     }
 
+
     .interests-header {
         flex-direction: column;
         align-items: flex-start;
@@ -392,8 +393,13 @@
     }
 
     .interests-title {
+        font-size: 3.7rem !important;
         word-break: break-word;
         overflow-wrap: break-word;
+    }
+
+    .recommendations-title{
+        font-size: 3.1rem;
     }
 
     .interests-footer {

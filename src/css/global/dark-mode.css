@@ -143,8 +143,6 @@ body.dark-mode#body-feed .profile-suggestion:hover{
 
 
 body.dark-mode#body-feed .profile-suggestion img.recommended-user-avatar {
-    width: 40px;
-    height: 40px;
     object-fit: cover;
     border-radius: 50%;
     border: 2px solid var(--purple3);
@@ -404,13 +402,13 @@ body.dark-mode .edit-icon-label{
     box-shadow: 0 1px 2px var(--purple3);
   }
   body.dark-mode#body-feed .suggestions-list {
-    font-size: 15px;
     gap: 20px;
     overflow-x: scroll;
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
   }
+
   
   /* ===== MODO ESCURO: Perfil do usuario ===== */
   body.dark-mode #bio-edit-textarea{
