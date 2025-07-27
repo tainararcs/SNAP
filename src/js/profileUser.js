@@ -12,7 +12,13 @@ profileUserLink.addEventListener("click", (e) => {
     showPage("page-profile-user");
 });
 
-let tempImageFile = null; // variável global temporária
+let tempImageFile = null;
+
+function sanitizeText(text) {
+    const element = document.createElement('div');
+    element.innerText = text;
+    return element.innerHTML;
+}
 
 export function setupProfileUser() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -20,35 +26,74 @@ export function setupProfileUser() {
 
   loadUserProfileImage();
 
-  // Inputs e elementos...
+  // Elementos DOM
   const nameDisplay = document.getElementById("profileUser-name");
   const nameInput = document.getElementById("name-edit-input");
   const bioText = document.getElementById("bioText");
   const bioTextarea = document.getElementById("bio-edit-textarea");
+  const charCountElement = document.getElementById("bio-char-count");
   const editIcon = document.querySelector("label.edit-icon-label");
   const editBtn = document.getElementById("editProfileBtn");
   const saveBtn = document.getElementById("saveProfileBtn");
   const cancelBtn = document.getElementById("cancelEditBtn");
   const uploadInput = document.getElementById("profile-upload");
 
+  // Configuração inicial
   if (nameDisplay && nameInput) {
     nameDisplay.textContent = `${user.name}`;
     nameInput.value = user.name;
   }
 
   if (bioText && bioTextarea) {
-    bioText.textContent = user.bio || "";
+    bioText.innerHTML = sanitizeText(user.bio || "");
     bioTextarea.value = user.bio || "";
   }
 
-  // Renderiza os posts do usuário logado
+  // Sistema de contador de caracteres
+  function updateCharCount() {
+    if (!bioTextarea || !charCountElement) return;
+    
+    const currentLength = bioTextarea.value.length;
+    charCountElement.textContent = `${currentLength}/500`;
+    
+    // Limpar mensagem anterior
+    const warningSpan = charCountElement.querySelector('.char-limit-warning');
+    if (warningSpan) warningSpan.remove();
+    
+    if (currentLength >= 500) {
+      const warning = document.createElement('span');
+      warning.textContent = '(Máximo atingido)';
+      warning.className = 'char-limit-warning';
+      charCountElement.appendChild(warning);
+    }
+  }
+
+  // Configurar eventos para o contador
+  if (bioTextarea && charCountElement) {
+    // Atualizar contador ao iniciar
+    updateCharCount();
+    
+    // Atualizar enquanto digita
+    bioTextarea.addEventListener('input', () => {
+      // Limitar a 500 caracteres
+      if (bioTextarea.value.length > 500) {
+        bioTextarea.value = bioTextarea.value.substring(0, 500);
+      }
+      updateCharCount();
+    });
+  }
+
+  // Renderização de posts
   const postsContainer = document.getElementById("profileUser-posts");
   if (postsContainer && Array.isArray(user.posts)) {
-    postsContainer.innerHTML = ""; // limpa antes de renderizar
+    postsContainer.innerHTML = "";
     if (user.posts.length === 0) {
       postsContainer.innerHTML = `<p class="loading">Você ainda não publicou nenhum post.</p>`;
     } else {
       user.posts.forEach((post,index) => {
+        const safeContent = sanitizeText(post.conteudo);
+        const safeHashtags = sanitizeText(post.hashtags);
+        
         const postHTML = `
           <div class="post-card">
             <div class="post-header">
@@ -62,27 +107,26 @@ export function setupProfileUser() {
                   delete
               </button>
             </div>
-            <p class="post-content">${post.conteudo}</p>
-           <p class="post-hashtags">
-              ${transformarHashtagsEmLinks(post.hashtags)}
-          </p>
+            <p class="post-content">${safeContent}</p>
+            <p class="post-hashtags">
+              ${transformarHashtagsEmLinks(safeHashtags)}
+            </p>
           </div>
         `;
         postsContainer.insertAdjacentHTML("beforeend", postHTML);
       });
-      // Adiciona os eventos de clique para hashtags
+      
+      // Eventos para hashtags e botões de deletar
       document.querySelectorAll(".hashtag-link").forEach(link => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
-
           const hashtag = e.target.dataset.hashtag;
           localStorage.setItem("searchQuery", hashtag);
-
           const searchLink = document.getElementById("link-search");
           if (searchLink) searchLink.click();
         });
       });
-      // Evento para deletar post
+      
       document.querySelectorAll(".delete-post-btn").forEach(button => {
         button.addEventListener("click", (e) => {
           const index = parseInt(e.target.dataset.index);
@@ -90,19 +134,19 @@ export function setupProfileUser() {
             if (confirm("Tem certeza que deseja excluir este post?")) {
               user.posts.splice(index, 1);
               localStorage.setItem("user", JSON.stringify(user));
-              setupProfileUser(); // Re-renderiza os posts
+              setupProfileUser();
             }
           }
         });
       });
-
     }
   }
   
 
+  // Eventos dos botões de edição
   editBtn.addEventListener("click", () => {
     editBtn.style.display = "none"; 
-    document.getElementById("cancelEditBtn").style.display = "inline-block"; 
+    cancelBtn.style.display = "inline-block"; 
 
     if (editIcon) editIcon.style.display = "block";
     if (saveBtn) saveBtn.style.display = "inline-block";
@@ -115,20 +159,28 @@ export function setupProfileUser() {
     const postsContainer = document.getElementById("profileUser-posts");
     if (postsContainer) postsContainer.style.display = "none";
 
+    // Atualizar contador ao entrar no modo edição
+    updateCharCount();
   });
 
   saveBtn.addEventListener("click", () => {
     const updatedName = nameInput.value.trim();
     const updatedBio = bioTextarea.value.trim();
     
+    // Validar comprimento da bio
+    if (updatedBio.length > 500) {
+      alert("A bio não pode ter mais de 500 caracteres.");
+      return;
+    }
+
     user.name = updatedName;
     user.bio = updatedBio;
 
     localStorage.setItem("user", JSON.stringify(user));
 
     if (tempImageFile) {
-      saveUserProfileImage(tempImageFile); // só salva se houver nova imagem
-      tempImageFile = null; // limpa após salvar
+      saveUserProfileImage(tempImageFile);
+      tempImageFile = null;
     }
 
     if (nameDisplay) {
@@ -138,16 +190,16 @@ export function setupProfileUser() {
     document.getElementById("name-edit-wrapper").style.display = "none";
 
     if (bioText) {
-      bioText.textContent = updatedBio;
+      bioText.innerHTML = sanitizeText(updatedBio);
       bioText.style.display = "block";
     }
     document.getElementById("bio-edit-wrapper").style.display = "none";
-    if (saveBtn) saveBtn.style.display = "none";
+    saveBtn.style.display = "none";
     if (editIcon) editIcon.style.display = "none";
     if (postsContainer) postsContainer.style.display = "block";
 
     editBtn.style.display = "inline-block"; 
-    document.getElementById("cancelEditBtn").style.display = "none"; 
+    cancelBtn.style.display = "none"; 
   });
 
   cancelBtn.addEventListener("click", () => {
@@ -170,24 +222,20 @@ export function setupProfileUser() {
 
     // Restaurar interface
     if (editIcon) editIcon.style.display = "none";
-    if (saveBtn) saveBtn.style.display = "none";
-    if (editBtn) editBtn.style.display = "inline-block";
+    saveBtn.style.display = "none";
+    editBtn.style.display = "inline-block";
     cancelBtn.style.display = "none";
 
-    if (nameDisplay) {
-      nameDisplay.style.display = "block";
-    }
+    if (nameDisplay) nameDisplay.style.display = "block";
     document.getElementById("name-edit-wrapper").style.display = "none";
 
-    if (bioText) {
-      bioText.style.display = "block";
-    }
+    if (bioText) bioText.style.display = "block";
     document.getElementById("bio-edit-wrapper").style.display = "none";
 
     const postsContainer = document.getElementById("profileUser-posts");
     if (postsContainer) postsContainer.style.display = "block";
 
-    // Reverter imagem de perfil temporária (recarrega a salva)
+    // Reverter imagem
     if (tempImageFile) {
       loadUserProfileImage();
       tempImageFile = null;
@@ -198,8 +246,6 @@ export function setupProfileUser() {
     const file = uploadInput.files[0];
     if (file) {
       tempImageFile = file;
-
-      // Pré-visualiza a imagem sem salvar ainda
       const reader = new FileReader();
       reader.onload = () => {
         const img = document.getElementById("profile-preview");
@@ -212,9 +258,10 @@ export function setupProfileUser() {
 
 function transformarHashtagsEmLinks(hashtagsString) {
   if (!hashtagsString) return '';
-  const tags = hashtagsString.trim().split(/\s+/); // separa por espaço
+  const tags = hashtagsString.trim().split(/\s+/);
   return tags.map(tag => {
-    const hashtag = tag.replace(/\s/g, '_');
+    const safeTag = tag.replace(/[^a-zA-Z0-9#_]/g, '');
+    const hashtag = safeTag.replace(/\s/g, '_');
     return `<a href="#" class="hashtag-link" data-hashtag="${hashtag}">${hashtag}</a>`;
   }).join(' ');
 }

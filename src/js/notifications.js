@@ -28,8 +28,7 @@ window.NotificationSystem = {
 
     // Atualiza o badge de notificações na sidebar
     updateNotificationBadge() {
-        console.log("[NotificationSystem] Atualizando badge de notificações");
-        console.log(`[NotificationSystem] Usando API: ${this.API_URL}`);
+
         
         const notifLink = document.querySelector("#link-notif");
         if (!notifLink) return;
@@ -84,7 +83,6 @@ window.NotificationSystem = {
 
     // Adiciona nova notificação
     addNotification(message) {
-        console.log(`[NotificationSystem] Adicionando notificação: "${message}"`);
         const newNotification = {
             notificationId: this.notificationCounter++,
             message: message,
@@ -110,7 +108,6 @@ window.NotificationSystem = {
 
     // Marca notificação como lida
     markAsRead(notificationId) {
-        console.log(`[NotificationSystem] Marcando notificação ${notificationId} como lida`);
         const notification = this.notifications.find(n => n.notificationId === notificationId);
         if (notification) {
             notification.read = true;
@@ -121,7 +118,6 @@ window.NotificationSystem = {
 
     // Marca TODAS as notificações como lidas
     markAllAsRead() {
-        console.log("[NotificationSystem] Marcando todas as notificações como lidas");
         this.notifications.forEach(notification => {
             notification.read = true;
         });
@@ -131,7 +127,6 @@ window.NotificationSystem = {
 
     // Limpa TODAS as notificações
     clearAllNotifications() {
-        console.log("[NotificationSystem] Limpando todas as notificações");
         this.notifications = [];
         this.notificationCounter = 1;
         this.updateNotificationBadge();
@@ -153,8 +148,6 @@ window.NotificationSystem = {
 
         this.isGeneratingNotification = true;
         this.lastNotificationTime = Date.now();
-        console.log("[NotificationSystem] Verificando novas notificações...");
-        console.log(`[NotificationSystem] Usando API: ${this.API_URL}`);
 
         // Declare userInterests fora do bloco try para que esteja disponível no catch
         let userInterests;
@@ -253,7 +246,6 @@ window.NotificationSystem = {
 
     // Renderiza notificações na página
     renderNotifications() {
-        console.log("[NotificationSystem] Renderizando notificações...");
         let attempts = 0;
         const maxAttempts = 5;
 
@@ -265,7 +257,6 @@ window.NotificationSystem = {
                     : this.generateEmptyStateHTML();
                 
                 this.addMarkAsReadListeners();
-                console.log("[NotificationSystem] Notificações renderizadas com sucesso.");
             } else if (attempts < maxAttempts) {
                 attempts++;
                 console.log(`[NotificationSystem] Container não encontrado, tentativa ${attempts}/${maxAttempts}`);
@@ -398,7 +389,6 @@ if (notifLink) {
         }
 
         loadPage("notifications", "notifications.html", () => {
-            console.log("Notificações carregadas");
             
             // Adiciona um pequeno atraso para garantir que o container esteja no DOM
             setTimeout(() => {
