@@ -128,7 +128,22 @@
 }
 
 
-@media (max-width: 768px) {
+#help-div p {
+    display: flex;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+#help-div p span {
+    color: var(--blue1);
+    text-decoration: underline;
+    font-style: oblique;
+}
+
+
+@media (max-width: 769px) {
 
     #settings-container {
         display: flex;
@@ -156,23 +171,37 @@
         font-size: 2.4rem;
     }
 
+    .settings-header {
+        display: flex;
+        gap: 30px;
+        border: none;
+    }
+
     .settings-header h1 {
         display: none;
+    }
+
+    .settings-header h2 {
+        display: flex;
     }
 
     #theme-div,
     #language-div,
     #help-div {
         width: 80vw;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        margin-top: 100px;
     }
+
+    #theme-div .settings-header,
+    #language-div .settings-header,
+    #help-div .settings-header {
+        border-bottom: 1px solid var(--purple1);
+    }
+
 }
 
 @media (max-width: 400px) {
-    #settings-container{
+    #settings-container {
         width: 90vw;
     }
 
