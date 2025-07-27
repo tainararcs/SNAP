@@ -1,3 +1,4 @@
+
 #body-feed {
     background-color: var(--main-white);
     margin: 0;
@@ -9,7 +10,6 @@
 .mobile-title {
     display: none;
 }
-
 
 /* Solução para o dark mode */
 .nav-icon {
@@ -347,8 +347,6 @@ body.dark-mode .nav-icon {
         border-bottom: 1px solid var(--light-gray1);
     }
 
-
-
     #feed-container {
         width: 100% !important;
     }
@@ -369,13 +367,11 @@ body.dark-mode .nav-icon {
     }
 }
 
-
 @media screen and (min-width: 768px) {
     .mobile-title {
         display: none !important;
     }
 }
-
 
 @media (max-width: 767.98px) {
 
@@ -398,7 +394,6 @@ body.dark-mode .nav-icon {
         width: 100%;
         z-index: 1002;
     }
-
 
     #feed-container {
         width: 100%;
@@ -444,7 +439,18 @@ body.dark-mode .nav-icon {
         bottom: 0 !important;
         overflow-y: hidden;
         z-index: 1003;
-        transition: none !important;
+    }
+
+    .nav-link.active::before {
+        transition: 2s all ease-in-out;
+    }
+
+    .nav-link.active {
+        transition: 2s all ease-in-out;
+    }
+
+    .nav-link.active::before {
+        transition: 2s all ease-in-out;
     }
 
     #all-links {
@@ -484,7 +490,7 @@ body.dark-mode .nav-icon {
         overflow-x: hidden;
         padding-left: 20px;
         border: 0.5px solid var(--light-gray1);
-        background-color: #faf1ffd8;
+        background-color: #f8f1ffa7;
     }
 
     .profile-suggestion::before {
@@ -503,7 +509,6 @@ body.dark-mode .nav-icon {
     .suggestions-title {
         margin-left: 0;
     }
-
 
     /* Scrollbar personalizada */
     .suggestions-list::-webkit-scrollbar {
@@ -605,6 +610,20 @@ body.dark-mode .nav-icon {
         border: 3px solid var(--purple1);
     }
 
+    .sidebar .nav-link::before {
+        content: "";
+        position: absolute;
+        
+        width: 0;
+        transition: width 0.3s ease-in-out, opacity 0.7s ease-in-out;
+        opacity: 0;
+    }
+
+    .sidebar .nav-link.active::before {
+        width: 4px;
+        opacity: 1;
+    }
+
 }
 
 
@@ -631,7 +650,6 @@ body.dark-mode .nav-icon {
         font-size: 3.5rem;
     }
 
-
     .mobile-title span {
         font-size: clamp(14px, 10vw, 30px);
     }
@@ -642,8 +660,7 @@ body.dark-mode .nav-icon {
 }
 
 
-@media (max-width: 250px){
-    
+@media (max-width: 250px) {
     .sidebar-footer {
         margin-top: 5px;
     }
@@ -662,4 +679,8 @@ body.dark-mode .nav-icon {
     overflow-y: auto;
     background-color: var(--main-white);
     padding: 2rem 1rem;
+}
+
+.animate__fadeInLeft{
+    animation-duration: 0.4s !important;
 }

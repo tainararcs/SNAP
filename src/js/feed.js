@@ -234,6 +234,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const newTitle = link.getAttribute('data-title');
 
+
+            // Animação Animate.css
+            mobileTitleText.classList.remove('animate__animated', 'animate__fadeInLeft');
+            void mobileTitleText.offsetWidth;
+            mobileTitleText.classList.add('animate__animated', 'animate__fadeInLeft');
+
             if (newTitle !== "Configurações") {
                 document.getElementById('link-configs').style.display = 'flex';
             }
@@ -249,12 +255,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     mobileTitleText.textContent = "Configurações";
                 }
             } else if (newTitle === "Criar") {
+                 mobileTitleText.textContent = "Criar";
                 return;
             } else {
                 document.getElementById('link-configs').style.display = 'flex';
                 mobileTitleWrapper.style.display = 'flex';
                 mobileTitleWrapper.style.justifyContent = 'flex-start'; // Volta ao normal
-                 mobileTitleWrapper.style.paddingLeft = '70px'
+                mobileTitleWrapper.style.paddingLeft = '70px'
 
                 mobileTitleText.textContent = newTitle;
             }

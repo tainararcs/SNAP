@@ -257,12 +257,21 @@
         align-items: center;
     }
 
+    .profile-header-left{
+       width: 40%;
+    }
+
     .profile-header-top {
         display: flex;
         flex-direction: column;
         width: 100%;
+        max-width: 305px;
         align-items: center;
         gap: 20px;
+    }
+
+    #name-edit-input{
+        max-width: 305px;
     }
 
     #editProfileBtn {
@@ -282,7 +291,15 @@
 
     #edit-button {
         display: flex;
+        justify-content: center;
         gap: 20px;
+    }
+
+    #edit-button button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
     }
 
     #edit-button button:focus {
@@ -346,9 +363,8 @@
 
     .bio-gene {
         text-align: justify;
-        font-size: 1.rem;
+        font-size: 1.6rem;
     }
-
 
     /* Posts */
 
@@ -385,6 +401,7 @@
         position: absolute;
         right: 4%;
     }
+
 }
 
 
