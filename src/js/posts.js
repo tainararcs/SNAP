@@ -1,5 +1,5 @@
-import { User } from './User.js'; // Importe a classe User
-import {requisitarPost, requisitarUserData} from './gemini.js'
+import { User } from './User.js';
+import { requisitarPost, requisitarUserData, requisitarBioUsuarioF } from './gemini.js'; // Importação corrigida
 
 /**
  * Prepara um post para o feed, solicitando conteúdo e dados de usuário fictício separadamente ao backend (Gemini).
@@ -18,31 +18,28 @@ export async function prepararPostParaFeed(currentUser) {
     console.log("Solicitando post e dados de usuário fictício do backend com base nos interesses:", interessesDoUsuario);
 
     try {
-
-        // Faz as duas requisições em paralelo.
         const [postContentArray, userData] = await Promise.all([
-            requisitarPost(interessesDoUsuario), // Conteúdo e hashtags.
-            requisitarUserData() // Dados do usuário fictício.
+            requisitarPost(interessesDoUsuario),
+            requisitarUserData()
         ]);
 
-        const [conteudo, hashtagsArray] = postContentArray; // Desestrutura a resposta do post.
+        const [conteudo, hashtagsArray] = postContentArray;
 
-        // Verifica se ambos os dados foram obtidos com sucesso.
-        if (conteudo && userData && userData.nome) { // Assumindo que userData.nome é o nome gerado.
-
-            // O avatarId é gerado aleatoriamente para o avatar com base no id do usuário fictício.
+        if (conteudo && userData && userData.nome) {
             const avatarIdFromUserData = userData.id % 70 || Math.floor(Math.random() * 70) + 1;
             const avatarUrl = `https://i.pravatar.cc/150?img=${avatarIdFromUserData}`;
             
-            armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl);
+            await armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl);
 
             return {
-                nomeUsuario: userData.nome, // Nome gerado pelo Gemini via requisitarUserData.
-                avatarUrl: avatarUrl,       // Avatar baseado no id gerado pelo Gemini.
+                nomeUsuario: userData.nome,
+                avatarUrl: avatarUrl,
                 conteudo: conteudo,
-                hashtags: hashtagsArray.map(tag => {const hashtag = `${tag.replace(/\s/g, '_')}`;
-                                                    return `<a href="#" class="hashtag-link" data-hashtag="${hashtag}">${hashtag}</a>`;}).join(' ')
-                                                    };
+                hashtags: hashtagsArray.map(tag => {
+                    const hashtag = `${tag.replace(/\s/g, '_')}`;
+                    return `<a href="#" class="hashtag-link" data-hashtag="${hashtag}">${hashtag}</a>`;
+                }).join(' ')
+            };
         } else {
             console.error("Dados de post ou usuário fictício incompletos:", { conteudo, userData });
             return null;
@@ -51,25 +48,23 @@ export async function prepararPostParaFeed(currentUser) {
         console.error("Erro ao preparar post para o feed:", error);
         return null;
     }
-} // function prepararPostParaFeed
+}
 
-
-// Recupera os usuários armazenados no localStorage, ou retorna um array vazio.
+// Recupera os usuários armazenados
 export function getStoredUsers() {
-  return JSON.parse(localStorage.getItem('usuarios') || '[]');
+    return JSON.parse(localStorage.getItem('usuarios') || '[]');
 }
 
-// Salva um array de usuários no localStorage com a chave 'usuarios'.
+// Salva usuários
 export function saveStoredUsers(users) {
-  localStorage.setItem('usuarios', JSON.stringify(users));
+    localStorage.setItem('usuarios', JSON.stringify(users));
 }
 
-// Retorna o próximo ID disponível com base no maior ID já usado. Se não houver usuários, começa com 1.
+// Retorna o próximo ID disponível
 export function getNextUserId() {    
     const users = getStoredUsers();
     return users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
 }
-
 
 /**
  * Armazena ou atualiza um usuário fictício com um novo post.
@@ -78,12 +73,9 @@ export function getNextUserId() {
  * @param {string[]} hashtagsArray - Lista de hashtags.
  * @param {string} avatarUrl - URL do avatar associado ao post.
  */
-export function armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl) {
+export async function armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarUrl) {
     const users = getStoredUsers();
-
-    // Verifica se o usuário já existe com base no email.
     const userExistente = users.find(user => user.email === userData.email);
-
     let id;
 
     if (userExistente) {
@@ -92,7 +84,6 @@ export function armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarU
         id = getNextUserId();
     }
 
-    // Cria um novo objeto de post.
     const novoPost = {
         conteudo,
         hashtags: hashtagsArray.join(' '),
@@ -103,21 +94,27 @@ export function armazenarUsuarioEPost(userData, conteudo, hashtagsArray, avatarU
     if (userExistente) {
         userExistente.posts.push(novoPost);
     } else {
-        // Se for um novo usuário, cria um novo objeto com o post e adiciona ao array de usuários.
+        let bio = null;
+        try {
+            // Tentar gerar a bio durante o feed
+            bio = await requisitarBioUsuarioF(hashtagsArray, userData.nome);
+        } catch (error) {
+            console.error("Erro ao gerar bio para usuário fictício:", error);
+            // Deixa a bio como null para tentar gerar depois no perfil
+        }
+        
         const novoUsuario = {
             id,
             nome: userData.nome,
             email: userData.email,
             senha: userData.senha,
             interests: hashtagsArray,
+            bio, // Pode ser null se falhou
             posts: [novoPost]
         };
         users.push(novoUsuario);
     }
 
-    // Atualiza o localStorage.
     saveStoredUsers(users);
-
-    // Retorna o ID do usuário.
     return id;
 }

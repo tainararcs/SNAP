@@ -118,7 +118,7 @@ export async function requisitarImagemPerfil (username) {
    Exemplo:
    const bio = await requisitarBioUsuarioF(["#moda", "#viagem"]);
 */
-export async function requisitarBioUsuarioF(interesses = [], nome = {}) {
+export async function requisitarBioUsuarioF(interesses = [], nome = "") {
     try {
         const response = await fetch(`${reqLink}/requisitarBioUsuarioF`, {
             method: 'POST',

@@ -234,7 +234,7 @@ app.post('/requisitarBioUsuarioF', async (req, res) => {
 
     const interessesPredefinidos = req.body.interesses || [];
     const nome = req.body.nome || ""; // <- agora como string
-    let prompt = 'Crie uma bio de um usuário fictício para uma rede social, como se fosse um jovem da geração Z.';
+    let prompt = 'Crie uma bio de um usuário fictício para uma rede social, como se fosse um jovem da geração Z. A bio deve conter no máximo 250 caracteres, sem excessões!';
 
     if (nome) {
         prompt += ` O nome do usuário é "${nome}, use os pronomes corretos com base nesse nome fornecido, randomize a escolha de começar ou não com a frase: Meu nome é...".`;
