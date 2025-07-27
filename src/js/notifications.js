@@ -3,16 +3,34 @@
 // Sistema de notificações global
 window.NotificationSystem = {
     notifications: [],
-    notificationCounter: 1, // Renomeado de notificationId para notificationCounter
+    notificationCounter: 1,
     isGeneratingNotification: false,
     lastNotificationTime: 0,
     notificationInterval: null,
     NOTIFICATION_COOLDOWN_MS: 20000, // 20 segundos entre notificações
-    API_URL: 'http://localhost:3001',
+    
+    // URL da API baseada no domínio atual
+    get API_URL() {
+        // Se estamos no domínio da Vercel
+        if (window.location.hostname.includes('vercel.app')) {
+            return 'https://gemini-api-requests.onrender.com';
+        }
+        
+        // Se estamos em localhost
+        if (window.location.hostname === 'localhost' || 
+            window.location.hostname === '127.0.0.1') {
+            return 'http://localhost:3001';
+        }
+        
+        // Caso padrão para produção
+        return 'https://gemini-api-requests.onrender.com';
+    },
 
     // Atualiza o badge de notificações na sidebar
     updateNotificationBadge() {
         console.log("[NotificationSystem] Atualizando badge de notificações");
+        console.log(`[NotificationSystem] Usando API: ${this.API_URL}`);
+        
         const notifLink = document.querySelector("#link-notif");
         if (!notifLink) return;
         
@@ -68,7 +86,7 @@ window.NotificationSystem = {
     addNotification(message) {
         console.log(`[NotificationSystem] Adicionando notificação: "${message}"`);
         const newNotification = {
-            notificationId: this.notificationCounter++, // Renomeado id para notificationId
+            notificationId: this.notificationCounter++,
             message: message,
             read: false,
             icon: 'bi-bell',
@@ -91,9 +109,9 @@ window.NotificationSystem = {
     },
 
     // Marca notificação como lida
-    markAsRead(notificationId) { // Renomeado parâmetro id para notificationId
+    markAsRead(notificationId) {
         console.log(`[NotificationSystem] Marcando notificação ${notificationId} como lida`);
-        const notification = this.notifications.find(n => n.notificationId === notificationId); // Renomeado id para notificationId
+        const notification = this.notifications.find(n => n.notificationId === notificationId);
         if (notification) {
             notification.read = true;
             this.updateNotificationBadge();
@@ -115,7 +133,7 @@ window.NotificationSystem = {
     clearAllNotifications() {
         console.log("[NotificationSystem] Limpando todas as notificações");
         this.notifications = [];
-        this.notificationCounter = 1; // Renomeado notificationId para notificationCounter
+        this.notificationCounter = 1;
         this.updateNotificationBadge();
         this.renderNotifications();
     },
@@ -136,9 +154,13 @@ window.NotificationSystem = {
         this.isGeneratingNotification = true;
         this.lastNotificationTime = Date.now();
         console.log("[NotificationSystem] Verificando novas notificações...");
+        console.log(`[NotificationSystem] Usando API: ${this.API_URL}`);
 
+        // Declare userInterests fora do bloco try para que esteja disponível no catch
+        let userInterests;
+        
         try {
-            const userInterests = this.getUserInterests();
+            userInterests = this.getUserInterests();
             
             // Chamada mais robusta com timeout e tratamento de erros específicos
             const response = await this.fetchWithTimeout(
@@ -148,7 +170,7 @@ window.NotificationSystem = {
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ interesses: userInterests })
                 },
-                5000 // 5 segundos de timeout
+                10000 // 10 segundos de timeout
             );
 
             // Verifica se a resposta é válida
@@ -166,6 +188,11 @@ window.NotificationSystem = {
             }
         } catch (error) {
             console.error('Erro ao buscar notificação:', error);
+            
+            // Se userInterests não foi definido, obtenha novamente
+            if (!userInterests) {
+                userInterests = this.getUserInterests();
+            }
             
             // Mensagens de fallback baseadas nos interesses do usuário
             const fallbackMessages = this.generateFallbackNotifications(userInterests);
@@ -210,13 +237,18 @@ window.NotificationSystem = {
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout);
         
-        const response = await fetch(resource, {
-            ...options,
-            signal: controller.signal
-        });
-        
-        clearTimeout(id);
-        return response;
+        try {
+            const response = await fetch(resource, {
+                ...options,
+                signal: controller.signal
+            });
+            
+            clearTimeout(id);
+            return response;
+        } catch (error) {
+            clearTimeout(id);
+            throw error;
+        }
     },
 
     // Renderiza notificações na página
@@ -237,7 +269,7 @@ window.NotificationSystem = {
             } else if (attempts < maxAttempts) {
                 attempts++;
                 console.log(`[NotificationSystem] Container não encontrado, tentativa ${attempts}/${maxAttempts}`);
-                setTimeout(tryRender, 100); // Tenta novamente após 100ms
+                setTimeout(tryRender, 100);
             } else {
                 console.error("[NotificationSystem] Falha ao encontrar container de notificações após múltiplas tentativas.");
             }
@@ -308,7 +340,7 @@ window.NotificationSystem = {
     addMarkAsReadListeners() {
         document.querySelectorAll('.mark-as-read').forEach(button => {
             button.addEventListener('click', (e) => {
-                const notificationId = parseInt(e.target.dataset.notificationId); // Renomeado para notificationId
+                const notificationId = parseInt(e.target.dataset.notificationId);
                 this.markAsRead(notificationId);
             });
         });
