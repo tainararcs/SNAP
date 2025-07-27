@@ -122,7 +122,10 @@
 }
 
 @media (max-width: 450px) {
-    
+    .notifications-container{
+        margin-top: 90px;
+    }
+
     .notification-card{
         width: 100%;
         flex-direction: column;

@@ -245,9 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('link-configs').style.display = 'flex';
             }
 
-            if (newTitle === "Notificações") {
-                mobileTitleWrapper.style.display = 'none';
-            } else if (newTitle === "Configurações") {
+            if (newTitle === "Configurações") {
                 if (window.innerWidth < 768) {
                     document.getElementById('link-configs').style.display = 'none';
                     mobileTitleWrapper.style.display = 'flex';
