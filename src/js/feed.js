@@ -234,31 +234,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const newTitle = link.getAttribute('data-title');
 
-            if(newTitle != "Configurações"){
-                document.getElementById('link-configs').style.display = 'flex'
+            if (newTitle !== "Configurações") {
+                document.getElementById('link-configs').style.display = 'flex';
             }
 
             if (newTitle === "Notificações") {
-                // Esconde o título
                 mobileTitleWrapper.style.display = 'none';
-            } else if (newTitle === "Configurações"){
-                if(window.innerWidth<768)
-                {
-                    document.getElementById('link-configs').style.display = 'none'
-                 mobileTitleText.textContent = "Configurações";
+            } else if (newTitle === "Configurações") {
+                if (window.innerWidth < 768) {
+                    document.getElementById('link-configs').style.display = 'none';
+                    mobileTitleWrapper.style.display = 'flex';
+                    mobileTitleWrapper.style.justifyContent = 'center'; // Centraliza
+                    mobileTitleWrapper.style.paddingLeft = '0px'
+                    mobileTitleText.textContent = "Configurações";
                 }
-            }
-            else if (newTitle === "Criar") {
-                // Não altera o título atual nem mostra/oculta nada
+            } else if (newTitle === "Criar") {
                 return;
             } else {
-                // Mostra e atualiza o título normalmente
-                 document.getElementById('link-configs').style.display = 'flex'
-                mobileTitleWrapper.style.display = 'block';
+                document.getElementById('link-configs').style.display = 'flex';
+                mobileTitleWrapper.style.display = 'flex';
+                mobileTitleWrapper.style.justifyContent = 'flex-start'; // Volta ao normal
+                 mobileTitleWrapper.style.paddingLeft = '70px'
+
                 mobileTitleText.textContent = newTitle;
             }
         });
     });
+
 });
 
 // Limpeza quando a página for fechada

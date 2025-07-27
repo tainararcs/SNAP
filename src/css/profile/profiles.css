@@ -266,8 +266,18 @@
     }
 
     #editProfileBtn {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
         font-weight: bold;
+        font-size: 1.7rem;
         margin-top: 0 !important;
+    }
+
+    #editProfileBtn span {
+        font-size: 2.3rem;
+        margin-right: 10px;
     }
 
     #edit-button {
@@ -275,11 +285,12 @@
         gap: 20px;
     }
 
-    #edit-button button:focus{
+    #edit-button button:focus {
         outline: none;
         border: none;
     }
-    #edit-button button:active{
+
+    #edit-button button:active {
         outline: none;
         border: none;
     }
@@ -333,7 +344,7 @@
         max-width: initial;
     }
 
-    .bio-gene{
+    .bio-gene {
         text-align: justify;
         font-size: 1.rem;
     }

@@ -13,16 +13,13 @@
 
 /* Solução para o dark mode */
 .nav-icon {
-  filter: initial;
-  transition: filter 0.3s ease;
+    filter: initial;
+    transition: filter 0.3s ease;
 }
 
 body.dark-mode .nav-icon {
-  filter: invert(1);
+    filter: invert(1);
 }
-
-
-
 
 .container-fluid,
 .row.g-0 {
@@ -305,40 +302,40 @@ body.dark-mode .nav-icon {
     background-color: var(--gray);
 }
 
-/* Sugestões (Desktop) */ 
+/* Sugestões (Desktop) */
 @media (min-width: 768px) {
-  .suggestions-list {
-    gap: 4px;
-  }
+    .suggestions-list {
+        gap: 4px;
+    }
 
-  .profile-suggestion {
-    padding: 6px 4px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: var(--main-black);
-  }
+    .profile-suggestion {
+        padding: 6px 4px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: var(--main-black);
+    }
 
-  .profile-suggestion:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    text-decoration: none;
-  }
+    .profile-suggestion:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        text-decoration: none;
+    }
 
-  .profile-suggestion img.recommended-user-avatar {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid var(--purple1);
-  }
+    .profile-suggestion img.recommended-user-avatar {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid var(--purple1);
+    }
 
-  .profile-suggestion span {
-    font-weight: 600;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120px;
-  }
+    .profile-suggestion span {
+        font-weight: 600;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
 }
 
 /* Responsividade */
@@ -374,9 +371,9 @@ body.dark-mode .nav-icon {
 
 
 @media screen and (min-width: 768px) {
-  .mobile-title {
-    display: none !important;
-  }
+    .mobile-title {
+        display: none !important;
+    }
 }
 
 
@@ -393,7 +390,6 @@ body.dark-mode .nav-icon {
         font-size: 35px;
         position: absolute;
         padding-left: 70px;
-        font-weight: bold;
         background-color: white;
         color: var(--purple1);
         border-bottom: 4px solid var(--purple1);
@@ -478,22 +474,22 @@ body.dark-mode .nav-icon {
         margin-top: 90px;
         display: flex;
         align-self: center;
-        width: 80vw;  
+        width: 80vw;
         border-radius: 8px;
         padding: 20px;
+        padding-top: 5px;
         padding-left: 0;
         height: fit-content;
         box-shadow: none;
         overflow-x: hidden;
-        box-shadow: 0px 0px 5px var(--light-gray1);
         padding-left: 20px;
-        background-color: transparent;
+        border: 0.5px solid var(--light-gray1);
+        background-color: #faf1ff;
     }
 
-    .profile-suggestion::before{
+    .profile-suggestion::before {
         display: none;
     }
-
 
     .suggestions-list {
         font-size: 15px;
@@ -501,10 +497,10 @@ body.dark-mode .nav-icon {
         overflow-x: scroll;
         display: flex;
         justify-content: space-between;
-        border-radius: 10px;
+        padding-bottom: 0;
     }
 
-    .suggestions-title{
+    .suggestions-title {
         margin-left: 0;
     }
 
@@ -629,17 +625,18 @@ body.dark-mode .nav-icon {
 }
 
 @media (max-width: 400px) {
-    .mobile-title{
-       text-align: center;
-       padding-left: 0;
-       font-size: 3.5rem;
+    .mobile-title {
+        justify-content: center;
+        text-align: center;
+        padding-left: 0;
+        font-size: 3.5rem;
     }
 
-    .mobile-title span{
-       font-size: clamp(14px, 10vw, 30px);
+    .mobile-title span {
+        font-size: clamp(14px, 10vw, 30px);
     }
 
-    .nav-icon{
+    .nav-icon {
         width: 8vw;
     }
 }
