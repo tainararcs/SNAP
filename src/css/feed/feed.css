@@ -379,9 +379,15 @@ body.dark-mode .nav-icon {
         overflow-y: auto;
     }
 
+       .mobile-logo{
+        width: 48px;
+        margin-right: 5px;
+    }
+
     .mobile-title {
         display: flex;
         justify-content: flex-start;
+        align-items: center;
         padding: 10px;
         font-size: 35px;
         position: absolute;
@@ -561,7 +567,7 @@ body.dark-mode .nav-icon {
         padding: 0;
         margin: 0;
         position: fixed;
-        top: 0%;
+        top: 1%;
         margin-top: 10px;
         right: 12%;
         width: fit-content;
@@ -624,6 +630,7 @@ body.dark-mode .nav-icon {
         opacity: 1;
     }
 
+
 }
 
 
@@ -643,6 +650,7 @@ body.dark-mode .nav-icon {
 }
 
 @media (max-width: 400px) {
+
     .mobile-title {
         justify-content: center;
         text-align: center;
@@ -656,6 +664,18 @@ body.dark-mode .nav-icon {
 
     .nav-icon {
         width: 8vw;
+    }
+}
+
+@media (max-width: 350px){
+    .mobile-title{
+        flex-direction: column;
+        padding-left: 0 !important;
+    }
+
+    .mobile-logo{
+        width: 48px;
+        margin-right: 0;
     }
 }
 

@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = document.querySelectorAll('.nav-link');
     const mobileTitleWrapper = document.querySelector('.mobile-title');
     const mobileTitleText = mobileTitleWrapper.querySelector('span');
+    const logo = document.querySelector('.mobile-logo')
 
     links.forEach(link => {
         link.addEventListener('click', (event) => {
@@ -236,9 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             // Animação Animate.css
-            mobileTitleText.classList.remove('animate__animated', 'animate__fadeInLeft');
+           logo.classList.remove('animate__animated', 'animate__fadeInLeft');
             void mobileTitleText.offsetWidth;
-            mobileTitleText.classList.add('animate__animated', 'animate__fadeInLeft');
+            logo.classList.add('animate__animated', 'animate__fadeInLeft');
 
             if (newTitle !== "Configurações") {
                 document.getElementById('link-configs').style.display = 'flex';

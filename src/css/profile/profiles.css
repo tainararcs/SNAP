@@ -215,6 +215,10 @@
 
 @media (max-width: 768px) {
 
+    #bio-loading{
+        font-size: 1.6rem;
+    }
+
     .profile-header-top {
         display: flex;
         align-items: center;
