@@ -3,7 +3,7 @@
 // Sistema de notificações global
 window.NotificationSystem = {
     notifications: [],
-    notificationId: 1,
+    notificationCounter: 1, // Renomeado de notificationId para notificationCounter
     isGeneratingNotification: false,
     lastNotificationTime: 0,
     notificationInterval: null,
@@ -12,6 +12,7 @@ window.NotificationSystem = {
 
     // Atualiza o badge de notificações na sidebar
     updateNotificationBadge() {
+        console.log("[NotificationSystem] Atualizando badge de notificações");
         const notifLink = document.querySelector("#link-notif");
         if (!notifLink) return;
         
@@ -65,8 +66,9 @@ window.NotificationSystem = {
 
     // Adiciona nova notificação
     addNotification(message) {
+        console.log(`[NotificationSystem] Adicionando notificação: "${message}"`);
         const newNotification = {
-            id: this.notificationId++,
+            notificationId: this.notificationCounter++, // Renomeado id para notificationId
             message: message,
             read: false,
             icon: 'bi-bell',
@@ -89,8 +91,9 @@ window.NotificationSystem = {
     },
 
     // Marca notificação como lida
-    markAsRead(id) {
-        const notification = this.notifications.find(n => n.id === id);
+    markAsRead(notificationId) { // Renomeado parâmetro id para notificationId
+        console.log(`[NotificationSystem] Marcando notificação ${notificationId} como lida`);
+        const notification = this.notifications.find(n => n.notificationId === notificationId); // Renomeado id para notificationId
         if (notification) {
             notification.read = true;
             this.updateNotificationBadge();
@@ -100,6 +103,7 @@ window.NotificationSystem = {
 
     // Marca TODAS as notificações como lidas
     markAllAsRead() {
+        console.log("[NotificationSystem] Marcando todas as notificações como lidas");
         this.notifications.forEach(notification => {
             notification.read = true;
         });
@@ -109,8 +113,9 @@ window.NotificationSystem = {
 
     // Limpa TODAS as notificações
     clearAllNotifications() {
+        console.log("[NotificationSystem] Limpando todas as notificações");
         this.notifications = [];
-        this.notificationId = 1; // Reseta o contador
+        this.notificationCounter = 1; // Renomeado notificationId para notificationCounter
         this.updateNotificationBadge();
         this.renderNotifications();
     },
@@ -122,44 +127,123 @@ window.NotificationSystem = {
             && !this.isGeneratingNotification;
     },
 
-    // Busca novas notificações
     async checkForNewNotifications() {
-        if (!this.shouldGenerateNotification()) return;
+        if (!this.shouldGenerateNotification()) {
+            console.log("[NotificationSystem] Aguardando cooldown para nova notificação");
+            return;
+        }
 
         this.isGeneratingNotification = true;
         this.lastNotificationTime = Date.now();
+        console.log("[NotificationSystem] Verificando novas notificações...");
 
         try {
             const userInterests = this.getUserInterests();
-            const response = await fetch(`${this.API_URL}/requisitarPost`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ interesses: userInterests })
-            });
+            
+            // Chamada mais robusta com timeout e tratamento de erros específicos
+            const response = await this.fetchWithTimeout(
+                `${this.API_URL}/requisitarPost`,
+                {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ interesses: userInterests })
+                },
+                5000 // 5 segundos de timeout
+            );
 
-            if (!response.ok) throw new Error(`Erro: ${response.status}`);
+            // Verifica se a resposta é válida
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
             
             const data = await response.json();
-            if (data?.texto) {
+            
+            // Validação rigorosa da resposta
+            if (this.isValidPostResponse(data)) {
                 this.addNotification(data.texto);
+            } else {
+                throw new Error('Resposta inválida da API');
             }
         } catch (error) {
             console.error('Erro ao buscar notificação:', error);
+            
+            // Mensagens de fallback baseadas nos interesses do usuário
+            const fallbackMessages = this.generateFallbackNotifications(userInterests);
+            const randomIndex = Math.floor(Math.random() * fallbackMessages.length);
+            this.addNotification(fallbackMessages[randomIndex]);
         } finally {
             this.isGeneratingNotification = false;
         }
     },
 
+    // Validador de resposta da API
+    isValidPostResponse(data) {
+        return data && 
+            typeof data === 'object' &&
+            typeof data.texto === 'string' && 
+            data.texto.trim() !== '' &&
+            Array.isArray(data.interesses);
+    },
+
+    // Gera mensagens de fallback baseadas nos interesses
+    generateFallbackNotifications(interests) {
+        const baseMessages = [
+            "Novas atualizações disponíveis no seu feed!",
+            "Confira as últimas novidades",
+            "Temos novidades para você"
+        ];
+        
+        if (interests.length === 0 || interests.includes('aleatório')) {
+            return baseMessages;
+        }
+        
+        // Mensagens personalizadas por interesse
+        const interestMessages = interests.map(interest => 
+            `Novo conteúdo sobre ${interest} disponível!`
+        );
+        
+        return [...baseMessages, ...interestMessages];
+    },
+
+    // Implementação de fetch com timeout
+    async fetchWithTimeout(resource, options = {}, timeout = 5000) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        
+        const response = await fetch(resource, {
+            ...options,
+            signal: controller.signal
+        });
+        
+        clearTimeout(id);
+        return response;
+    },
+
     // Renderiza notificações na página
     renderNotifications() {
-        const container = document.getElementById('notifications-container');
-        if (!container) return;
+        console.log("[NotificationSystem] Renderizando notificações...");
+        let attempts = 0;
+        const maxAttempts = 5;
 
-        container.innerHTML = this.notifications.length 
-            ? this.generateNotificationsHTML() 
-            : this.generateEmptyStateHTML();
-        
-        this.addMarkAsReadListeners();
+        const tryRender = () => {
+            const container = document.getElementById('notifications-container');
+            if (container) {
+                container.innerHTML = this.notifications.length 
+                    ? this.generateNotificationsHTML() 
+                    : this.generateEmptyStateHTML();
+                
+                this.addMarkAsReadListeners();
+                console.log("[NotificationSystem] Notificações renderizadas com sucesso.");
+            } else if (attempts < maxAttempts) {
+                attempts++;
+                console.log(`[NotificationSystem] Container não encontrado, tentativa ${attempts}/${maxAttempts}`);
+                setTimeout(tryRender, 100); // Tenta novamente após 100ms
+            } else {
+                console.error("[NotificationSystem] Falha ao encontrar container de notificações após múltiplas tentativas.");
+            }
+        };
+
+        tryRender();
     },
 
     // Gera HTML para notificações
@@ -198,7 +282,7 @@ window.NotificationSystem = {
                             </small>
                         </div>
                         ${!notification.read ? 
-                            `<button class="mark-as-read" data-id="${notification.id}">
+                            `<button class="mark-as-read" data-notification-id="${notification.notificationId}">
                                 Marcar como lida
                             </button>` : ''}
                     </div>
@@ -224,14 +308,20 @@ window.NotificationSystem = {
     addMarkAsReadListeners() {
         document.querySelectorAll('.mark-as-read').forEach(button => {
             button.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
-                this.markAsRead(id);
+                const notificationId = parseInt(e.target.dataset.notificationId); // Renomeado para notificationId
+                this.markAsRead(notificationId);
             });
         });
     },
 
     // Inicia o sistema
     startNotificationSystem() {
+        console.log("[NotificationSystem] Iniciando sistema de notificações");
+        if (this.notificationInterval) {
+            console.log("[NotificationSystem] Sistema já está rodando");
+            return;
+        }
+
         const userInterests = this.getUserInterests();
         const welcomeMessage = userInterests.includes('aleatório') || userInterests.length < 2
             ? 'Sistema de notificações iniciado!'
@@ -241,16 +331,20 @@ window.NotificationSystem = {
         
         this.notificationInterval = setInterval(
             () => this.checkForNewNotifications(), 
-            60000
+            60000 // Verifica a cada 60 segundos
         );
         
+        // Primeira verificação após 5 segundos
         setTimeout(() => this.checkForNewNotifications(), 5000);
     },
 
     // Para o sistema
     stopNotificationSystem() {
-        clearInterval(this.notificationInterval);
-        this.notificationInterval = null;
+        console.log("[NotificationSystem] Parando sistema de notificações");
+        if (this.notificationInterval) {
+            clearInterval(this.notificationInterval);
+            this.notificationInterval = null;
+        }
     }
 };
 
@@ -266,14 +360,18 @@ if (notifLink) {
     notifLink.addEventListener("click", (e) => {
         e.preventDefault();
 
+        // Garante que o sistema está rodando
+        if (!window.NotificationSystem.notificationInterval) {
+            window.NotificationSystem.startNotificationSystem();
+        }
+
         loadPage("notifications", "notifications.html", () => {
             console.log("Notificações carregadas");
             
-            // Renderiza as notificações
-            window.NotificationSystem.renderNotifications();
-            
-            // Atualiza o badge (opcional: marcar todas como lidas ao entrar)
-            window.NotificationSystem.updateNotificationBadge();
+            // Adiciona um pequeno atraso para garantir que o container esteja no DOM
+            setTimeout(() => {
+                window.NotificationSystem.renderNotifications();
+            }, 50);
         });
 
         setActiveLink("link-notif");
