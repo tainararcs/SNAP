@@ -392,7 +392,7 @@ body.dark-mode .nav-icon {
         padding-left: 70px;
         background-color: white;
         color: var(--purple1);
-        border-bottom: 4px solid var(--purple1);
+        border-bottom: 3px solid var(--purple1);
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
         width: 100%;
@@ -484,7 +484,7 @@ body.dark-mode .nav-icon {
         overflow-x: hidden;
         padding-left: 20px;
         border: 0.5px solid var(--light-gray1);
-        background-color: #faf1ff;
+        background-color: #faf1ffd8;
     }
 
     .profile-suggestion::before {
@@ -563,7 +563,6 @@ body.dark-mode .nav-icon {
         z-index: 999;
     }
 
-
     .bio-generate {
         font-size: 1.4rem;
     }
@@ -632,6 +631,7 @@ body.dark-mode .nav-icon {
         font-size: 3.5rem;
     }
 
+
     .mobile-title span {
         font-size: clamp(14px, 10vw, 30px);
     }
@@ -641,6 +641,13 @@ body.dark-mode .nav-icon {
     }
 }
 
+
+@media (max-width: 250px){
+    
+    .sidebar-footer {
+        margin-top: 5px;
+    }
+}
 
 /* Layout geral */
 .layout-wrapper {
