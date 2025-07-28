@@ -1,14 +1,11 @@
 import { GoogleGenAI, Modality } from "@google/genai";
-
 import express from 'express'; // Criar servidor HTTP.
 import cors from 'cors'; // Permitir requisições de outros domínios.
 import bodyParser from 'body-parser'; // Transformar corpo de requisições em obj Javascript.
 import dotenv from 'dotenv'; // Váriaveis de ambiente por meio de arquivos .env
-
 import * as fs from "node:fs"; 
 
 dotenv.config(); // Carrega a chave api do arquivo .env como variável de ambiente. 
-
 const app = express(); 
 const PORT = 3001; // Porta onde o servidor escutará requisições.
 
@@ -17,67 +14,64 @@ app.use(bodyParser.json());
 app.use(express.text());
 app.use('/img', express.static('public/img')); // Acesso as imagens armazenadas.
 
+
 // Rota POST para requisitarPost. 
 app.post('/requisitarPost', async (req, res) => {
-    
     const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY1});
+    const { interesses = [], gerarBio = false, nome = "" } = req.body;
 
-    const interessesPredefinidos = req.body.interesses || [];
-
-    let prompt = 'Crie um post pequeno e aleatório para uma rede social, como se fosse um jovem da geração Z. Evite iniciar de forma genérica como: Acabei de ... etc. Este post não deve conter nenhuma hashtag em seu corpo.\n';
-
-    // Verifica se há interesses pré-definidos.
-    if(interessesPredefinidos.length > 0){
-
-        prompt += 'Baseado em pelo menos um interesses da seguinte lista de interesses: ';
-        
-        for(let i = 0; i < interessesPredefinidos.length; i++){
-
-            prompt += `"${interessesPredefinidos[i]}"`;
-
-            if(i < interessesPredefinidos.length - 1){
-                prompt += ', ';
-            }
-            else{
-                prompt += '.\n';
-            }
+    let prompt;
+    //Verifica se há uma requisição de bio a ser criada.
+    if (gerarBio) {
+        prompt = 'Crie uma bio de um usuário fictício para uma rede social, como se fosse um jovem da geração Z. A bio deve conter no máximo 250 caracteres!';
+        if (nome) {
+            prompt += ` O nome do usuário é "${nome}", use pronomes adequados.`;
         }
+        prompt += ' Baseie-se nos interesses do usuário. Não inclua hashtags.\n';
+    } else {
+        prompt = 'Crie um post pequeno e aleatório para uma rede social, como se fosse um jovem da geração Z. Evite iniciar de forma genérica. Não inclua hashtags no corpo.\n';
     }
 
-    prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo textual deste post.';
-    prompt += ' Gere uma lista contendo estes interesses, que devem ser representados como hashtags (obrigatoriamente precedidos por #).\n';
+    // Verifica se há interesses pré-definidos.
+    if (interesses.length > 0) {
+        prompt += 'Baseado em pelo menos um destes interesses: ';
+        prompt += interesses.map(i => `"${i}"`).join(', ') + '.\n';
+    }
+
+    if (!gerarBio) {
+        prompt += '- Determine de 1 a 5 interesses relacionados (como hashtags).\n';
+    }
 
     // Especifica o formato esperado da resposta.
-    prompt += 'O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
+    prompt += 'Retorne SOMENTE no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
 
-    try{
-       
+    try {
         const response = await genAI.models.generateContent({
             model: 'gemini-2.5-flash-lite',
             contents: prompt
         }); // Obtém resposta.
-       
-        const text = response.text; // Extrai o conteúdo como texto.
 
-        // Busca um bloco no formato JSON dentro do texto.
+        const text = response.text; // Extrai o conteúdo como texto.
         const jsonMatch = text.match(/{[\s\S]*}/);
 
-        if(!jsonMatch)
+        if (!jsonMatch) 
             throw new Error('Resposta fora do formato esperado.');
 
+
         // Converte o texto JSON em um objeto JavaScript.
-        const post = JSON.parse(jsonMatch[0]);
+        const result = JSON.parse(jsonMatch[0]);
 
-        // Atribui o texto da resposta ou null.
-        const texto = post.texto || null;
-
-        const interesses = post.interesses || [];
-
-        res.json({ texto, interesses }); // Responde em formato JSON.
-
-    } catch(error){ // Em caso de erro.
+        // Responde em formato JSON.
+        res.json({ 
+            texto: result.texto || null, // Atribui o texto da resposta ou null.
+            interesses: result.interesses || [] 
+        });
+    } catch (error) { // Em caso de erro.
         console.error('Erro:', error);
-        res.status(500).json({ texto: null, interesses: interessesPredefinidos || [] });
+        res.status(500).json({ 
+            texto: null, 
+            interesses: interesses 
+        });
     }
 });
 
@@ -227,52 +221,6 @@ app.post('/requisitarImagemPerfil', async (req, res) => {
         res.status(500).send("Erro ao gerar ou salvar imagem.");
     }
 });
-
-
-app.post('/requisitarBioUsuarioF', async (req, res) => {
-    const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_KEY4 });
-
-    const interessesPredefinidos = req.body.interesses || [];
-    const nome = req.body.nome || ""; // <- agora como string
-    let prompt = 'Crie uma bio de um usuário fictício para uma rede social, como se fosse um jovem da geração Z. A bio deve conter no máximo 250 caracteres, sem excessões!';
-
-    if (nome) {
-        prompt += ` O nome do usuário é "${nome}, use os pronomes corretos com base nesse nome fornecido, randomize a escolha de começar ou não com a frase: Meu nome é...".`;
-    }
-
-    prompt += ' A bio deve ser uma apresentação com base nos interesses do usuário e em sua personalidade. Esta bio não deve conter nenhuma hashtag em seu corpo.\n';
-
-    if (interessesPredefinidos.length > 0) {
-        prompt += 'Baseado em pelo menos um dos seguintes interesses: ';
-        prompt += interessesPredefinidos.map(i => `"${i}"`).join(', ') + '.\n';
-    }
-
-    prompt += '- Determine de 1 a 5 interesses relacionados ao conteúdo da bio.';
-    prompt += ' O retorno deve estar somente no formato JSON: {"texto": "...", "interesses": ["...", "..."] }';
-
-    try {
-        const response = await genAI.models.generateContent({
-            model: 'gemini-2.5-flash-lite',
-            contents: prompt
-        });
-
-        const text = response.text;
-        const jsonMatch = text.match(/{[\s\S]*}/);
-
-        if (!jsonMatch)
-            throw new Error('Resposta fora do formato esperado.');
-
-        const post = JSON.parse(jsonMatch[0]);
-        const texto = post.texto || null;
-        const interesses = post.interesses || [];
-
-        res.json({ texto, interesses });
-    } catch (error) {
-        console.error('Erro:', error);
-        res.status(500).json({ texto: null, interesses: interessesPredefinidos || [] });
-    }
-});
-
 
 // Inicia o servidor na porta especificada.
 app.listen(PORT, () => {

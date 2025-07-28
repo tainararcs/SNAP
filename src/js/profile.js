@@ -1,6 +1,6 @@
 import { getStoredUsers } from './posts.js';
 import { setupProfileUser } from './profileUser.js';
-import { requisitarBioUsuarioF } from './gemini.js'; // Importação adicionada
+import { requisitarPost } from './gemini.js'; // Importação modificada
 
 document.addEventListener("click", (event) => {
     if (event.target.classList.contains("clicavel")) {
@@ -99,8 +99,8 @@ function setupBioFicticia(usuario = {}) {
     retryCount = 0;
 
     function attemptGeneration() {
-        requisitarBioUsuarioF(usuario.interests || [], usuario.nome || "")
-            .then(bioGerada => {
+         requisitarPost(usuario.interests || [], true, usuario.nome || "")
+            .then(([bioGerada]) => {
                 if (bioGerada) {
                     // Atualiza o usuário no localStorage
                     const users = getStoredUsers();

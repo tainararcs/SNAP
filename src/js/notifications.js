@@ -156,15 +156,18 @@ window.NotificationSystem = {
             userInterests = this.getUserInterests();
             
             // Chamada mais robusta com timeout e tratamento de erros específicos
-            const response = await this.fetchWithTimeout(
-                `${this.API_URL}/requisitarPost`,
-                {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ interesses: userInterests })
-                },
-                10000 // 10 segundos de timeout
-            );
+             const response = await this.fetchWithTimeout(
+            `${this.API_URL}/requisitarPost`,
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    interesses: userInterests,
+                    gerarBio: false // Especifica que é para gerar post, não bio
+                })
+            },
+            10000
+        );
 
             // Verifica se a resposta é válida
             if (!response.ok) {

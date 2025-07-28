@@ -1,42 +1,53 @@
 const reqLink = "https://gemini-api-requests.onrender.com";
 //const reqLink = "http://localhost:3001";
 
-/* Gera o conteúdo para um post. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
+/* Gera conteúdo textual (post ou biografia) para um usuário fictício. Faz uma requisição para o servidor, que utiliza internamente a API Gemini. 
 
-    Uma lista de interesses (hashtags) pode ou não ser passada como parâmetro. 
-    Se uma lista for fornecida, o modelo irá criar uma postagem baseada nos interesses contidos nesta lista.
-    Caso nenhuma lista ou uma lista vazia seja fornecida, o modelo irá criar um post e uma lista de interesses associados, ambos aleatórios.
+    Parâmetros:
+    - interessesPredefinidos: lista de interesses (hashtags) que pode ser fornecida para direcionar o conteúdo. 
+        Se uma lista for fornecida, o modelo irá criar o conteúdo baseado em pelo menos um desses interesses.
+        Caso nenhuma lista ou uma lista vazia seja fornecida, o modelo irá criar conteúdo e interesses associados aleatoriamente.
+    - gerarBio: booleano opcional (padrão: false). Se true, gera uma biografia de perfil; se false, gera um post.
+    - nome: string opcional (padrão: ""). Nome do usuário, usado apenas quando gerarBio=true para personalizar a biografia.
 
-    - interessesPredefinidos: lista de interesses.
-
-    Em caso de sucesso, retorna um array com dois elementos, sendo o primeiro uma string que representa o conteúdo,
-    e o segundo um array de strings que representa os interesses associados ao post. Em caso de erro, retorna null 
-    e a lista de interesses vazia, ou com os interesses passados como parâmetro, respectivamente.
+    Retorno:
+    Em caso de sucesso, retorna um array com dois elementos:
+        [0]: string com o conteúdo textual (post ou biografia)
+        [1]: array de strings com os interesses (hashtags) associados ao conteúdo gerado.
+    Em caso de erro, retorna [null, interessesPredefinidos || []] 
 
     Exemplos de uso:
 
-        const [texto, interesses] = await requisitarPost(["#tecnologia", "#games"])
-        const [textoAleatorio, interessesAleatorios] = await requisitarPost()
+        // Gerar um post com base em interesses
+        const [post, interessesPost] = await requisitarPost(["#tecnologia", "#games"]);
+        
+        // Gerar um post aleatório
+        const [postAleatorio, interessesAleatorios] = await requisitarPost();
+        
+        // Gerar uma biografia com base em interesses e nome
+        const [bio, interessesBio] = await requisitarPost(["#música", "#viagem"], true, "Ana Silva");
+        
+        // Gerar uma biografia aleatória
+        const [bioAleatoria, interessesBio] = await requisitarPost([], true);
 
     OBS: Esta é uma função assíncrona, seu retorno é uma Promise. É necessário usar await para obter o valor de retorno corretamente.
 */
-export async function requisitarPost(interessesPredefinidos = null) {
-    
-    try{
-
-        // Chama o servidor backend Node.js, para solicitar uma postagem.
+export async function requisitarPost(interessesPredefinidos = null, gerarBio = false, nome = "") {
+    try {
         const response = await fetch(`${reqLink}/requisitarPost`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ interesses: interessesPredefinidos || [] })
+            body: JSON.stringify({ 
+                interesses: interessesPredefinidos || [],
+                gerarBio,
+                nome
+            })
         });
 
-        // Converte a resposta de JSON para um objeto JavaScript.
         const content = await response.json();
         return [content.texto, content.interesses];
-
-    } catch(error){ // Em caso de erro
-        console.error('Erro ao obter post:', error);
+    } catch (error) {
+        console.error('Erro ao obter conteúdo:', error);
         return [null, interessesPredefinidos || []];
     }
 } // function requisitarPost
