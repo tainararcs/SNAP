@@ -213,9 +213,31 @@
     max-width: 100%;
 }
 
+#saveProfileBtn{
+    color: green;
+}
+
+#cancelEditBtn{
+    color: red;
+}
+
+#cancelEditBtn:hover{
+    color: var(--white);
+    background-color: red;
+    border: none !important;
+}
+
+#saveProfileBtn:hover{
+    background-color: green;
+    color: var(--white);
+    order: none !important;
+}
+
+
+
 @media (max-width: 768px) {
 
-    #bio-loading{
+    #bio-loading {
         font-size: 1.6rem;
     }
 
@@ -253,7 +275,20 @@
     }
 
     #name-edit-wrapper {
+        margin-top: 30px;
         width: 60vw;
+    }
+
+    .edit-input,
+    #bio-edit-textarea {
+        border-width: 1px;
+        border-color: var(--purple1);
+    }
+
+    #name-edit-input {
+        max-width: initial !important;
+        padding: 10px 20px;
+        font-size: 1.9rem;
     }
 
     .profile-header {
@@ -261,8 +296,8 @@
         align-items: center;
     }
 
-    .profile-header-left{
-       width: 40%;
+    .profile-header-left {
+        width: 40%;
     }
 
     .profile-header-top {
@@ -274,7 +309,7 @@
         gap: 20px;
     }
 
-    #name-edit-input{
+    #name-edit-input {
         max-width: 305px;
     }
 
@@ -303,7 +338,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.6rem;
+        font-size: 1.7rem;
     }
 
     #edit-button button:focus {

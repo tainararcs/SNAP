@@ -1,3 +1,12 @@
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,        /* 0 = contorno, 1 = preenchido */
+    'wght' 800,      /* peso: de 100 (fino) a 700 (grosso) */
+    'GRAD' 0,        /* contraste: -25 a 200 */
+    'opsz'  !important;       /* tamanho ótico do ícone */
+  font-size: 20px !important;
+}
+
 #settings-container,
 #theme-div,
 #help-div,
@@ -83,7 +92,7 @@
     font-weight: bold;
 }
 
-.settings-option:hover .glyphicon {
+.settings-option:hover .icon-right {
     color: var(--white);
 }
 
@@ -117,6 +126,9 @@
 
 .logout-btn {
     gap: 4px;
+    background-color: var(--gray) ;
+    color: var(--white);
+    border: none !important;
     padding: 10px 30px !important;
 }
 
@@ -148,7 +160,7 @@
     #settings-container {
         display: flex;
         max-width: initial;
-        width: 65vw;
+        width: 75vw;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -157,10 +169,13 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        padding: 20px;
+        padding-bottom: 30px;
     }
 
     .settings-options {
         margin: 0;
+        width: 90%;
     }
 
     .settings-options a {

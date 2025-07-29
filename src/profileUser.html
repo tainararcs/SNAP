@@ -4,27 +4,27 @@
 <link rel="stylesheet" href="css/profile/profileUser.css" />
 
 <style>
-  /* Estilos para o contador de caracteres */
-  #bio-char-count {
-    display: block;
-    font-size: 15px;
-    margin-top: 5px;
-    text-align: right;
-    color: #666;
-  }
-  
-  .char-limit-warning {
-    color: #ff0000;
-    font-weight: bold;
-    margin-left: 5px;
-  }
+    /* Estilos para o contador de caracteres */
+    #bio-char-count {
+        display: block;
+        font-size: 15px;
+        margin-top: 5px;
+        text-align: right;
+        color: #666;
+    }
+
+    .char-limit-warning {
+        color: #ff0000;
+        font-weight: bold;
+        margin-left: 5px;
+    }
 </style>
 
 <div class="profile">
     <div class="settings-header">
-           <!-- Aqui o JS vai inserir o botão "Voltar" -->
-       </div>
-   
+        <!-- Aqui o JS vai inserir o botão "Voltar" -->
+    </div>
+
     <div class="profile-header">
         <!-- Linha superior com imagem, nome e botão -->
         <div class="profile-header-top">
@@ -57,11 +57,15 @@
                 </button>
 
                 <button id="cancelEditBtn" class="btn standard-btn edit-btn" style="display: none;">
-                    <span class="glyphicon glyphicon-remove"></span> Voltar
+                    <span class="material-symbols-outlined cancel">
+                        close
+                    </span> Cancelar
                 </button>
 
                 <button id="saveProfileBtn" class="btn standard-btn edit-btn" style="display: none;">
-                    <span class="glyphicon glyphicon-ok"></span> Salvar
+                    <span class="material-symbols-outlined check">
+                        check
+                    </span> Salvar
                 </button>
 
             </div>
