@@ -213,21 +213,21 @@
     max-width: 100%;
 }
 
-#saveProfileBtn{
+#saveProfileBtn {
     color: green;
 }
 
-#cancelEditBtn{
+#cancelEditBtn {
     color: red;
 }
 
-#cancelEditBtn:hover{
+#cancelEditBtn:hover {
     color: var(--white);
     background-color: red;
     border: none !important;
 }
 
-#saveProfileBtn:hover{
+#saveProfileBtn:hover {
     background-color: green;
     color: var(--white);
     order: none !important;
@@ -245,7 +245,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: fit-content;
+        width: max-content;
     }
 
     .profile-picture-wrapper {
@@ -276,7 +276,7 @@
 
     #name-edit-wrapper {
         margin-top: 30px;
-        width: 60vw;
+        width: 100%;
     }
 
     .edit-input,
@@ -309,10 +309,6 @@
         gap: 20px;
     }
 
-    #name-edit-input {
-        max-width: 305px;
-    }
-
     #editProfileBtn {
         display: flex;
         flex-wrap: wrap;
@@ -329,9 +325,10 @@
     }
 
     #edit-button {
+        width: 100% !important;
         display: flex;
-        justify-content: center;
-        gap: 20px;
+        justify-content:space-evenly;
+        gap: 10px;
     }
 
     #edit-button button {
@@ -339,6 +336,11 @@
         align-items: center;
         justify-content: center;
         font-size: 1.7rem;
+    }
+
+
+    #profileUser-bios {
+        max-width: 305px;
     }
 
     #edit-button button:focus {
@@ -367,6 +369,7 @@
         font-size: 2.1rem !important;
     }
 
+
     .profile {
         margin-top: 80px;
     }
@@ -376,7 +379,6 @@
     }
 
     #edit-button {
-        width: fit-content;
         display: flex;
         flex-wrap: wrap;
     }
@@ -440,7 +442,22 @@
         position: absolute;
         right: 4%;
     }
+}
 
+@media (max-width:450px) {
+    #name-edit-wrapper {
+        width: 65vw;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile-header-top{
+        width: initial !important;
+    }
+
+    #edit-button{
+        justify-content: space-around;
+    }
 }
 
 
