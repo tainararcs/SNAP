@@ -105,6 +105,12 @@
 
 @media (max-width: 768px) {
 
+    .notification-badge{
+        left: 22px;
+        top: 4px !important;
+        min-width: 5px;
+    }
+
     .notifications-container{
         margin-top: 40px;
     }
@@ -124,6 +130,11 @@
 @media (max-width: 450px) {
     .notifications-container{
         margin-top: 90px;
+    }
+
+    .notification-badge{
+        top: 2%;
+        right: 2%;
     }
 
     .notification-card{
@@ -157,4 +168,12 @@
         /* suporte adicional para quebra */
         text-align: center;
     }
+}
+
+@media (max-width:235px) {
+        .notification-badge{
+        top: 0% !important;
+        right: 0% !important;
+    }
+
 }

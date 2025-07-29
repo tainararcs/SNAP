@@ -213,9 +213,31 @@
     max-width: 100%;
 }
 
+#saveProfileBtn {
+    color: green;
+}
+
+#cancelEditBtn {
+    color: red;
+}
+
+#cancelEditBtn:hover {
+    color: var(--white);
+    background-color: red;
+    border: none !important;
+}
+
+#saveProfileBtn:hover {
+    background-color: green;
+    color: var(--white);
+    order: none !important;
+}
+
+
+
 @media (max-width: 768px) {
 
-    #bio-loading{
+    #bio-loading {
         font-size: 1.6rem;
     }
 
@@ -223,7 +245,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: fit-content;
+        width: max-content;
     }
 
     .profile-picture-wrapper {
@@ -253,7 +275,20 @@
     }
 
     #name-edit-wrapper {
-        width: 60vw;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .edit-input,
+    #bio-edit-textarea {
+        border-width: 1px;
+        border-color: var(--purple1);
+    }
+
+    #name-edit-input {
+        max-width: initial !important;
+        padding: 10px 20px;
+        font-size: 1.9rem;
     }
 
     .profile-header {
@@ -261,8 +296,8 @@
         align-items: center;
     }
 
-    .profile-header-left{
-       width: 40%;
+    .profile-header-left {
+        width: 40%;
     }
 
     .profile-header-top {
@@ -272,10 +307,6 @@
         max-width: 305px;
         align-items: center;
         gap: 20px;
-    }
-
-    #name-edit-input{
-        max-width: 305px;
     }
 
     #editProfileBtn {
@@ -294,16 +325,22 @@
     }
 
     #edit-button {
+        width: 100% !important;
         display: flex;
-        justify-content: center;
-        gap: 20px;
+        justify-content:space-evenly;
+        gap: 10px;
     }
 
     #edit-button button {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.6rem;
+        font-size: 1.7rem;
+    }
+
+
+    #profileUser-bios {
+        max-width: 305px;
     }
 
     #edit-button button:focus {
@@ -332,6 +369,7 @@
         font-size: 2.1rem !important;
     }
 
+
     .profile {
         margin-top: 80px;
     }
@@ -341,7 +379,6 @@
     }
 
     #edit-button {
-        width: fit-content;
         display: flex;
         flex-wrap: wrap;
     }
@@ -405,7 +442,22 @@
         position: absolute;
         right: 4%;
     }
+}
 
+@media (max-width:450px) {
+    #name-edit-wrapper {
+        width: 65vw;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile-header-top{
+        width: initial !important;
+    }
+
+    #edit-button{
+        justify-content: space-around;
+    }
 }
 
 
