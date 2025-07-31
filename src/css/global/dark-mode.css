@@ -99,7 +99,7 @@ body.dark-mode#body-feed .sidebar, .header {
 
 body.dark-mode#body-feed .sidebar .nav-link:hover  {
   background-color: var(--light-gray1);
-  color: var(--white);
+  color: var(--main-black);
 }
 
 body.dark-mode#body-feed .sidebar .nav-link.active {
@@ -163,6 +163,11 @@ body.dark-mode #search-input{
   color: var(--black);
   border-color: #5E60CE ;
 }
+
+body.dark-mode #search-input::placeholder{
+  color: var(--gray);
+}
+
 body.dark-mode  .form-control::placeholder{
 color: var(--black);
 }
