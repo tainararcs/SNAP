@@ -45,7 +45,7 @@ function setupSettingsNavigation() {
         backButton.id = "PbackToSettings";
         backButton.className = "btn standard-btn settings-btn";
         backButton.innerHTML =
-          '<span class="glyphicon glyphicon-chevron-left"></span> Voltar';
+          '<span class="glyphicon glyphicon-chevron-left"></span>';
 
         // Insere o botão no início do header
         header.insertBefore(backButton, header.firstChild);
