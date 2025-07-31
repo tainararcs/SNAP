@@ -59,7 +59,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 3px solid var(--purple3);
+    border: 3px solid var(--purple1);
     overflow: hidden;
     object-fit: cover;
 }
@@ -105,6 +105,11 @@
 
 .edit-btn {
     border-radius: 8px !important;
+    border-color: var(--purple3) !important;
+}
+
+.edit-btn:focus {
+    background-color: var(--purple3) !important; 
     border-color: var(--purple3) !important;
 }
 
@@ -222,20 +227,24 @@
 }
 
 #saveProfileBtn {
+    border-color: green !important;
     color: green;
 }
 
 #cancelEditBtn {
+    border-color: red !important;
     color: red;
+    margin-right: 5px;
 }
 
 #cancelEditBtn:hover {
+    font-weight: bold;
     color: var(--white);
     background-color: red;
-    border: none !important;
 }
 
 #saveProfileBtn:hover {
+    font-weight: bold;
     background-color: green;
     color: var(--white);
     order: none !important;
