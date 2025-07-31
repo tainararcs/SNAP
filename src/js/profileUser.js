@@ -50,7 +50,7 @@ export function setupProfileUser() {
     if (!bioTextarea || !charCountElement) return;
     
     const currentLength = bioTextarea.value.length;
-    charCountElement.textContent = `${currentLength}/50`;
+    charCountElement.textContent = `${currentLength}/100`;
     
     // Limpar mensagem anterior
     const warningSpan = charCountElement.querySelector('.char-limit-warning');
