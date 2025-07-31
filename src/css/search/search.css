@@ -16,19 +16,13 @@
 #search-input {
     font-size: 1.6rem !important;
     padding: 20px;
-    background-color: #72efdc1f;
-    border: 1px solid var(--blue5);
-    border-left: 5px solid var(--blue1);
-    box-shadow:  0px 0px 20px #56cee12b;
 }
 
 #search-input::placeholder{
-    color: var(--blue1);
+    color: var(--dark-gray);
 }
 
 #search-input:focus {
-    border-color: var(--blue3);
-    box-shadow: 0 0 0 3px rgba(83, 144, 217, 0.2);
     outline: none;
 }
 
