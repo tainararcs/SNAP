@@ -300,6 +300,46 @@ body.dark-mode .nav-icon {
 .feed-central::-webkit-scrollbar-thumb:hover {
     background-color: var(--gray);
 }
+.empty-state {
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--bg-light, #f0f0f0);
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-message {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.empty-hint {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.btn-reload {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+}
+
+.btn-reload:hover {
+    background-color: #0056b3;
+}
 
 /* Sugestões (Desktop) */
 @media (min-width: 768px) {

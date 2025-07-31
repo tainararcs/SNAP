@@ -15,7 +15,6 @@ const NUMBER_OF_POSTS_TO_GENERATE = 10;
 const INTERVAL_BETWEEN_POSTS_MS = 0;
 const MAX_RETRY_ATTEMPTS = 3;
 
-
 let currentUser;
 let postGenerationActive = true;
 const storedUser = localStorage.getItem('user');
@@ -189,7 +188,7 @@ async function startAutomaticPostGeneration(count = NUMBER_OF_POSTS_TO_GENERATE,
     }
 }
 
-// Função para carregar recomendações
+// Função para carregar recomendações (MODIFICADA)
 function loadRecommendations() {
     try {
         const container = document.querySelector('.suggestions-list');
@@ -199,10 +198,20 @@ function loadRecommendations() {
         const currentUserData = JSON.parse(localStorage.getItem('user'));
 
         if (!users?.length || !currentUserData) {
-            container.innerHTML = '<p class="small">Nenhuma recomendação disponível</p>';
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <p class="empty-message">Ainda estamos vazios por aqui...</p>
+                    <small class="empty-hint">Assim que os primeiros usuários aparecerem, você verá sugestões de contas incríveis</small>
+                    <button class="btn-reload" onclick="window.location.reload()">
+                        <i class="fas fa-sync-alt"></i> Recarregar
+                    </button>
+                </div>
+            `;
             return;
         }
 
+        // Restante da função original permanece IGUAL
         const recommendations = users
             .filter(user =>
                 user.nome &&
@@ -260,7 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
     setActiveLink('link-home');
     loadRecommendations();
-
 
     const links = document.querySelectorAll('.nav-link');
     const mobileTitleWrapper = document.querySelector('.mobile-title');
