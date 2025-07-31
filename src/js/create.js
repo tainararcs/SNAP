@@ -1,6 +1,5 @@
 import {setupProfileUser, sanitizeText} from './profileUser.js';
 import {showAlert} from './login.js';
-import { loadUserProfileImage } from './User.js';
 
 const createBtn = document.querySelector("#link-create");
 
@@ -134,17 +133,15 @@ function setupCreateModal() {
         localStorage.setItem('user', JSON.stringify(user));
 
         showAlert("Post criado","success");
-        setupProfileUser();// Recarrega o perfil do usuário com o novo post
-
+        
         modal.classList.add("hidden");
-    
+        
         clearCreateModalFields();
-        errorDiv.textContent = "";
-        errorDiv.style.display = "none";
+        setActiveLink(previousActiveLink);
       }else{
-        showAlert("Digite algo para postar", "danger");
+        showAlert("Digite algo para postar", "warning");
       }
-      setActiveLink(previousActiveLink);
+      setupProfileUser();// Recarrega o perfil do usuário com o novo post
     });
   }
 

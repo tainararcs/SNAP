@@ -16,9 +16,8 @@ profileUserLink.addEventListener("click", (e) => {
 let tempImageFile = null;
 
 export function sanitizeText(text) {
-    const element = document.createElement('div');
-    element.innerText = text;
-    return element.innerHTML;
+   // Remove qualquer tag HTML como <...>
+   return text.replace(/<[^>]*>/g, "");
 }
 
 export function setupProfileUser() {
@@ -55,13 +54,13 @@ export function setupProfileUser() {
     if (!bioTextarea || !charCountElement) return;
     
     const currentLength = bioTextarea.value.length;
-    charCountElement.textContent = `${currentLength}/100`;
+    charCountElement.textContent = `${currentLength}/50`;
     
     // Limpar mensagem anterior
     const warningSpan = charCountElement.querySelector('.char-limit-warning');
     if (warningSpan) warningSpan.remove();
     
-    if (currentLength >= 100) {
+    if (currentLength >= 50) {
       const warning = document.createElement('span');
       warning.textContent = '(Máximo atingido)';
       warning.className = 'char-limit-warning';
@@ -76,9 +75,9 @@ export function setupProfileUser() {
     
     // Atualizar enquanto digita
     bioTextarea.addEventListener('input', () => {
-      // Limitar a 100 caracteres
-      if (bioTextarea.value.length > 100) {
-        bioTextarea.value = bioTextarea.value.substring(0, 100);
+      // Limitar a 50 caracteres
+      if (bioTextarea.value.length > 50) {
+        bioTextarea.value = bioTextarea.value.substring(0, 50);
       }
       updateCharCount();
     });
@@ -172,8 +171,8 @@ export function setupProfileUser() {
     const updatedBio = bioTextarea.value.trim();
     
     // Validar comprimento da bio
-    if (updatedBio.length > 100) {
-      alert("A bio não pode ter mais de 100 caracteres.");
+    if (updatedBio.length > 50) {
+      alert("A bio não pode ter mais de 50 caracteres.");
       return;
     }
 

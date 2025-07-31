@@ -21,7 +21,7 @@
     border-radius: 16px;
     width: 100%;
     max-width: 600px;
-    max-height: 400px;
+    max-height: 500px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     position: relative;
 }
@@ -38,7 +38,7 @@
 .modal-header h2 {
     font-size: 20px;
     font-weight: bold;
-    color: var(--blue1);
+    color: var(--purple3);
     margin: 0;
     flex-grow: 1;
     text-align: center;
@@ -47,7 +47,7 @@
 .close-button {
     color: var(--black);
     cursor: pointer;
-    font-size: 20px;
+    font-size: 30px;
     padding: 0px 12px;
 }
 
@@ -82,14 +82,14 @@
 }
 
 .modal-avatar {
-    width: 44px;
-    height: 44px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 }
 
 .modal-username {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #postContent {
@@ -113,6 +113,7 @@
 
 .hashtags-box {
     margin-bottom: 10px;
+    color: var(--blue1);
 }
 
 .hashtags-box label {
@@ -128,6 +129,7 @@
     border: 1px solid var(--gray);
     background-color: var(--main-white);
     font-size: 14px;
+    color: var(--main-black);
 }
 
 #postHashtags:focus {
@@ -148,6 +150,11 @@
     margin-top: 1px;
     text-align: right;
     color: #666;
+}
+
+ .close-button{
+  color: var(--purple3);
+   border-radius: 5px;
 }
 
 @media (max-width: 768px) {
@@ -190,7 +197,7 @@
         margin-bottom: 50px;
     }
 
-    .close-button{
+    .close-button, #postSubmitBtn{
         font-size: 2.6rem;
     }
 

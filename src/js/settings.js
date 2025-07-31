@@ -76,11 +76,6 @@ function setupSettingsNavigation() {
         showSettingsSection("help-div");
     });
 
-    document.getElementById("language-link").addEventListener("click", e => {
-        e.preventDefault();
-        showSettingsSection("language-div");
-    });
-
     // Botões de voltar
     document.getElementById("TbackToSettings").addEventListener("click", () => {
         showSettingsSection("settings-container");

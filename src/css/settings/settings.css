@@ -9,8 +9,7 @@
 
 #settings-container,
 #theme-div,
-#help-div,
-#language-div {
+#help-div{
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
@@ -201,14 +200,12 @@
     }
 
     #theme-div,
-    #language-div,
     #help-div {
         width: 80vw;
         margin-top: 100px;
     }
 
     #theme-div .settings-header,
-    #language-div .settings-header,
     #help-div .settings-header {
         border-bottom: 1px solid var(--purple1);
     }
