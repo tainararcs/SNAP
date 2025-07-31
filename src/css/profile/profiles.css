@@ -156,7 +156,7 @@
     right: 0;
     margin-left: 5px;
     color: var(--purple3) !important;
-    border-color: var(--white) !important;
+    border-color: var(--purple3) !important;
 }
 
 .delete-btn:focus {
