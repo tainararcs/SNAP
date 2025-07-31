@@ -238,13 +238,11 @@
 }
 
 #cancelEditBtn:hover {
-    font-weight: bold;
     color: var(--white);
     background-color: red;
 }
 
 #saveProfileBtn:hover {
-    font-weight: bold;
     background-color: green;
     color: var(--white);
     order: none !important;
