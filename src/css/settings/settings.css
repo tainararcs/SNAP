@@ -121,12 +121,11 @@
     top: 1px;
 }
 
-
 .logout-btn {
     gap: 4px;
-    background-color: var(--gray) ;
-    color: var(--white);
-    border: none !important;
+    background-color: var(--white) ;
+    color: var(--purple1);
+    border: 2px solid var(--purple1);
     padding: 10px 30px !important;
 }
 

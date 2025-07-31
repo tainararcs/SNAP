@@ -247,7 +247,15 @@
 }
 
 #back-to-login {
-	margin-top: 20px;
+	color: var(--gray) !important;
+	background: none !important;
+	border: none !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+    font-size: 14px !important;
+	font-weight: 500 !important;
+    text-decoration: none;
+    margin: 10px 0;
 }
 
 
