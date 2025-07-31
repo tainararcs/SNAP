@@ -1,4 +1,4 @@
-import {saveUserProfileImage, loadUserProfileImage } from './User.js';
+import {saveUserProfileImage, loadUserProfileImage, sanitizeText } from './User.js';
 import {showAlert} from './login.js';
 
 const profileUserLink = document.querySelector("#link-profile-user");
@@ -15,10 +15,6 @@ profileUserLink.addEventListener("click", (e) => {
 
 let tempImageFile = null;
 
-export function sanitizeText(text) {
-   // Remove qualquer tag HTML como <...>
-   return text.replace(/<[^>]*>/g, "");
-}
 
 export function setupProfileUser() {
   let user = JSON.parse(localStorage.getItem('user'));

@@ -1,4 +1,4 @@
-import { User, updateUserTheme, saveUserProfileImage } from './User.js';
+import { User, updateUserTheme, saveUserProfileImage, sanitizeText } from './User.js';
 
 let loginPage;
 let recoverPage;
@@ -175,8 +175,14 @@ function loginUser() {
  * Redireciona para a página de interesses após o cadastro.
  */
 function registerUser() {
-	const nome = document.getElementById('register-name')?.value.trim() || document.getElementById('nome')?.value.trim();
-	const email = document.getElementById('register-email')?.value.trim() || document.getElementById('email-signup')?.value.trim();
+	const nome = sanitizeText(
+ 		document.getElementById('register-name')?.value.trim() || document.getElementById('nome')?.value.trim()
+	);
+
+	const email = sanitizeText(
+		document.getElementById('register-email')?.value.trim() || document.getElementById('email-signup')?.value.trim()
+	);
+
 	const senha = document.getElementById('register-password')?.value || document.getElementById('password-signup')?.value;
 
 	if (!nome || !email || !senha) {

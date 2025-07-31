@@ -1,5 +1,6 @@
-import {setupProfileUser, sanitizeText} from './profileUser.js';
+import {setupProfileUser} from './profileUser.js';
 import {showAlert} from './login.js';
+import {sanitizeText} from './User.js';
 
 const createBtn = document.querySelector("#link-create");
 

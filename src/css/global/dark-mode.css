@@ -97,14 +97,18 @@ body.dark-mode#body-feed .sidebar, .header {
   color: var(--light-gray2);
 }
 
-body.dark-mode#body-feed .sidebar .nav-link:hover {
+body.dark-mode#body-feed .sidebar .nav-link:hover  {
   background-color: var(--light-gray1);
-  color: var(--blue5);
+  color: var(--white);
 }
 
 body.dark-mode#body-feed .sidebar .nav-link.active {
   background-color: var(--light-gray1);
-  color: var(--light-gray2);
+  color: var(--purple3);
+}
+
+body.dark-mode .sidebar .nav-link.active::before{
+  background-color: var(--purple3);
 }
 
 /* Feed central */
@@ -258,7 +262,7 @@ body.dark-mode label{
 }
 body.dark-mode #postHashtags, .modal-header{
   border-color: #5E60CE;
-  color: #5390D9;
+  color: var(--black);
 }
 
 body.dark-mode .modal-header{
@@ -305,8 +309,8 @@ body.dark-mode .standard-btn{
 }
 
 body.dark-mode .logout-btn:hover{
-  background-color: var(--purple2);
-  border:  var(--purple2) !important;
+  background-color: var(--purple3);
+  border: var(--purple3) !important;
 }
 
 body.dark-mode .settings-option{
@@ -314,7 +318,7 @@ body.dark-mode .settings-option{
 }
 body.dark-mode .settings-option:hover{
   color: var(--white);
-  background-color: var(--purple2);
+  background-color: var(--purple3);
 }
 
  body.dark-mode .settings-header{
@@ -347,6 +351,8 @@ body.dark-mode .delete-post-btn:hover{
 
 body.dark-mode .delete-post-btn{
   color: var(--purple3);
+  font-size: 20px; 
+  padding: 2px 8px;    
 }
 
 
@@ -389,9 +395,7 @@ body.dark-mode .edit-icon-label{
     border-color: var(--purple3);
 
   }
-  body.dark-mode .sidebar .nav-link.active::before{
-    background-color: var(--purple3);
-  }
+
   body.dark-mode h6 {
     color: var(--purple3) !important;
   }
@@ -416,5 +420,4 @@ body.dark-mode .edit-icon-label{
       border: 2px solid var(--purple3);
   }
 
-  
 }

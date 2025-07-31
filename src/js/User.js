@@ -172,3 +172,8 @@ export function loadUserProfileImage() {
         img.src = user.profileImage;
     }
 }
+
+export function sanitizeText(text) {
+   // Remove qualquer tag HTML como <...>
+   return text.replace(/<[^>]*>/g, "");
+}
