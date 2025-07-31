@@ -140,13 +140,15 @@
     margin: auto;
 }
 
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-top: 4px;
-  display: none;
-}
 
+ /* Estilos para o contador de caracteres */
+#create-char-count {
+    display: block;
+    font-size: 14px;
+    margin-top: 1px;
+    text-align: right;
+    color: #666;
+}
 
 @media (max-width: 768px) {
     .modal-content{
@@ -201,3 +203,4 @@
     }
 
 }
+

@@ -20,6 +20,7 @@
     }
 </style>
 
+<div id="global-alert" class="alert d-none global-alert"></div>
 <div class="profile">
     <div class="settings-header">
         <!-- Aqui o JS vai inserir o botão "Voltar" -->
@@ -37,7 +38,6 @@
                         <label for="profile-upload" class="edit-icon-label" title="Alterar foto" style="display: none;">
                             <span class="glyphicon glyphicon-edit"></span>
                         </label>
-
                         <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
                     </div>
                 </div>
@@ -46,15 +46,14 @@
                     <div id="profileUser-name" class="user-name"></div>
                     <div id="name-edit-wrapper" class="edit-field" style="display: none;">
                         <label for="name-edit-input" class="edit-label">Nome de usuário</label>
-                        <input type="text" id="name-edit-input" class="edit-input" />
+                        <input type="text" id="name-edit-input" class="edit-input" maxlength="30" />
                     </div>
                 </div>
             </div>
 
             <div id="edit-button">
                 <button id="editProfileBtn" class="btn standard-btn edit-btn">
-                    <span class="material-symbols-outlined">edit</span> Editar Perfil
-                </button>
+                    <span class="material-symbols-outlined">edit</span> Editar Perfil</button>
 
                 <button id="cancelEditBtn" class="btn standard-btn edit-btn" style="display: none;">
                     <span class="material-symbols-outlined">
@@ -79,7 +78,7 @@
                 <textarea id="bio-edit-textarea" style="width: 750px; height: 200px; resize: none;" class="edit-input"
                     rows="3"></textarea>
                 <!-- Contador de caracteres -->
-                <div id="bio-char-count">0/500</div>
+                <div id="bio-char-count">0/100</div>
             </div>
         </div>
     </div>

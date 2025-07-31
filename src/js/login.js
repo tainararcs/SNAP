@@ -236,16 +236,20 @@ function recoverPassword(isMobile = false) {
  * @param {string} type - Tipo do alerta (success, danger, warning...).
  * @param {number} duration - Tempo de exibição em milissegundos.
  */
-function showAlert(message, type = "success", duration = 3000) {
+export function showAlert(message, type = "success", duration = 3000) {
 	const alertDiv = document.getElementById("global-alert");
 	if (!alertDiv) return;
 
 	alertDiv.className = `alert alert-${type} text-center global-alert`;
 	alertDiv.textContent = message;
-	alertDiv.classList.remove("d-none");
     
     // Oculta o alerta após determinado tempo.
 	setTimeout(() => {
-		alertDiv.classList.add("d-none");
+		alertDiv.classList.remove("show");
 	}, duration);
+
+	setTimeout(() => {
+		alertDiv.className = "global-alert"; 
+		alertDiv.textContent = "";
+	}, duration + 500); // 500ms extra para dar tempo da transição
 }

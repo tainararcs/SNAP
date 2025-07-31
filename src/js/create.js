@@ -1,32 +1,41 @@
+import {setupProfileUser, sanitizeText} from './profileUser.js';
+import {showAlert} from './login.js';
+import { loadUserProfileImage } from './User.js';
+
 const createBtn = document.querySelector("#link-create");
+
+// Variável que guarda o ID do link ativo anterior ao abrir o modal de criação
 let previousActiveLink = null;
 
 createBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  // Guarda qual era o link ativo antes de clicar em "criar"
+  // Salva o link ativo antes de clicar em "criar"
   const current = document.querySelector(".nav-link.active");
   if (current && current.id !== "link-create") {
     previousActiveLink = current.id;
   }
 
   const container = document.getElementById("modals-container");
-
-  // Só carrega se ainda não estiver carregado
+  
+  // Carrega o modal de criação de post apenas se ele ainda não estiver carregado
   if (!document.getElementById("postModal")) {
     fetch("create.html")
       .then(res => res.text())
       .then(html => {
         container.innerHTML = html;
-        setupCreateModal();
+        setupCreateModal();// Inicializa os eventos e lógica do modal
       });
   } else {
     document.getElementById("postModal").classList.remove("hidden");
   }
 
+  // Atualiza o estado de link ativo
   setActiveLink("link-create");
 });
 
+
+// Função que inicializa toda a lógica do modal de criação de post
 function setupCreateModal() {
   const modal = document.getElementById("postModal");
   const closeBtn = document.getElementById("closePostModal");
@@ -37,25 +46,24 @@ function setupCreateModal() {
   // Fechar modal ao clicar no X
   closeBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
+    clearCreateModalFields();
     setActiveLink(previousActiveLink);
     updateMobileTitleByLinkId(previousActiveLink);
   });
-
-
 
   // fechar clicando fora do modal
   window.addEventListener("click", (event) => {
     if (event.target === modal) {
       modal.classList.add("hidden");
+      clearCreateModalFields();
       setActiveLink(previousActiveLink);
     }
   });
 
   const user = JSON.parse(localStorage.getItem("user"));
   if (user) {
-
     document.getElementById("modal-avatar").src = user.profileImage;
-    document.getElementById("modal-username").textContent = user.name;
+    document.getElementById("modal-username").textContent = sanitizeText(user.name);
 
     document.getElementById("postModal").classList.remove("hidden");
 
@@ -63,60 +71,84 @@ function setupCreateModal() {
       document.getElementById("postModal").classList.add("hidden");
     });
 
+    const content = document.getElementById("postContent");
+    const charCountElement = document.getElementById("create-char-count");
 
-    // Postar
+    // Sistema de contador de caracteres
+    function updateCharCount() {
+      if (!content || !charCountElement) return;
+      
+      const currentLength = content.value.length;
+      charCountElement.textContent = `${currentLength}/280`;
+      
+      // Limpar mensagem anterior
+      const warningSpan = charCountElement.querySelector('.char-limit-warning');
+      if (warningSpan) warningSpan.remove();
+      
+      if (currentLength >= 280) {
+        const warning = document.createElement('span');
+        warning.textContent = '(Limite máximo atingido)';
+        warning.className = 'char-limit-warning';
+        charCountElement.appendChild(warning);
+      }
+    }
+
+    // Escuta evento de digitação para contar caracteres e limitar
+    content.addEventListener('input', () => {
+      // Limitar a 280 caracteres
+      if (content.value.length > 280) {
+        content.value = content.value.substring(0, 280);
+      }
+      updateCharCount();
+    });
+
+    // Evento de envio do post
     const postBtn = document.getElementById("postSubmitBtn");
     postBtn.addEventListener("click", () => {
       const content = document.getElementById("postContent").value;
       const rawHashtags = document.getElementById("postHashtags").value.trim();
-      const errorDiv = document.getElementById("hashtagError");
 
       const words = rawHashtags.split(" ").filter(word => word !== "");
       const hashtagRegex = /^#[A-Za-z][a-zA-Z0-9]*$/;
       const allHashtagsValid = words.every(word => hashtagRegex.test(word));
 
-
-
-      // Se tiver algo escrito e for inválido
+      // Verifica se as hashtags são válidas
       if (!allHashtagsValid && rawHashtags.length > 0) {
-        errorDiv.textContent = "Hashtags devem começar com '#'(ex: #Filme #musica)";
-        errorDiv.style.display = "block";
-
-        setTimeout(() => {
-          errorDiv.style.display = "none";
-        }, 3000);
+        showAlert("Hashtags devem começar com '#'(ex: #Filme #musica)",'danger', 5000);
         return;
-      } else {
-        // Oculta o erro se estiver tudo certo
-        errorDiv.textContent = "";
-        errorDiv.style.display = "none";
-      }
+      } 
 
       const hashtags = words.join(" ");
 
       if (content.trim()) {
         const newPost = {
-          conteudo: content,
+          conteudo: sanitizeText(content),
           hashtags,
           avatarUrl: user.profileImage,
           data: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
         };
 
+        // Adiciona o novo post ao usuário e salva no localStorage
         user.posts = user.posts || [];
         user.posts.unshift(newPost);
         localStorage.setItem('user', JSON.stringify(user));
 
-        console.log("Postando:", content, hashtags);
+        showAlert("Post criado","success");
+        setupProfileUser();// Recarrega o perfil do usuário com o novo post
 
         modal.classList.add("hidden");
-        document.getElementById("postContent").value = "";
-        document.getElementById("postHashtags").value = "";
+    
+        clearCreateModalFields();
         errorDiv.textContent = "";
         errorDiv.style.display = "none";
+      }else{
+        showAlert("Digite algo para postar", "danger");
       }
+      setActiveLink(previousActiveLink);
     });
   }
 
+  // Garante que o modal feche ao navegar entre links
   if (!modal.dataset.navListenersSet) {
     const navLinks = document.querySelectorAll(".nav-link");
     navLinks.forEach(link => {
@@ -130,12 +162,11 @@ function setupCreateModal() {
         });
       }
     });
-    modal.dataset.navListenersSet = "true";
+    modal.dataset.navListenersSet = "true";// evita adicionar eventos duplicados
   }
-
 }
 
-
+// Atualiza o título na barra superior do mobile
 function updateMobileTitleByLinkId(linkId) {
   const link = document.getElementById(linkId);
   if (!link) return;
@@ -165,4 +196,12 @@ function updateMobileTitleByLinkId(linkId) {
   }
 
   mobileTitleText.textContent = newTitle;
+}
+
+// Limpa os campos do modal de criação de post
+function clearCreateModalFields() {
+  document.getElementById("postContent").value = "";
+  document.getElementById("postHashtags").value = "";
+  const charCountElement = document.getElementById("create-char-count");
+  if (charCountElement) charCountElement.textContent = "0/280";
 }

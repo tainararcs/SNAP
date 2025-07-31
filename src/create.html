@@ -5,7 +5,7 @@
 <div id="postModal" class="modal hidden">
   <div class="modal-content">
     <div class="modal-header">
-      <span id="closePostModal" class="close-button">&times;</span>
+      <span id="closePostModal" class="close-button" title="Fechar">&times;</span>
       <h2>Criar postagem</h2>
 
       <div class="post-actions">
@@ -18,12 +18,14 @@
       <span id="modal-username" class="modal-username"></span>
     </div>
 
-    <textarea id="postContent" placeholder="No que você está pensando?"></textarea>
 
+    <textarea id="postContent" placeholder="No que você está pensando?"></textarea>
+    <div id="create-char-count">0/280</div>
+    
+    <!-- Contador de caracteres -->
     <div class="hashtags-box">
       <label>Hashtags</label>
-      <input type="text" id="postHashtags" placeholder="#Filmes #Series" />
-      <div class="error-message" id="hashtagError"></div>
+      <input type="text" id="postHashtags" placeholder="#Filmes #series" />
     </div>
 
   </div>

@@ -163,14 +163,12 @@ export function saveUserProfileImage(file) {
   reader.readAsDataURL(file);// Converte o arquivo em base64
 }
 
-// Carrega a imagem salva no localStore, se não exisitir nenhuma ele usa uma padrão existente.
+// Carrega a imagem salva no localStore.
 export function loadUserProfileImage() {
     const user = JSON.parse(localStorage.getItem('user'));
     const img = document.getElementById("profile-preview");
 
     if (user && user.profileImage) {
         img.src = user.profileImage;
-    }else{
-        img.src = "img/icons/circle-user.svg";
     }
 }
