@@ -26,14 +26,18 @@
     outline: none;
 }
 
+#search-input:focus + .search-icon {
+    color: var(--blue1);
+}
+
 .search-icon {
     position: absolute;
-    right: 1rem;
+    right: 1.1rem;
     width: 20px;
     height: 20px;
     pointer-events: none;
     opacity: 1;
-    color: var(--blue3);
+    color: var(--purple1);
 }
 
 /* Resultados */
