@@ -6,9 +6,15 @@ const feedContainer = document.getElementById('feed-container');
 const initialLoadingMessage = document.getElementById('initial-loading-message');
 const userDisplayName = document.getElementById('user-display-name');
 
+const loadMoreButton = document.createElement('button');
+loadMoreButton.className = 'btn-load-more';
+loadMoreButton.innerHTML = '<i class="fas fa-sync-alt"></i> Ver mais posts';
+let currentPostCount = 0;
+
 const NUMBER_OF_POSTS_TO_GENERATE = 10;
 const INTERVAL_BETWEEN_POSTS_MS = 0;
 const MAX_RETRY_ATTEMPTS = 3;
+
 
 let currentUser;
 let postGenerationActive = true;
@@ -125,22 +131,54 @@ async function generatePostWithRetry(attempts = MAX_RETRY_ATTEMPTS) {
 async function generateAndAddSinglePost() {
     if (!postGenerationActive) return;
 
-    const generatingMessage = document.createElement('p');
+    // Mensagem fixa de carregamento
+    const generatingMessage = document.createElement('div');
     generatingMessage.className = 'generating-message active';
+    generatingMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Atualizando feed posts personalizados para você...';
+    
+    // Remove qualquer mensagem existente antes de adicionar a nova
+    const existingMessage = document.querySelector('.generating-message.active');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Adiciona a mensagem no topo do container
     feedContainer.prepend(generatingMessage);
 
     try {
         const post = await generatePostWithRetry();
-        generatingMessage.remove();
         addPostToFeedDOM(post);
+        currentPostCount++;
+        updateLoadMoreButton();
+
+        // Remove a mensagem após um pequeno delay para dar tempo de ser vista
+        setTimeout(() => {
+            if (generatingMessage.parentNode) {
+                generatingMessage.remove();
+            }
+        }, 500);
     } catch (error) {
-        generatingMessage.remove();
         console.error("Falha ao gerar post após várias tentativas:", error);
+    }  
+}
+
+function updateLoadMoreButton() {
+    if (currentPostCount >= NUMBER_OF_POSTS_TO_GENERATE) {
+        if (!document.querySelector('.btn-load-more')) {
+            loadMoreButton.addEventListener('click', async () => {
+                loadMoreButton.disabled = true;
+                loadMoreButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando...';
+                await startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
+                loadMoreButton.disabled = false;
+                loadMoreButton.innerHTML = '<i class="fas fa-sync-alt"></i> Ver mais posts';
+            });
+            feedContainer.appendChild(loadMoreButton);
+        }
     }
 }
 
 // Função principal para gerar posts automaticamente
-async function startAutomaticPostGeneration(count, interval) {
+async function startAutomaticPostGeneration(count = NUMBER_OF_POSTS_TO_GENERATE, interval = INTERVAL_BETWEEN_POSTS_MS) {
     if (!initializeUser()) return;
 
     for (let i = 0; i < count && postGenerationActive; i++) {
@@ -227,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = document.querySelectorAll('.nav-link');
     const mobileTitleWrapper = document.querySelector('.mobile-title');
     const mobileTitleText = mobileTitleWrapper.querySelector('span');
-    const logo = document.querySelector('.mobile-logo')
 
     links.forEach(link => {
         link.addEventListener('click', (event) => {
@@ -235,38 +272,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const newTitle = link.getAttribute('data-title');
 
-
-            // Animação Animate.css
-           logo.classList.remove('animate__animated', 'animate__fadeInLeft');
-            void mobileTitleText.offsetWidth;
-            logo.classList.add('animate__animated', 'animate__fadeInLeft');
-
-            if (newTitle !== "Configurações") {
-                document.getElementById('link-configs').style.display = 'flex';
-            }
-
-            if (newTitle === "Configurações") {
-                if (window.innerWidth < 768) {
-                    document.getElementById('link-configs').style.display = 'none';
-                    mobileTitleWrapper.style.display = 'flex';
-                    mobileTitleWrapper.style.justifyContent = 'center'; // Centraliza
-                    mobileTitleWrapper.style.paddingLeft = '0px'
-                    mobileTitleText.textContent = "Configurações";
-                }
+            if (newTitle === "Configurações" || newTitle === "Notificações") {
+                // Esconde o título
+                mobileTitleWrapper.style.display = 'none';
             } else if (newTitle === "Criar") {
-                 mobileTitleText.textContent = "Criar";
+                // Não altera o título atual nem mostra/oculta nada
                 return;
             } else {
-                document.getElementById('link-configs').style.display = 'flex';
-                mobileTitleWrapper.style.display = 'flex';
-                mobileTitleWrapper.style.justifyContent = 'flex-start'; // Volta ao normal
-                mobileTitleWrapper.style.paddingLeft = '70px'
-
+                // Mostra e atualiza o título normalmente
+                mobileTitleWrapper.style.display = 'block';
                 mobileTitleText.textContent = newTitle;
             }
         });
     });
-
 });
 
 // Limpeza quando a página for fechada
