@@ -56,7 +56,7 @@ export function setupProfileUser() {
     const warningSpan = charCountElement.querySelector('.char-limit-warning');
     if (warningSpan) warningSpan.remove();
     
-    if (currentLength >= 50) {
+    if (currentLength >= 100) {
       const warning = document.createElement('span');
       warning.textContent = '(Máximo atingido)';
       warning.className = 'char-limit-warning';
@@ -167,8 +167,8 @@ export function setupProfileUser() {
     const updatedBio = bioTextarea.value.trim();
     
     // Validar comprimento da bio
-    if (updatedBio.length > 50) {
-      alert("A bio não pode ter mais de 50 caracteres.");
+    if (updatedBio.length > 100) {
+      alert("A bio não pode ter mais de 100 caracteres.");
       return;
     }
 
