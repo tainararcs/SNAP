@@ -1,5 +1,5 @@
 import { User } from './User.js';
-import { requisitarPost, requisitarUserData, requisitarBioUsuarioF } from './gemini.js'; // Importação corrigida
+import { requisitarPost, requisitarUserData } from './gemini.js'; // Removida importação de requisitarBioUsuarioF
 
 /**
  * Prepara um post para o feed, solicitando conteúdo e dados de usuário fictício separadamente ao backend (Gemini).
@@ -50,6 +50,23 @@ export async function prepararPostParaFeed(currentUser) {
     }
 }
 
+/**
+ * Gera uma bio para um usuário fictício usando a função requisitarPost.
+ * @param {string[]} interesses - Lista de interesses do usuário.
+ * @param {string} nome - Nome do usuário.
+ * @returns {Promise<string|null>} A bio gerada ou null em caso de erro.
+ */
+export async function gerarBioUsuario(interesses = [], nome = "") {
+    try {
+        console.log("Gerando bio para usuário:", nome, "com interesses:", interesses);
+        const [bioGerada] = await requisitarPost(interesses, true, nome);
+        return bioGerada;
+    } catch (error) {
+        console.error("Erro ao gerar bio do usuário:", error);
+        return null;
+    }
+}
+
 // Recupera os usuários armazenados
 export function getStoredUsers() {
     return JSON.parse(localStorage.getItem('usuarios') || '[]');
@@ -96,8 +113,8 @@ export async function armazenarUsuarioEPost(userData, conteudo, hashtagsArray, a
     } else {
         let bio = null;
         try {
-            // Tentar gerar a bio durante o feed
-            bio = await requisitarBioUsuarioF(hashtagsArray, userData.nome);
+            // Gerar a bio usando a função centralizada
+            bio = await gerarBioUsuario(hashtagsArray, userData.nome);
         } catch (error) {
             console.error("Erro ao gerar bio para usuário fictício:", error);
             // Deixa a bio como null para tentar gerar depois no perfil

@@ -1,6 +1,5 @@
-import { getStoredUsers } from './posts.js';
+import { getStoredUsers, gerarBioUsuario, saveStoredUsers } from './posts.js'; // Importação modificada
 import { setupProfileUser } from './profileUser.js';
-import { requisitarPost } from './gemini.js'; // Importação modificada
 
 document.addEventListener("click", (event) => {
     if (event.target.classList.contains("clicavel")) {
@@ -112,23 +111,24 @@ function setupBioFicticia(usuario = {}) {
     retryCount = 0;
 
     function attemptGeneration() {
-         requisitarPost(usuario.interests || [], true, usuario.nome || "")
-            .then(([bioGerada]) => {
+        // Usando a função centralizada de geração de bio
+        gerarBioUsuario(usuario.interests || [], usuario.nome || "")
+            .then((bioGerada) => {
                 if (bioGerada) {
-                    // Atualiza o usuário no localStorage
+                    // Atualiza o usuário no localStorage usando as funções centralizadas
                     const users = getStoredUsers();
                     const userIndex = users.findIndex(u => u.id === usuario.id);
                     
                     if (userIndex !== -1) {
                         users[userIndex].bio = bioGerada;
-                        localStorage.setItem('usuarios', JSON.stringify(users));
+                        saveStoredUsers(users);
                     }
 
                     bioContent.innerHTML = `<p class="bio-gene">${bioGerada}</p>`;
                     loadingElement.style.display = "none";
                     bioContent.style.display = "block";
                 } else {
-                    throw new Error("API retornou bio vazia");
+                    throw new Error("Função retornou bio vazia");
                 }
             })
             .catch(err => {

@@ -23,9 +23,9 @@ app.post('/requisitarPost', async (req, res) => {
     let prompt;
     //Verifica se há uma requisição de bio a ser criada.
     if (gerarBio) {
-        prompt = 'Crie uma bio de um usuário fictício para uma rede social, como se fosse um jovem da geração Z. A bio deve conter no máximo 250 caracteres!';
+        prompt = 'Crie uma biográfia de um usuário fictício para uma rede social, como se fosse um jovem da geração Z. A bio deve conter no máximo 100 caracteres!';
         if (nome) {
-            prompt += ` O nome do usuário é "${nome}", use pronomes adequados.`;
+            prompt += ` O nome do usuário é "${nome}", use pronomes adequados. Na bio, não inclua o nome do usuário.`;
         }
         prompt += ' Baseie-se nos interesses do usuário. Não inclua hashtags.\n';
     } else {
@@ -39,7 +39,7 @@ app.post('/requisitarPost', async (req, res) => {
     }
 
     if (!gerarBio) {
-        prompt += '- Determine de 1 a 5 interesses relacionados (como hashtags).\n';
+        prompt += '- Determine de 1 a 5 interesses relacionados (como hashtags, começando com "#" e sem espaços, exemplo: #Jardinagem).\n';
     }
 
     // Especifica o formato esperado da resposta.
