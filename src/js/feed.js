@@ -269,10 +269,16 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutomaticPostGeneration(NUMBER_OF_POSTS_TO_GENERATE, INTERVAL_BETWEEN_POSTS_MS);
     setActiveLink('link-home');
     loadRecommendations();
+    setupMobileMenuBehavior();
+});
 
+
+
+function setupMobileMenuBehavior() {
     const links = document.querySelectorAll('.nav-link');
     const mobileTitleWrapper = document.querySelector('.mobile-title');
     const mobileTitleText = mobileTitleWrapper.querySelector('span');
+    const logo = document.querySelector('.mobile-logo');
 
     links.forEach(link => {
         link.addEventListener('click', (event) => {
@@ -280,20 +286,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const newTitle = link.getAttribute('data-title');
 
-            if (newTitle === "Configurações" || newTitle === "Notificações") {
-                // Esconde o título
-                mobileTitleWrapper.style.display = 'none';
+            // Animação Animate.css
+            logo.classList.remove('animate__animated', 'animate__fadeInLeft');
+            void mobileTitleText.offsetWidth;
+            logo.classList.add('animate__animated', 'animate__fadeInLeft');
+
+            if (newTitle !== "Configurações") {
+                document.getElementById('link-configs').style.display = 'flex';
+            }
+
+            if (newTitle === "Configurações") {
+                if (window.innerWidth < 768) {
+                    document.getElementById('link-configs').style.display = 'none';
+                    mobileTitleWrapper.style.display = 'flex';
+                    mobileTitleWrapper.style.justifyContent = 'center';
+                    mobileTitleWrapper.style.paddingLeft = '0px';
+                    mobileTitleText.textContent = "Configurações";
+                }
             } else if (newTitle === "Criar") {
-                // Não altera o título atual nem mostra/oculta nada
+                mobileTitleText.textContent = "Criar";
                 return;
             } else {
-                // Mostra e atualiza o título normalmente
-                mobileTitleWrapper.style.display = 'block';
+                document.getElementById('link-configs').style.display = 'flex';
+                mobileTitleWrapper.style.display = 'flex';
+                mobileTitleWrapper.style.justifyContent = 'flex-start';
+                mobileTitleWrapper.style.paddingLeft = '70px';
                 mobileTitleText.textContent = newTitle;
             }
         });
     });
-});
+}
+
 
 // Limpeza quando a página for fechada
 window.addEventListener('beforeunload', () => {
