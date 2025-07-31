@@ -71,9 +71,9 @@ export function setupProfileUser() {
     
     // Atualizar enquanto digita
     bioTextarea.addEventListener('input', () => {
-      // Limitar a 50 caracteres
-      if (bioTextarea.value.length > 50) {
-        bioTextarea.value = bioTextarea.value.substring(0, 50);
+      // Limitar a 100 caracteres
+      if (bioTextarea.value.length > 100) {
+        bioTextarea.value = bioTextarea.value.substring(0, 100);
       }
       updateCharCount();
     });
