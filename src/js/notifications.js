@@ -7,7 +7,9 @@ window.NotificationSystem = {
     isGeneratingNotification: false,
     lastNotificationTime: 0,
     notificationInterval: null,
-    NOTIFICATION_COOLDOWN_MS: 20000, // 20 segundos entre notificações
+    fallbackTimeout: null,
+    NOTIFICATION_INTERVAL_MS: 60000, // 1 minuto entre notificações
+    FALLBACK_DELAY_MS: 15000, // 15 segundos para fallback
     
     // URL da API baseada no domínio atual
     get API_URL() {
@@ -28,8 +30,6 @@ window.NotificationSystem = {
 
     // Atualiza o badge de notificações na sidebar
     updateNotificationBadge() {
-
-        
         const notifLink = document.querySelector("#link-notif");
         if (!notifLink) return;
         
@@ -82,13 +82,14 @@ window.NotificationSystem = {
     },
 
     // Adiciona nova notificação
-    addNotification(message) {
+    addNotification(message, isTemplate = false) {
         const newNotification = {
             notificationId: this.notificationCounter++,
             message: message,
             read: false,
-            icon: 'bi-bell',
-            timestamp: new Date()
+            icon: isTemplate ? 'bi-info-circle' : 'bi-bell',
+            timestamp: new Date(),
+            isTemplate: isTemplate
         };
         
         this.notifications.unshift(newNotification);
@@ -133,69 +134,81 @@ window.NotificationSystem = {
         this.renderNotifications();
     },
 
-    // Verifica se pode gerar nova notificação
-    shouldGenerateNotification() {
-        const now = Date.now();
-        return (now - this.lastNotificationTime >= this.NOTIFICATION_COOLDOWN_MS) 
-            && !this.isGeneratingNotification;
+    // Cancela o timeout de fallback se existir
+    cancelFallbackTimeout() {
+        if (this.fallbackTimeout) {
+            clearTimeout(this.fallbackTimeout);
+            this.fallbackTimeout = null;
+        }
+    },
+
+    // Gera notificação template após delay
+    scheduleFallbackNotification() {
+        this.cancelFallbackTimeout();
+        
+        this.fallbackTimeout = setTimeout(() => {
+            if (this.isGeneratingNotification) {
+                const userInterests = this.getUserInterests();
+                const fallbackMessages = this.generateFallbackNotifications(userInterests);
+                const randomIndex = Math.floor(Math.random() * fallbackMessages.length);
+                
+                console.log("[NotificationSystem] Gerando notificação template após timeout da API");
+                this.addNotification(fallbackMessages[randomIndex], true);
+                this.isGeneratingNotification = false;
+            }
+        }, this.FALLBACK_DELAY_MS);
     },
 
     async checkForNewNotifications() {
-        if (!this.shouldGenerateNotification()) {
-            console.log("[NotificationSystem] Aguardando cooldown para nova notificação");
+        if (this.isGeneratingNotification) {
+            console.log("[NotificationSystem] Já está gerando notificação, pulando");
             return;
         }
 
         this.isGeneratingNotification = true;
         this.lastNotificationTime = Date.now();
 
-        // Declare userInterests fora do bloco try para que esteja disponível no catch
-        let userInterests;
+        console.log("[NotificationSystem] Iniciando geração de nova notificação");
+
+        // Agenda notificação template para caso a API falhe
+        this.scheduleFallbackNotification();
         
         try {
-            userInterests = this.getUserInterests();
+            const userInterests = this.getUserInterests();
             
-            // Chamada mais robusta com timeout e tratamento de erros específicos
-             const response = await this.fetchWithTimeout(
-            `${this.API_URL}/requisitarPost`,
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ 
-                    interesses: userInterests,
-                    gerarBio: false // Especifica que é para gerar post, não bio
-                })
-            },
-            10000
-        );
+            // Chamada com timeout de 10 segundos
+            const response = await this.fetchWithTimeout(
+                `${this.API_URL}/requisitarPost`,
+                {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ 
+                        interesses: userInterests,
+                        gerarBio: false
+                    })
+                },
+                10000
+            );
 
-            // Verifica se a resposta é válida
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
             
             const data = await response.json();
             
-            // Validação rigorosa da resposta
             if (this.isValidPostResponse(data)) {
-                this.addNotification(data.texto);
+                // Cancela o timeout de fallback já que a API funcionou
+                this.cancelFallbackTimeout();
+                
+                console.log("[NotificationSystem] Notificação da API gerada com sucesso");
+                this.addNotification(data.texto, false);
+                this.isGeneratingNotification = false;
             } else {
                 throw new Error('Resposta inválida da API');
             }
         } catch (error) {
-            console.error('Erro ao buscar notificação:', error);
-            
-            // Se userInterests não foi definido, obtenha novamente
-            if (!userInterests) {
-                userInterests = this.getUserInterests();
-            }
-            
-            // Mensagens de fallback baseadas nos interesses do usuário
-            const fallbackMessages = this.generateFallbackNotifications(userInterests);
-            const randomIndex = Math.floor(Math.random() * fallbackMessages.length);
-            this.addNotification(fallbackMessages[randomIndex]);
-        } finally {
-            this.isGeneratingNotification = false;
+            console.error('Erro ao buscar notificação da API:', error);
+            // O fallback será executado pelo timeout já agendado
         }
     },
 
@@ -211,9 +224,14 @@ window.NotificationSystem = {
     // Gera mensagens de fallback baseadas nos interesses
     generateFallbackNotifications(interests) {
         const baseMessages = [
-            "Novas atualizações disponíveis no seu feed!",
-            "Confira as últimas novidades",
-            "Temos novidades para você"
+            "🔔 Novas atualizações disponíveis no seu feed!",
+            "📱 Confira as últimas novidades da plataforma",
+            "✨ Temos conteúdo interessante para você",
+            "🎯 Descubra novas oportunidades hoje",
+            "💡 Dica: Explore novos conteúdos no seu feed",
+            "🌟 Novidades chegando! Dê uma olhada",
+            "📈 Mantenha-se atualizado com as últimas tendências",
+            "🎪 Há sempre algo novo acontecendo aqui"
         ];
         
         if (interests.length === 0 || interests.includes('aleatório')) {
@@ -221,9 +239,12 @@ window.NotificationSystem = {
         }
         
         // Mensagens personalizadas por interesse
-        const interestMessages = interests.map(interest => 
-            `Novo conteúdo sobre ${interest} disponível!`
-        );
+        const interestMessages = interests.flatMap(interest => [
+            `🎯 Novo conteúdo sobre ${interest} disponível!`,
+            `📚 Descubra mais sobre ${interest} no seu feed`,
+            `⭐ Conteúdo recomendado: ${interest}`,
+            `🔍 Explore: ${interest} - novidades te aguardam!`
+        ]);
         
         return [...baseMessages, ...interestMessages];
     },
@@ -291,7 +312,7 @@ window.NotificationSystem = {
             </div>
             <div class="notifications-list">
                 ${this.notifications.map(notification => `
-                    <div class="notification-card ${notification.read ? '' : 'unread'}">
+                    <div class="notification-card ${notification.read ? '' : 'unread'} ${notification.isTemplate ? 'template-notification' : ''}">
                         <div class="notification-icon">
                             <i class="bi ${notification.icon}"></i>
                         </div>
@@ -305,6 +326,7 @@ window.NotificationSystem = {
                                     hour: '2-digit',
                                     minute: '2-digit'
                                 })}
+                                ${notification.isTemplate ? ' • Template' : ''}
                             </small>
                         </div>
                         ${!notification.read ? 
@@ -325,7 +347,7 @@ window.NotificationSystem = {
             </div>
             <div class="no-notifications">
                 <p>Nenhuma notificação no momento.</p>
-                <small>As notificações aparecerão aqui quando houver atividade.</small>
+                <small>As notificações aparecerão aqui a cada minuto quando houver atividade.</small>
             </div>
         `;
     },
@@ -350,18 +372,21 @@ window.NotificationSystem = {
 
         const userInterests = this.getUserInterests();
         const welcomeMessage = userInterests.includes('aleatório') || userInterests.length < 2
-            ? 'Sistema de notificações iniciado!'
-            : `Sistema de notificações iniciado! Você receberá notificações sobre: ${userInterests.join(', ')}`;
+            ? '🎉 Sistema de notificações iniciado! Você receberá notificações a cada minuto.'
+            : `🎉 Sistema de notificações iniciado! Você receberá notificações sobre: ${userInterests.join(', ')} a cada minuto.`;
         
         this.addNotification(welcomeMessage);
         
+        // Configura intervalo de 1 minuto
         this.notificationInterval = setInterval(
             () => this.checkForNewNotifications(), 
-            60000 // Verifica a cada 60 segundos
+            this.NOTIFICATION_INTERVAL_MS
         );
         
         // Primeira verificação após 5 segundos
         setTimeout(() => this.checkForNewNotifications(), 5000);
+        
+        console.log(`[NotificationSystem] Sistema configurado para gerar notificações a cada ${this.NOTIFICATION_INTERVAL_MS/1000} segundos`);
     },
 
     // Para o sistema
@@ -371,6 +396,10 @@ window.NotificationSystem = {
             clearInterval(this.notificationInterval);
             this.notificationInterval = null;
         }
+        
+        // Cancela qualquer timeout de fallback pendente
+        this.cancelFallbackTimeout();
+        this.isGeneratingNotification = false;
     }
 };
 
@@ -392,7 +421,6 @@ if (notifLink) {
         }
 
         loadPage("notifications", "notifications.html", () => {
-            
             // Adiciona um pequeno atraso para garantir que o container esteja no DOM
             setTimeout(() => {
                 window.NotificationSystem.renderNotifications();

@@ -18,11 +18,12 @@ app.use('/img', express.static('public/img')); // Acesso as imagens armazenadas.
 // Rota POST para requisitarPost. 
 app.post('/requisitarPost', async (req, res) => {
     const { interesses = [], gerarBio = false, nome = "" } = req.body;
+    let genAI;
     if(gerarBio){
-        const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY1});
+        genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY4});
     }
     else{
-        const genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY4});
+        genAI = new GoogleGenAI({apiKey: process.env.GEMINI_KEY1});
     }
     let prompt;
     //Verifica se há uma requisição de bio a ser criada.
