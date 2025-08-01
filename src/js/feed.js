@@ -133,7 +133,7 @@ async function generateAndAddSinglePost() {
     // Mensagem fixa de carregamento
     const generatingMessage = document.createElement('div');
     generatingMessage.className = 'generating-message active';
-    generatingMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Atualizando feed posts personalizados para você...';
+    generatingMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Atualizando o feed com posts personalizados para você...';
     
     // Remove qualquer mensagem existente antes de adicionar a nova
     const existingMessage = document.querySelector('.generating-message.active');
