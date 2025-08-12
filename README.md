@@ -1,4 +1,4 @@
-# 🌐 Rede Social Generativa com IA
+# 🌐 SNAP - Rede Social Generativa com IA
 
 Protótipo funcional de uma rede social generativa, desenvolvido como trabalho prático da disciplina **Linguagem de Programação Visual (LPV)** no curso de **Tecnologia em Sistemas para Internet** – Instituto Federal do Sudeste de Minas Gerais, Campus Barbacena.
 
@@ -35,7 +35,7 @@ Acesse a versão online: [https://tainararcs.github.io/Social-Network-AI-Prototy
   <a href="https://tainararcs.github.io/Social-Network-AI-Prototype/">
     <img src="https://image.thum.io/get/width/1000/https://tainararcs.github.io/Social-Network-AI-Prototype/?v=2" 
          alt="Tela de Login" 
-         style="width: 90%; max-width: 600px; height: 90%;  height: 700px; border-radius: 12px; border: 1px solid #ddd;">
+         style="width: 90%; max-width: 600px; height: 90%;  height: 600px; border-radius: 12px; border: 1px solid #ddd;">
   </a>
 </div>
 
