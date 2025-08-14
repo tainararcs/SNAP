@@ -46,6 +46,6 @@ graph TD
     A[Frontend] --> B[HTML5 Semântico]
     A --> C[CSS3 Moderno]
     A --> D[JavaScript ES6+]
-    B --> E[Bootstrap 5]
+    C --> E[Bootstrap 5]
     D --> F[Gemini API]
     D --> G[LocalStorage]
