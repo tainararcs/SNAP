@@ -1,4 +1,4 @@
-# 🌐 SNAP - Social Network AI Prototype
+# 🌐 Social Network AI Prototype
 
 Protótipo funcional de uma rede social generativa, desenvolvido como trabalho prático da disciplina **Linguagem de Programação Visual (LPV)** no curso de **Tecnologia em Sistemas para Internet** – Instituto Federal do Sudeste de Minas Gerais, Campus Barbacena.
 
