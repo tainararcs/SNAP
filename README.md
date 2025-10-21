@@ -29,11 +29,11 @@ A aplicação simula uma rede social onde **conteúdos e perfis são gerados aut
 - Otimização de performance para carregamento rápido
 
 ## Demonstração
-Link de acesso: [Social Network AI Prototype](https://social-network-ai-prototype-s33k.vercel.app/)
+Link de acesso: [Social Network AI Prototype](https://social-network-ai-prototype.vercel.app/)
 
 <div align="center">
   <a href="https://tainararcs.github.io/Social-Network-AI-Prototype/">
-    <img src="https://image.thum.io/get/width/1000/https://tainararcs.github.io/Social-Network-AI-Prototype/?v=2" 
+    <img src="https://image.thum.io/get/width/1000/https://social-network-ai-prototype.vercel.app/" 
          alt="Tela de Login" 
          style="width: 90%; max-width: 600px; height: 90%;  height: 600px; border-radius: 12px; border: 1px solid #ddd;">
   </a>
